@@ -1,0 +1,728 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>📊 06 - Instrumental Variables | | Tutorials - Spring 2022 |</title>
+    <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-6/</link>
+      <atom:link href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-6/index.xml" rel="self" type="application/rss+xml" />
+    <description>📊 06 - Instrumental Variables</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 15 Mar 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
+      <title>📊 06 - Instrumental Variables</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-6/</link>
+    </image>
+    
+    <item>
+      <title>05 - Slides</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-6/slides/</link>
+      <pubDate>Mon, 15 Mar 2021 00:00:00 +0000</pubDate>
+      <guid>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-6/slides/</guid>
+      <description>&lt;h2 id=&#34;slides&#34;&gt;Slides&lt;/h2&gt;
+&lt;iframe src=&#34;../w6_instruments.pdf#view=fit&#34; width=&#34;100%&#34; height=&#34;500px&#34;&gt;
+    &lt;/iframe&gt;
+&lt;!--
+## Courses in this program
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure &gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;featured.jpg&#34; &gt;
+
+
+  &lt;img src=&#34;featured.jpg&#34; alt=&#34;&#34;  &gt;
+&lt;/a&gt;
+
+
+
+&lt;/figure&gt;
+
+
+&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    The parameter $\mu$ is the mean or expectation of the distribution.
+$\sigma$ is its standard deviation.
+The variance of the distribution is $\sigma^{2}$.
+  &lt;/div&gt;
+&lt;/div&gt;
+
+--&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Instrumental Variables</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-6/06-online-tutorial/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-6/06-online-tutorial/</guid>
+      <description>
+&lt;script src=&#34;https://seramirezruiz.github.io/2022-spring-stats2/2021-spring-stats2rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://seramirezruiz.github.io/2022-spring-stats2/2021-spring-stats2rmarkdown-libs/lightable/lightable.css&#34; rel=&#34;stylesheet&#34; /&gt;
+
+
+&lt;div id=&#34;welcome&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Welcome&lt;/h2&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Introduction!&lt;/h3&gt;
+&lt;p&gt;Welcome to our sixth tutorial for the Statistics II: Statistical Modeling &amp;amp; Causal Inference (with R) course.&lt;/p&gt;
+&lt;p&gt;During this week&#39;s lecture you reviewed what happens when experiments break due to non-compliance. You were also introduced to &lt;strong&gt;encouragement experimental setups&lt;/strong&gt;, and their the observational analogue, &lt;strong&gt;instrumental variables&lt;/strong&gt;. Finally, you learned how you can estimate local average treatment effects by breaking out the variation in &lt;strong&gt;D&lt;/strong&gt; into two parts.&lt;/p&gt;
+&lt;p&gt;In this lab session we will:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Review how to manually extract the LATE through the &lt;strong&gt;wald estimator&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Learn how to perform Two-stage Least Squares regression (2SLS) with &lt;code&gt;ivreg()&lt;/code&gt; from the &lt;code&gt;AER&lt;/code&gt; package&lt;/li&gt;
+&lt;li&gt;Illustrate the mechanics of Two-stage Least Squares regression (2SLS) with &lt;code&gt;lm()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;packages&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Packages&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# These are the libraries we will use today. Make sure to install them in your console in case you have not done so previously.
+
+library(tidyverse) # To load the collection of packages in the tidyverse
+library(dplyr) # To wrangle our data (this package is also loaded by library(tidyverse))
+library(readr) # To load the .csv data (this package is also loaded by library(tidyverse))
+library(ggplot2) # To create plots (this package is also loaded by library(tidyverse))
+library(tidyr) # To use pivot_wider() (this package is also loaded by library(tidyverse))
+library(ggdag) # To dagify and plot our DAG objects in R
+#library(summarytools) # for ctable()
+library(broom) # To format regression output
+library(janitor) # To examine our data with tabyl()
+library(stargazer) # To format model output
+library(knitr) # To create HTML tables with kable()
+library(kableExtra) # To format the HTML tables
+library(AER) # To run 2SLS with ivreg()&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;measuring-the-effect-of-mosquito-net-use-on-malaria-infections&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Measuring the effect of mosquito net use on malaria infections&lt;/h2&gt;
+&lt;p&gt;Imagine that the organization you work for is laying out a project to distribute mosquito nets to help combat malaria transmitions.&lt;/p&gt;
+&lt;p&gt;The funding agency requires a impact evaluation report from your organization. You are in charge of running the evaluation of this program.&lt;/p&gt;
+&lt;p&gt;You realize that there are potential &lt;span style=&#34;color:#6600cc;&#34;&gt;unobserved counfounders&lt;/span&gt; that could bias the observed differences in malaria risk for mosquito net users and non-users. You also think about the ethical considerations of fully randomizing who receives the nets, so you remember your Statistics II lecture on IVs and set up an &lt;strong&gt;encouragement design&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Your benificiaries are scattered across ten villages. You decide to randomly select five villages to &lt;span style=&#34;color:#cc0055;&#34;&gt;send SMS reminders every night encouraging them to use the mosquito nets&lt;/span&gt;. (This example is using simulated data) &lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/110632472-f2535080-81a7-11eb-9143-60ab36ecff07.png&#34; width=&#34;90%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;assumptions&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Assumptions&lt;/h3&gt;
+&lt;p&gt;To render credible results for the evaluation of this program, we need to fulfill a certain set of assumtions:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;a) Relevance:&lt;/strong&gt; Also known as non-zero average encouragement effect. Does our &lt;span class=&#34;math inline&#34;&gt;\(Z\)&lt;/span&gt; create variation in our &lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;? In other words, is the mosquito net use different under the encouragement group? (Statistically testable)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;b) Exogeneity/Ignorability of the instrument:&lt;/strong&gt; Potential outcomes and treatments are independent of &lt;span class=&#34;math inline&#34;&gt;\(Z\)&lt;/span&gt;. In this case given by out randomization of encouragement by villages.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;c) Exclusion restriction:&lt;/strong&gt; The instrument only affects the outcome via the treatment. In other words, there are no alternative paths through which our SMS can have an effect on malaria infections other that the use of the mosquito nets.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;d) Monotonicity:&lt;/strong&gt; No defiers. We assume that non-compliers fall in the camp of always- and never-takers. We would not expect subjects who when encouraged would not use the nets, but would use them if they did not recieve the SMS reminder.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exploring-our-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Exploring our data&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;evaluation_df &amp;lt;- readr::read_csv(&amp;quot;https://raw.githubusercontent.com/seramirezruiz/stats-ii-lab/master/Session%205/data/evaluation_data.csv&amp;quot;) # loading simulated data frame of the intervention&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You receive the results of your intervention from the M&amp;amp;E officers. There are 1000 inhabitants across the ten villages. This is what the data look like:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;village_name&lt;/code&gt;: A character string with the name of the village&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;sms&lt;/code&gt;: A binary marker for the SMS encouragement&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;net_use&lt;/code&gt;: A binary marker for mosquito net use&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;malaria&lt;/code&gt;: A binary marker for malaria infection&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;h4 style=&#34;color:#cc0055;&#34;&gt;
+Compliance types
+&lt;/h4&gt;
+&lt;p&gt;You may remember, this table from the lecture:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/seramirezruiz/stats-ii-lab/master/Session%205/data/compliance.png&#34; width=&#34;90%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;We can crosstabulate our data with &lt;code&gt;janitor::tabyl()&lt;/code&gt; and the additional features of the &lt;code&gt;janitor::adorn_*&lt;/code&gt; functions.&lt;/p&gt;
+&lt;p&gt;Why &lt;code&gt;janitor::tabyl()&lt;/code&gt;? Because as prospective policy analysts we will do a lot of counting.&lt;/p&gt;
+&lt;p&gt;As the &lt;a href=&#34;https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html&#34;&gt;vignette&lt;/a&gt; of the package even puts it:&lt;/p&gt;
+&lt;p&gt;Analysts do a lot of counting. Indeed, it’s been said that &#39;data science is mostly counting things.&#39; But the base R function for counting, &lt;code&gt;table()&lt;/code&gt;, leaves much to be desired:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It doesn’t accept data.frame inputs (and thus doesn’t play nicely with the %&amp;gt;% pipe)&lt;/li&gt;
+&lt;li&gt;It doesn’t output data.frames&lt;/li&gt;
+&lt;li&gt;Its results are hard to format. Compare the look and formatting choices of an R table to a Microsoft Excel PivotTable.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This is how it works. Say we are interested in exploring the number of persons in each of the observed strata, we would do:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;evaluation_df %&amp;gt;% # your data frame
+  janitor::tabyl(net_use, sms) %&amp;gt;% # the two dimensions for the table (D, Z)
+  janitor::adorn_totals(c(&amp;quot;row&amp;quot;, &amp;quot;col&amp;quot;)) %&amp;gt;% # add totals for rows and cols
+  knitr::kable() %&amp;gt;% # turn into a kable table for nice rendering in HTML
+  kableExtra::kable_styling() %&amp;gt;% 
+  kableExtra::add_header_above(c(&amp;quot;&amp;quot;, &amp;quot;sms&amp;quot; = 2, &amp;quot;&amp;quot;)) #add header for sms&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;empty-cells: hide;border-bottom:hidden;&#34; colspan=&#34;1&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; &#34; colspan=&#34;2&#34;&gt;
+&lt;div style=&#34;border-bottom: 1px solid #ddd; padding-bottom: 5px; &#34;&gt;
+sms
+&lt;/div&gt;
+&lt;/th&gt;
+&lt;th style=&#34;empty-cells: hide;border-bottom:hidden;&#34; colspan=&#34;1&#34;&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+net_use
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Total
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+335
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+110
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+445
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+165
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+390
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+555
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Total
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+500
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+500
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;If you want to learn more about the syntax of &lt;code&gt;tabyl()&lt;/code&gt;, make sure to check the&lt;/em&gt; &lt;a href=&#34;https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html&#34;&gt;vignette&lt;/a&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h4 style=&#34;color:#6600cc;&#34;&gt;
+Exercise
+&lt;/h4&gt;
+&lt;h5&#34;&gt;Let&#39;s explore the compliance types from this table
+&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Where are our compliers and non-compliers?&lt;/li&gt;
+&lt;li&gt;How many people were encouraged via SMS, but did not use the net?&lt;/li&gt;
+&lt;li&gt;How many people were not encouraged via SMS, yet they utilized the net?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;h4 style=&#34;color:#cc0055;&#34;&gt;
+Average malaria infections across strata
+&lt;/h4&gt;
+&lt;p&gt;We can utilize the &lt;code&gt;tabyl()&lt;/code&gt; syntax and our knowledge from the grammar of graphics to table and visualize the distribution of malaria on each stratum:&lt;/p&gt;
+&lt;h5 style = &#34;color:#cc0055;&#34;&gt;
+Table: Count of malaria infections across strata (Y,Z)
+&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;evaluation_df %&amp;gt;% # your data frame
+  janitor::tabyl(malaria, sms) %&amp;gt;% # the two dimensions for the table (Y, Z)
+  janitor::adorn_totals(c(&amp;quot;row&amp;quot;, &amp;quot;col&amp;quot;)) %&amp;gt;% # add totals for rows and cols
+  knitr::kable() %&amp;gt;% # turn into a kable table for nice rendering in HTML
+  kableExtra::kable_styling() %&amp;gt;% 
+  kableExtra::add_header_above(c(&amp;quot;&amp;quot;, &amp;quot;sms&amp;quot; = 2, &amp;quot;&amp;quot;)) #add header for sms&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;empty-cells: hide;border-bottom:hidden;&#34; colspan=&#34;1&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; &#34; colspan=&#34;2&#34;&gt;
+&lt;div style=&#34;border-bottom: 1px solid #ddd; padding-bottom: 5px; &#34;&gt;
+sms
+&lt;/div&gt;
+&lt;/th&gt;
+&lt;th style=&#34;empty-cells: hide;border-bottom:hidden;&#34; colspan=&#34;1&#34;&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+malaria
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Total
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+248
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+410
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+658
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+252
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+90
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+342
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Total
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+500
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+500
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h5 style = &#34;color:#cc0055;&#34;&gt;
+Plot: Distribution of malaria infections across strata
+&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(evaluation_df, aes(x = factor(sms), 
+                          y = factor(net_use), 
+                          color = factor(malaria))) +
+  geom_jitter() +
+  theme_minimal() +
+  scale_x_discrete(labels = c(&amp;quot;SMS = 0&amp;quot;, &amp;quot;SMS = 1&amp;quot;)) +
+  scale_y_discrete(limits = c(&amp;quot;1&amp;quot;,&amp;quot;0&amp;quot;), labels = c(&amp;quot;NET = 1&amp;quot;, &amp;quot;NET = 0&amp;quot;)) +
+  scale_color_manual(values = c(&amp;quot;#CDCDCD&amp;quot;, &amp;quot;#CC0055&amp;quot;),
+                       labels = c(&amp;quot;Not infected&amp;quot;, &amp;quot;Infected&amp;quot;)) +
+  labs(x = &amp;quot;Encouragement&amp;quot;,
+       y = &amp;quot;Treatment&amp;quot;,
+       color = &amp;quot;&amp;quot;) +
+  theme(legend.position = &amp;quot;bottom&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/111189828-c3c5e300-85b6-11eb-8a6e-cb958c5fa0bf.png&#34; width=&#34;90%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h4 style=&#34;color:#6600cc;&#34;&gt;
+Exercise
+&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;What insights can we gather from the table and plot?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exploring-our-set-up&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Exploring our set-up&lt;/h2&gt;
+&lt;div id=&#34;lets-check-whether-sms-encouragement-is-a-strong-instrument&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Let&#39;s check whether SMS encouragement is a strong instrument&lt;/h4&gt;
+&lt;p&gt;In other words, we are looking at the relevance assumption. Does our SMS encouragement create changes in our mosquito net use?&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;lm(net_use ~ sms, data = evaluation_df) %&amp;gt;%
+  stargazer::stargazer(type = &amp;quot;text&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## ===============================================
+##                         Dependent variable:    
+##                     ---------------------------
+##                               net_use          
+## -----------------------------------------------
+## sms                          0.450***          
+##                               (0.028)          
+##                                                
+## Constant                     0.330***          
+##                               (0.020)          
+##                                                
+## -----------------------------------------------
+## Observations                   1,000           
+## R2                             0.205           
+## Adjusted R2                    0.204           
+## Residual Std. Error      0.444 (df = 998)      
+## F Statistic          257.315*** (df = 1; 998)  
+## ===============================================
+## Note:               *p&amp;lt;0.1; **p&amp;lt;0.05; ***p&amp;lt;0.01&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Economists have established as a &amp;quot;rule-of-thumb&amp;quot; for the case of a single endogenous regressor to be considered a strong instrument should have a &lt;strong&gt;F-statistic&lt;/strong&gt; &lt;a href=&#34;#fn1&#34; class=&#34;footnoteRef&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; greater than 10. From this regression, we can see that SMS encouragement is a strong instrument.&lt;/p&gt;
+&lt;p&gt;Additionally, the substantive read in this case is that only 33% of those who did not receive the SMS utilized the mosquito nets, where as 78% of those who got the SMS encouragement did. &lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;lets-gather-a-naïve-estimate-of-mosquito-net-use-and-malaria-infection.&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Let&#39;s gather a naïve estimate of mosquito net use and malaria infection.&lt;/h4&gt;
+&lt;p&gt;Why do you think we call this a naïve estimate?&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;naive_model &amp;lt;- lm(malaria ~ net_use, data = evaluation_df)
+stargazer::stargazer(naive_model, type = &amp;quot;text&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## ===============================================
+##                         Dependent variable:    
+##                     ---------------------------
+##                               malaria          
+## -----------------------------------------------
+## net_use                      -0.615***         
+##                               (0.023)          
+##                                                
+## Constant                     0.683***          
+##                               (0.017)          
+##                                                
+## -----------------------------------------------
+## Observations                   1,000           
+## R2                             0.415           
+## Adjusted R2                    0.414           
+## Residual Std. Error      0.363 (df = 998)      
+## F Statistic          707.002*** (df = 1; 998)  
+## ===============================================
+## Note:               *p&amp;lt;0.1; **p&amp;lt;0.05; ***p&amp;lt;0.01&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h4 style=&#34;color:#6600cc;&#34;&gt;
+Exercise
+&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;What would our expectations be under the naïve model?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;lets-gather-our-intent-to-treat-effect-itt&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Let&#39;s gather our intent-to-treat effect (ITT)&lt;/h4&gt;
+&lt;p&gt;This is the effect that our SMS encouragement had on malaria infections. &lt;span class=&#34;math display&#34;&gt;\[ITT = E(Malaria_i|SMS=1) - E(Malaria_i|SMS=0)\]&lt;/span&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;itt_model &amp;lt;- lm(malaria ~ sms, data = evaluation_df)
+stargazer::stargazer(itt_model, type = &amp;quot;text&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## ===============================================
+##                         Dependent variable:    
+##                     ---------------------------
+##                               malaria          
+## -----------------------------------------------
+## sms                          -0.324***         
+##                               (0.028)          
+##                                                
+## Constant                     0.504***          
+##                               (0.020)          
+##                                                
+## -----------------------------------------------
+## Observations                   1,000           
+## R2                             0.117           
+## Adjusted R2                    0.116           
+## Residual Std. Error      0.446 (df = 998)      
+## F Statistic          131.753*** (df = 1; 998)  
+## ===============================================
+## Note:               *p&amp;lt;0.1; **p&amp;lt;0.05; ***p&amp;lt;0.01&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h4 style=&#34;color:#6600cc;&#34;&gt;
+Exercise
+&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;What does this tell us?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;lets-gather-out-local-average-treatment-effect-late&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Let&#39;s gather out local average treatment effect (LATE)&lt;/h2&gt;
+&lt;p&gt;We have several options for this:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Wald Estimator&lt;/strong&gt; We can calculate this by hand. Let&#39;s try that now using the values from the table we created earlier. We can also calculate the average malaria rates among those who did and did not receive an SMS (no SMS = 0.504, yes SMS = 0.18).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 style = &#34;color:#cc0055;&#34;&gt;
+Table: Observations across strata (D,Z)
+&lt;/h4&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;empty-cells: hide;border-bottom:hidden;&#34; colspan=&#34;1&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; &#34; colspan=&#34;2&#34;&gt;
+&lt;div style=&#34;border-bottom: 1px solid #ddd; padding-bottom: 5px; &#34;&gt;
+sms
+&lt;/div&gt;
+&lt;/th&gt;
+&lt;th style=&#34;empty-cells: hide;border-bottom:hidden;&#34; colspan=&#34;1&#34;&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+net_use
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Total
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+335
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+110
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+445
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+165
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+390
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+555
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Total
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+500
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+500
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h5 style = &#34;color:#cc0055;&#34;&gt;
+Table: Count of malaria infections across strata (Y,Z)
+&lt;/h4&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;empty-cells: hide;border-bottom:hidden;&#34; colspan=&#34;1&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; &#34; colspan=&#34;2&#34;&gt;
+&lt;div style=&#34;border-bottom: 1px solid #ddd; padding-bottom: 5px; &#34;&gt;
+sms
+&lt;/div&gt;
+&lt;/th&gt;
+&lt;th style=&#34;empty-cells: hide;border-bottom:hidden;&#34; colspan=&#34;1&#34;&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+malaria
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Total
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+248
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+410
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+658
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+252
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+90
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+342
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Total
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+500
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+500
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr /&gt;
+&lt;h4&gt;
+Local Average Treatment Effect (LATE) manually
+&lt;/h4&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[LATE = \frac{cov(Y_i,Z_i)}{cov(D_i,Z_i)}\]&lt;/span&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Let&#39;s take a look at our numerator&lt;/strong&gt; &lt;span class=&#34;math inline&#34;&gt;\(cov(Y_i,Z_i)\)&lt;/span&gt;, also &lt;span class=&#34;math inline&#34;&gt;\(ITT\)&lt;/span&gt;&lt;br&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(E(Y|Z = 1) = \frac{90}{(410+90)} = 0.18\)&lt;/span&gt; &lt;br&gt; &lt;span class=&#34;math inline&#34;&gt;\(E(Y|Z = 0) = \frac{252}{(252+248)} = 0.504\)&lt;/span&gt; &lt;br&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Let&#39;s take a look at our denominator&lt;/strong&gt; &lt;span class=&#34;math inline&#34;&gt;\(cov(D_i,Z_i)\)&lt;/span&gt; &lt;br&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(E(D∣Z = 1) = \frac{390}{(390 + 110)} = 0.78\)&lt;/span&gt; &lt;br&gt; &lt;span class=&#34;math inline&#34;&gt;\(E(D∣Z = 0) = \frac{165}{(165 + 335)} = 0.33\)&lt;/span&gt; &lt;br&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;We can calculate our LATE&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[LATE =  \frac{(0.18 - 0.504)}{(0.78 - 0.33)} = -0.72\]&lt;/span&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr /&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Two-stage Least Squares (2SLS)&lt;/strong&gt;. We will learn how to do this with &lt;code&gt;ivreg()&lt;/code&gt;, which is part of the &lt;code&gt;AER&lt;/code&gt; package. It fits instrumental-variable regression through two-stage least squares. The syntax is the following:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ivreg(outcome ~ treatment | instrument, data)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In our case:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;late_model &amp;lt;- AER::ivreg(malaria ~ net_use | sms, data = evaluation_df)
+summary(late_model)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## AER::ivreg(formula = malaria ~ net_use | sms, data = evaluation_df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.7416 -0.0216 -0.0216  0.2584  0.9784 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&amp;gt;|t|)    
+## (Intercept)  0.74160    0.03089   24.00   &amp;lt;2e-16 ***
+## net_use     -0.72000    0.05159  -13.96   &amp;lt;2e-16 ***
+## ---
+## Signif. codes:  0 &amp;#39;***&amp;#39; 0.001 &amp;#39;**&amp;#39; 0.01 &amp;#39;*&amp;#39; 0.05 &amp;#39;.&amp;#39; 0.1 &amp;#39; &amp;#39; 1
+## 
+## Residual standard error: 0.3671 on 998 degrees of freedom
+## Multiple R-Squared: 0.4025,  Adjusted R-squared: 0.4019 
+## Wald test: 194.8 on 1 and 998 DF,  p-value: &amp;lt; 2.2e-16&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h4 style=&#34;color:#6600cc;&#34;&gt;
+Exercise
+&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;What is the substantive reading of these results?&lt;/li&gt;
+&lt;li&gt;What would you tell the funding partner in your evaluation report?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;mechanics-behind-two-stage-least-squares-2sls&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Mechanics behind two-stage least squares (2SLS)&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/seramirezruiz/stats-ii-lab/master/Session%205/data/instrumental-variables.gif&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;What ivreg() is doing in the background is the following:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;net_use_hat &amp;lt;- lm(net_use ~ sms, evaluation_df)$fitted.values # get fitted values from first stage (the part of x that is exogenously driven by z)
+summary(lm(evaluation_df$malaria ~ net_use_hat)) # run second stage with instrumented x (careful, the standard errors are wrong; better use ivreg() from AER instead)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = evaluation_df$malaria ~ net_use_hat)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -0.504 -0.180 -0.180  0.496  0.820 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&amp;gt;|t|)    
+## (Intercept)  0.74160    0.03757   19.74   &amp;lt;2e-16 ***
+## net_use_hat -0.72000    0.06273  -11.48   &amp;lt;2e-16 ***
+## ---
+## Signif. codes:  0 &amp;#39;***&amp;#39; 0.001 &amp;#39;**&amp;#39; 0.01 &amp;#39;*&amp;#39; 0.05 &amp;#39;.&amp;#39; 0.1 &amp;#39; &amp;#39; 1
+## 
+## Residual standard error: 0.4463 on 998 degrees of freedom
+## Multiple R-squared:  0.1166, Adjusted R-squared:  0.1157 
+## F-statistic: 131.8 on 1 and 998 DF,  p-value: &amp;lt; 2.2e-16&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;thinking-about-the-validity-of-instruments&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Thinking about the validity of instruments&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/seramirezruiz/stats-ii-lab/master/Session%205/data/validity_ivs.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;We can also adapt the &lt;code&gt;ivreg()&lt;/code&gt; syntax to accomodate valid conditional instruments:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;AER::ivreg(Y ~ D + W | Z + W, data = your_df)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;An F statistic is a value you get when you run an ANOVA test or a regression analysis to find out if the means between two populations are significantly different. It’s similar to a t-statistic from a t-test; A-T test will tell you if a single variable is statistically significant and an F test will tell you if a group of variables are jointly significant.&lt;a href=&#34;#fnref1&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

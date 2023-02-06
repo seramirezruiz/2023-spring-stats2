@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>📊 03 - Visualization and Directed Acyclic Graphs (DAGs) | | Tutorials - Spring 2022 |</title>
+    <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-3/</link>
+      <atom:link href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-3/index.xml" rel="self" type="application/rss+xml" />
+    <description>📊 03 - Visualization and Directed Acyclic Graphs (DAGs)</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Tue, 23 Feb 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
+      <title>📊 03 - Visualization and Directed Acyclic Graphs (DAGs)</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-3/</link>
+    </image>
+    
+    <item>
+      <title>03 - Slides</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-3/slides/</link>
+      <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
+      <guid>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-3/slides/</guid>
+      <description>&lt;h2 id=&#34;slides&#34;&gt;Slides&lt;/h2&gt;
+&lt;iframe src=&#34;../w3_causal_graphs.pdf#view=fit&#34; width=&#34;100%&#34; height=&#34;500px&#34;&gt;
+    &lt;/iframe&gt;
+&lt;!--
+## Courses in this program
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure &gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;featured.jpg&#34; &gt;
+
+
+  &lt;img src=&#34;featured.jpg&#34; alt=&#34;&#34;  &gt;
+&lt;/a&gt;
+
+
+
+&lt;/figure&gt;
+
+
+&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    The parameter $\mu$ is the mean or expectation of the distribution.
+$\sigma$ is its standard deviation.
+The variance of the distribution is $\sigma^{2}$.
+  &lt;/div&gt;
+&lt;/div&gt;
+
+--&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Basics of Data Visualization and DAGs in R</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-3/03-online-tutorial/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-3/03-online-tutorial/</guid>
+      <description>
+
+
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Load packages. Install them first, in case you don&amp;#39;t have them yet.
+
+library(palmerpenguins) # To get our example&amp;#39;s dataset
+library(tidyverse) # To use dplyr functions and the pipe operator when needed
+library(ggplot2) # To visualize data (this package is also loaded by library(tidyverse))
+library(ggdag) # To create our DAGs&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;welcome&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Welcome&lt;/h1&gt;
+&lt;p&gt;This week&#39;s tutorial will be divided in two broader camps.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;First, we will learn some basics of data visualization with &lt;code&gt;ggplot&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Second, we will start our exploration of &lt;strong&gt;directed acyclic graphs (DAGs)&lt;/strong&gt; for causal inference.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;introduction-to-ggplot2&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction to &lt;code&gt;ggplot2&lt;/code&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;ggplot2&lt;/code&gt; is by far the most popular visualization package in &lt;strong&gt;R&lt;/strong&gt;. &lt;code&gt;ggplot2&lt;/code&gt; implements the &lt;strong&gt;grammar of graphics&lt;/strong&gt; to render a versatile syntax of creating visuals. The underlying logic of the package relies on deconstructing the structure of graphs (if you are interested in this you can read this &lt;a href=&#34;http://vita.had.co.nz/papers/layered-grammar.pdf&#34;&gt;article&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;For the purposes of this introduction to visualization with ggplot, we care about the layered nature of visualizing with &lt;code&gt;ggplot2&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/94537983-b94fa100-0243-11eb-8d12-c2e685141092.png&#34; width=&#34;70%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;*&lt;em&gt;This tutorial is based largely on chapters 7 to 10 from the &lt;a href=&#34;http://qpolr.com/dataviz.html&#34;&gt;QPOLR book&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;our-building-blocks&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Our building blocks&lt;/h2&gt;
+&lt;p&gt;During this week, we will learn about the following building blocks:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Data&lt;/strong&gt;: the data frame, or data frames, we will use to plot&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Aesthetics&lt;/strong&gt;: the variables we will be working with&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Geometric objects&lt;/strong&gt;: the type of visualization&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Theme adjustments&lt;/strong&gt;: size, text, colors etc&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;data&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Data&lt;/h3&gt;
+&lt;p&gt;The first building block for our plots are the data we intend to map. In &lt;code&gt;ggplot2&lt;/code&gt;, we always have to specify the object where our data lives. In other words, you will always have to specify a data frame, as such:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(name_of_your_df)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In the future, we will see how to combine multiple data sources to build a single plot. For now, we will work under the assumption that all your data live in the same object.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;aesthetics&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Aesthetics&lt;/h3&gt;
+&lt;p&gt;The second building block for our plots are the aesthetics. We need to specify the variables in the data frame we will be using and what role they play.&lt;/p&gt;
+&lt;p&gt;To do this we will use the function &lt;code&gt;aes()&lt;/code&gt; within the &lt;code&gt;ggplot()&lt;/code&gt; function after the data frame &lt;strong&gt;(remember to add a comma after the data frame)&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(name_of_your_df, aes(x = your_x_axis_variable, y = your_y_axis_variable))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Beyond your axis, you can add more aesthetics representing further dimensions of the data in the two dimensional graphic plane, such as: size, color, fill, to name but a few.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;geometric-objects&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Geometric objects&lt;/h3&gt;
+&lt;p&gt;The third layer to render our graph is a geomethic object. To add one, we need to add a plus (&lt;strong&gt;+&lt;/strong&gt;) at the end of the initial line and state the type of geometric object we want to add, for example, &lt;code&gt;geom_point()&lt;/code&gt; for a scatter plot, or &lt;code&gt;geom_bar()&lt;/code&gt; for barplots.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(name_of_your_df, aes(x = your_x_axis_variable, y = your_y_axis_variable)) +
+  geom_point()&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;theme&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Theme&lt;/h3&gt;
+&lt;p&gt;At this point our plot may just need some final thouches. We may want to fix the axes names or get rid of the default gray background. To do so, we need to add an additional layer preceded by a plus sign (+).&lt;/p&gt;
+&lt;p&gt;If we want to change the names in our axes, we can utilize the &lt;code&gt;labs()&lt;/code&gt; function.&lt;/p&gt;
+&lt;p&gt;We can also employ some of the pre-loaded themes, for example, &lt;code&gt;theme_minimal()&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(name_of_your_df, aes(x = your_x_axis_variable, y = your_y_axis_variable)) +
+  geom_point() +
+  theme_minimal() +
+  labs(x = &amp;quot;Name you want displayed&amp;quot;,
+       y = &amp;quot;Name you want displayed&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;our-first-plot&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Our first plot&lt;/h3&gt;
+&lt;p&gt;For our very first plot using &lt;code&gt;ggplot2&lt;/code&gt;, we will use the &lt;code&gt;penguins&lt;/code&gt; data from last week.&lt;/p&gt;
+&lt;p&gt;We would like to create a scatterplot that illustrates the relationship between the length of a penguin&#39;s flipper and their weight.&lt;/p&gt;
+&lt;p&gt;To do so, we need three of our building blocks: a) data, b) aesthetics, and c) a geometric object (&lt;code&gt;geom_point()&lt;/code&gt;).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(penguins, aes(x = flipper_length_mm, y=body_mass_g)) +
+  geom_point()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108834786-e1fb7d00-75ce-11eb-8a23-81414b76c484.png&#34; width=&#34;70%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;b&gt;
+&lt;p style= &#34;color: #9F24FF&#34;&gt;
+EXERCISE:
+&lt;p&gt;
+&lt;p&gt;&lt;/b&gt; Once we have our scatterplot. Can you think of a way to adapt the code to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;convey another dimension through color, the species of penguin&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;ol start=&#34;2&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;change the axes names&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;ol start=&#34;3&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;render the graph with &lt;code&gt;theme_minimal()&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;details class=&#34;spoiler &#34;  id=&#34;spoiler-0&#34;&gt;
+  &lt;summary&gt;Answer&lt;/summary&gt;
+  &lt;p&gt;&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(penguins, aes(x = flipper_length_mm, y=body_mass_g, color=species)) +
+  geom_point() +
+  theme_minimal() +
+  labs(x = &amp;quot;Flipper Length (mm)&amp;quot;,
+       y = &amp;quot;Body mass (g)&amp;quot;,
+       color = &amp;quot;Species&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108834863-f770a700-75ce-11eb-8fb4-b410dcd830f9.png&#34; width=&#34;70%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/p&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;visualizing-effectively&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Visualizing effectively&lt;/h1&gt;
+&lt;div id=&#34;plotting-distributions&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Plotting distributions&lt;/h2&gt;
+&lt;p&gt;If we are interested in plotting distributions of our data, we can leverage geometric objects, such as:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;geom_histogram()&lt;/code&gt;: visualizes the distribution of a single continuous variable by dividing the x axis into bins and counting the number of observations in each bin (the default is 30 bins).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;geom_density()&lt;/code&gt;: computes and draws kernel density estimate, which is a smoothed version of the histogram.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;geom_bar()&lt;/code&gt;: renders barplots and in plotting distributions behaves in a very similar way from &lt;code&gt;geom_histogram()&lt;/code&gt; (can also be used with two dimensions)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This is a histogram presenting the weight distribution of penguins in our sample. .&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108834871-f93a6a80-75ce-11eb-9a05-2161f6bad744.png&#34; width=&#34;70%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;b&gt;
+&lt;p style= &#34;color: #9F24FF&#34;&gt;
+EXERCISE:
+&lt;p&gt;
+&lt;p&gt;&lt;/b&gt; Let&#39;s adapt the code of our histogram:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;add &lt;code&gt;bins = 15&lt;/code&gt; argument (type different numbers)&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;ol start=&#34;2&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;add &lt;code&gt;fill = &amp;quot;#FF6666&amp;quot;&lt;/code&gt; (type &amp;quot;red&amp;quot;, &amp;quot;blue&amp;quot;, instead of #FF6666)&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;ol start=&#34;3&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;change the geom to &lt;code&gt;_density&lt;/code&gt; and &lt;code&gt;_bar&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;details class=&#34;spoiler &#34;  id=&#34;spoiler-1&#34;&gt;
+  &lt;summary&gt;Answer&lt;/summary&gt;
+  &lt;p&gt;&lt;ul&gt;
+&lt;li&gt;&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;strong&gt;Histogram with bins argument&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(bins = 15)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108834874-f9d30100-75ce-11eb-869e-d25423127afe.png&#34; width=&#34;70%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;ol start=&#34;2&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;strong&gt;Histogram with bins and fill arguments&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(bins = 25, fill = &amp;quot;#FF6666&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108834878-fa6b9780-75ce-11eb-833d-8675c65c2d34.png&#34; width=&#34;70%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;ol start=&#34;3&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;code&gt;geom_density()&lt;/code&gt; and &lt;code&gt;geom_bar()&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(penguins, aes(x = body_mass_g)) +
+  geom_density(alpha = 0.5, fill = &amp;quot;#FF6666&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108834879-fa6b9780-75ce-11eb-8b54-e73421f810fb.png&#34; width=&#34;70%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(penguins, aes(x = body_mass_g)) +
+  geom_bar(fill = &amp;quot;#FF6666&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108834882-fb042e00-75ce-11eb-8fd0-e309766734c0.png&#34; width=&#34;70%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/p&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;plotting-relationships&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Plotting relationships&lt;/h3&gt;
+&lt;p&gt;We can utilize graphs to explore how different variables are related. In fact, we did so before in our scatterplot. We can also use box plots and lines to show some of these relationships.&lt;/p&gt;
+&lt;p&gt;For example, this boxplot showcasing the distribution of weight by species:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(penguins, aes(x = species, y = body_mass_g)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(x = &amp;quot;Species&amp;quot;,
+       y = &amp;quot;Body mass (g)&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108834883-fb042e00-75ce-11eb-9081-f0fe68593721.png&#34; width=&#34;70%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Or this adaptation of our initial plot with a line of best fit for the observed data by each species:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(penguins, aes(x= flipper_length_mm, y = body_mass_g, color = species)) +
+  geom_point() + 
+  geom_smooth(method = &amp;quot;lm&amp;quot;, se = F) +
+  theme_minimal() +
+  labs(x = &amp;quot;Length of the flipper&amp;quot;,
+       y = &amp;quot;Body mass (g)&amp;quot;,
+       color = &amp;quot;Species&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108834884-fb042e00-75ce-11eb-8a4a-e10efcd16bd5.png&#34; width=&#34;70%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;next-steps&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Next steps&lt;/h3&gt;
+&lt;p&gt;Now that you have been introduced to some of the basics of &lt;code&gt;ggplot2&lt;/code&gt;, &lt;strong&gt;the best way to move forward is to experiment&lt;/strong&gt;. As we have discussed before, the &lt;strong&gt;R&lt;/strong&gt; community is very open. Perhaps, you can gather some inspiration from the Tidy Tuesday social data project in R where users explore a new dataset each week and share their visualizations and code on Twitter under #TidyTuesday. You can explore some of the previous visualizations &lt;a href=&#34;https://shiny.rstudio.com/gallery/tidy-tuesday.html&#34;&gt;here&lt;/a&gt; and try to replicate their code.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;a href=&#34;https://github.com/erikgahner/awesome-ggplot2&#34;&gt;Here is a curated list&lt;/a&gt; of awesome &lt;code&gt;ggplot2&lt;/code&gt; resources.&lt;/em&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;directed-acyclic-graphs-dags&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Directed Acyclic Graphs (DAGs)&lt;/h2&gt;
+&lt;p&gt;This week we learned that &lt;strong&gt;directed acyclic graphs (DAGs)&lt;/strong&gt; are very useful to express our beliefs about relationships among variables.&lt;/p&gt;
+&lt;p&gt;DAGs are compatible with the potential outcomes framework. They give us a more convinient and intuitive way of laying out causal models. Next week we will learn how they can help us develop a modeling strategy.&lt;/p&gt;
+&lt;p&gt;Today, we will focus on their structure and some DAG basics with the &lt;code&gt;ggdag&lt;/code&gt; package.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;creating-dags-in-r&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Creating DAGs in R&lt;/h3&gt;
+&lt;p&gt;To create our DAGs in &lt;strong&gt;R&lt;/strong&gt; we will use the &lt;code&gt;ggdag&lt;/code&gt; packages.&lt;/p&gt;
+&lt;p&gt;The first thing we will need to do is to create a &lt;strong&gt;dagified&lt;/strong&gt; object. That is an object where we state our variables and the relationships they have to each other. Once we have our &lt;strong&gt;dag object&lt;/strong&gt; we just need to plot with the &lt;code&gt;ggdag()&lt;/code&gt; function.&lt;/p&gt;
+&lt;p&gt;Let&#39;s say we want to re-create this DAG:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108728442-e4f06200-7529-11eb-90a9-90ae6bff6f06.png&#34; width=&#34;50%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;We would like to express the following links:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;P -&amp;gt; D&lt;/li&gt;
+&lt;li&gt;D -&amp;gt; M&lt;/li&gt;
+&lt;li&gt;D -&amp;gt; Y&lt;/li&gt;
+&lt;li&gt;M -&amp;gt; Y&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To do so in &lt;strong&gt;R&lt;/strong&gt; with &lt;code&gt;ggdag&lt;/code&gt;, we would use the following syntax:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dag_object &amp;lt;- ggdag::dagify(variable_being_pointed_at ~ variable_pointing,
+                            variable_being_pointed_at ~ variable_pointing,
+                            variable_being_pointed_at ~ variable_pointing)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After this we would just:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggdag::ggdag(dag_object)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Let&#39;s plot this DAG&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;our_dag &amp;lt;- ggdag::dagify(d ~ p,
+                         m ~ d,
+                         y ~ d,
+                         y ~ m)
+
+ggdag::ggdag(our_dag)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108834887-fb9cc480-75ce-11eb-8ec0-a2c28143612e.png&#34; width=&#34;70%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;b&gt;
+&lt;p style= &#34;color: #9F24FF&#34;&gt;
+EXERCISE:
+&lt;p&gt;
+&lt;p&gt;&lt;/b&gt; See what happens when you add &lt;code&gt;+ theme_minimal()&lt;/code&gt;, &lt;code&gt;+ theme_void()&lt;/code&gt;, or &lt;code&gt;+ theme_dag() to the DAG. What package do you think is laying behind the mappings of&lt;/code&gt;ggdag`?&lt;/p&gt;
+&lt;details class=&#34;spoiler &#34;  id=&#34;spoiler-2&#34;&gt;
+  &lt;summary&gt;Answer&lt;/summary&gt;
+  &lt;p&gt;&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;our_dag &amp;lt;- ggdag::dagify(d ~ p,
+                         m ~ d,
+                         y ~ d,
+                         y ~ m)
+
+ggdag::ggdag(our_dag) +
+  theme_minimal()
+
+ggdag::ggdag(our_dag) +
+  theme_void()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108834889-fb9cc480-75ce-11eb-9365-bb22788e4a10.png&#34; width=&#34;70%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108834890-fc355b00-75ce-11eb-95bc-76a89d88095f.png&#34; width=&#34;70%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/p&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;polishing-our-dags-in-r&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Polishing our DAGs in R&lt;/h3&gt;
+&lt;p&gt;As you may have seen, the DAG is not rendered with the nodes in the positions we want.&lt;/p&gt;
+&lt;p&gt;If you ever want to explicitly tell &lt;code&gt;ggdag&lt;/code&gt; where to position each node, you can tell it in a Cartesian coordinate plane.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108733908-30f1d580-752f-11eb-8588-241acb7e3dd6.png&#34; width=&#34;35%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Let&#39;s take &lt;strong&gt;P&lt;/strong&gt; as the point (0,0):&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108735739-2fc1a800-7531-11eb-8764-5e881b120615.png&#34; width=&#34;50%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;coord_dag &amp;lt;- list(
+  x = c(p = 0, d = 1, m = 2, y = 3),
+  y = c(p = 0, d = 0, m = 1, y = 0)
+)
+
+our_dag &amp;lt;- ggdag::dagify(d ~ p,
+                         m ~ d,
+                         y ~ d,
+                         y ~ m,
+                         coords = coord_dag)
+
+ggdag::ggdag(our_dag) + theme_void()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108834892-fc355b00-75ce-11eb-8a50-054ed9c5fffb.png&#34; width=&#34;70%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;more-complex-example&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;More complex example:&lt;/h3&gt;
+&lt;p&gt;Let&#39;s say we&#39;re looking at the relationship between smoking and cardiac arrest. We might assume that smoking causes changes in cholesterol, which causes cardiac arrest:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;smoking_ca_dag &amp;lt;- ggdag::dagify(cardiacarrest ~ cholesterol,
+                                cholesterol ~ smoking + weight,
+                                smoking ~ unhealthy,
+                                weight ~ unhealthy,
+                                labels = c(&amp;quot;cardiacarrest&amp;quot; = &amp;quot;Cardiac\n Arrest&amp;quot;, 
+                                           &amp;quot;smoking&amp;quot; = &amp;quot;Smoking&amp;quot;,
+                                           &amp;quot;cholesterol&amp;quot; = &amp;quot;Cholesterol&amp;quot;,
+                                           &amp;quot;unhealthy&amp;quot; = &amp;quot;Unhealthy\n Lifestyle&amp;quot;,
+                                           &amp;quot;weight&amp;quot; = &amp;quot;Weight&amp;quot;)
+                                )
+
+ggdag::ggdag(smoking_ca_dag, # the dag object we created
+             text = FALSE, # this means the original names won&amp;#39;t be shown
+             use_labels = &amp;quot;label&amp;quot;) + # instead use the new names
+  theme_void()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108834893-fccdf180-75ce-11eb-8494-937fd8b8da95.png&#34; width=&#34;70%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;In this example, we:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Used more meaningful variable names&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;ol start=&#34;2&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Created a variable that was the result of two variables vs. just one (cholesterol)&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;ol start=&#34;3&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Used the &amp;quot;labels&amp;quot; argument to rename our variables (this is useful if your desired final variable name is more than one word)&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;common-dag-path-structures&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Common DAG path structures&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/94547573-b8bd0780-024f-11eb-9565-03b1d1109c3b.png&#34; width=&#34;90%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;coord_dag &amp;lt;- list(
+  x = c(d = 0, x = 1, y = 2),
+  y = c(d = 0, x = 1, y = 0)
+)
+
+our_dag &amp;lt;- ggdag::dagify(x ~ d,
+                         y ~ d,
+                         y ~ x,
+                         coords = coord_dag)
+
+ggdag::ggdag(our_dag) + theme_void()&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;section&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108834894-fccdf180-75ce-11eb-89ef-d0e7ecf2719f.png&#34; width=&#34;70%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/h2&gt;
+&lt;b&gt;
+&lt;p style= &#34;color: #9F24FF&#34;&gt;
+EXERCISE:
+&lt;p&gt;
+&lt;p&gt;&lt;/b&gt; Let&#39;s adapt the code to make &lt;strong&gt;X&lt;/strong&gt; a &lt;strong&gt;confounder&lt;/strong&gt; and a &lt;strong&gt;collider&lt;/strong&gt;.&lt;/p&gt;
+&lt;details class=&#34;spoiler &#34;  id=&#34;spoiler-3&#34;&gt;
+  &lt;summary&gt;Answer&lt;/summary&gt;
+  &lt;p&gt;&lt;ul&gt;
+&lt;li&gt;&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;strong&gt;X as a confounder&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;coord_dag &amp;lt;- list(
+  x = c(d = 0, x = 1, y = 2),
+  y = c(d = 0, x = 1, y = 0)
+)
+&lt;p&gt;our_dag &amp;lt;- ggdag::dagify(d ~ x, #line from x to d
+y ~ d, #line from d to y
+y ~ x, #line from x to y
+coords = coord_dag)&lt;/p&gt;
+&lt;p&gt;ggdag::ggdag(our_dag) + theme_void()&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108834897-fd668800-75ce-11eb-8ce1-771415724e13.png&#34; width=&#34;70%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;ol start=&#34;2&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;strong&gt;X as a collider&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;coord_dag &amp;lt;- list(
+  x = c(d = 0, x = 1, y = 2),
+  y = c(d = 0, x = 1, y = 0)
+)
+&lt;p&gt;our_dag &amp;lt;- ggdag::dagify(x ~ d, #line from d to x
+y ~ d, #line from d to y
+x ~ y, #line from y to x
+coords = coord_dag)&lt;/p&gt;
+&lt;p&gt;ggdag::ggdag(our_dag) + theme_void()&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/108834900-fd668800-75ce-11eb-9a0c-e9de3be4fd93.png&#34; width=&#34;70%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/p&gt;
+&lt;/details&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

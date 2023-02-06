@@ -1,0 +1,1985 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.0.0-beta.2 for Hugo" />
+  
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Sebastian Ramirez Ruiz" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Welcome Introduction! Welcome to our fifth tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.
+During this week’s lecture you reviewed randomization in experimental setups." />
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-5/05-online-tutorial/" />
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    <meta name="theme-color" content="#1565c0" />
+  
+
+  
+  
+    
+    <script src="/2022-spring-stats2/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous" media="print" onload="this.media='all'">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/2022-spring-stats2/css/wowchemy.dd90b8698d7ba5e114b9de5647a585e5.css" />
+
+  
+
+
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+    <link rel="manifest" href="/2022-spring-stats2/index.webmanifest" />
+  
+
+  <link rel="icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_32x32_fill_lanczos_center_2.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_180x180_fill_lanczos_center_2.png" />
+
+  <link rel="canonical" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-5/05-online-tutorial/" />
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary" />
+  
+  <meta property="og:site_name" content="| Tutorials - Spring 2022 |" />
+  <meta property="og:url" content="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-5/05-online-tutorial/" />
+  <meta property="og:title" content="Matching in R | | Tutorials - Spring 2022 |" />
+  <meta property="og:description" content="Welcome Introduction! Welcome to our fifth tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.
+During this week’s lecture you reviewed randomization in experimental setups." /><meta property="og:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" />
+    <meta property="twitter:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" /><meta property="og:locale" content="en-us" />
+  
+    
+    
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+
+
+
+
+  <title>Matching in R | | Tutorials - Spring 2022 |</title>
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/2022-spring-stats2/js/wowchemy-init.min.d876f1a6b98701f9238f2313b512a26f.js"></script>
+
+  
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-end" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/2022-spring-stats2/materials/"><span>Materials</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+        
+      
+        
+      
+
+      
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    
+
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+          Matching in R
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/2022-spring-stats2/materials/"><i class="fas fa-arrow-left pr-1"></i>Materials</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/2022-spring-stats2/materials/session-5/">Matching in R</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  <li class=""><a href="/2022-spring-stats2/materials/session-5/slides/">Slides</a></li>
+
+
+
+  <li class="active"><a href="/2022-spring-stats2/materials/session-5/05-online-tutorial/">Matching in R</a></li>
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      
+
+      
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <article class="article">
+
+        <div class="docs-article-container">
+          
+            
+  <nav class="d-none d-md-flex" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      
+  
+  
+  
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/">
+      
+        Home
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/">
+      
+        Materials
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/session-5/">
+      
+        Matching in R
+      
+    </a>
+  </li>
+
+
+      <li class="breadcrumb-item active" aria-current="page">
+        Matching in R
+      </li>
+    </ol>
+  </nav>
+
+
+          
+
+          <h1>Matching in R</h1>
+
+          <div class="article-style">
+            
+<script src="/2022-spring-stats2rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<script src="/2022-spring-stats2rmarkdown-libs/kePrint/kePrint.js"></script>
+<link href="/2022-spring-stats2rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
+
+
+<div id="welcome" class="section level2">
+<h2>Welcome</h2>
+<div id="introduction" class="section level3">
+<h3>Introduction!</h3>
+<p>Welcome to our fifth tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.</p>
+<p>During this week’s lecture you reviewed randomization in experimental setups. You also learned how <strong>matching</strong> can be leveraged to gather causal estimates.</p>
+<p>In this lab session we will:</p>
+<ul>
+<li>Take a step back to review how to compare the means of two groups in <strong>R</strong></li>
+<li>Learn how to perform matching with the <code>MatchIt</code> package</li>
+<li>Illustrate the mechanics of propensity score matching with <code>gml()</code></li>
+</ul>
+<hr />
+<div id="packages" class="section level4">
+<h4>Packages</h4>
+<pre class="r"><code># These are the libraries we will use today. Make sure to install them in your console in case you have not done so previously.
+
+library(tidyverse) # To use dplyr functions and the pipe operator when needed
+library(ggplot2) # To create plots (this package is also loaded by library(tidyverse))
+library(purrr) # To repeat code across our list in the balance table purrr::map() (this package is also loaded by library(tidyverse))
+library(broom) # To format regression output
+library(stargazer) # To format model output
+library(knitr) # To create HTML tables with kable()
+library(kableExtra) # To format the HTML tables
+library(MatchIt) # To match</code></pre>
+<hr />
+</div>
+</div>
+</div>
+<div id="our-data" class="section level2">
+<h2>Our data</h2>
+<p>Today we will work with data from the Early Childhood Longitudinal Study (ECLS).</p>
+<pre class="r"><code>ecls_df &lt;- 
+  readr::read_csv(&quot;https://raw.githubusercontent.com/seramirezruiz/stats-ii-lab/master/Session%204/data/ecls.csv&quot;) %&gt;% 
+  dplyr::select(-childid, -race, -w3daded,
+                -w3momed, -w3inccat) #drop these columns (-)
+
+names(ecls_df) #checking the names of the variables in the data frame</code></pre>
+<pre><code>##  [1] &quot;catholic&quot;      &quot;race_white&quot;    &quot;race_black&quot;    &quot;race_hispanic&quot;
+##  [5] &quot;race_asian&quot;    &quot;p5numpla&quot;      &quot;p5hmage&quot;       &quot;p5hdage&quot;      
+##  [9] &quot;w3daded_hsb&quot;   &quot;w3momed_hsb&quot;   &quot;w3momscr&quot;      &quot;w3dadscr&quot;     
+## [13] &quot;w3income&quot;      &quot;w3povrty&quot;      &quot;p5fstamp&quot;      &quot;c5r2mtsc&quot;     
+## [17] &quot;c5r2mtsc_std&quot;</code></pre>
+<p>(Example inspired by Simon Ejdemyr: <a href="https://sejdemyr.github.io/r-tutorials/statistics/tutorial8.html" class="uri">https://sejdemyr.github.io/r-tutorials/statistics/tutorial8.html</a>)</p>
+<hr />
+<div id="reference-links" class="section level4">
+<h4>Reference links:</h4>
+<ol style="list-style-type: decimal">
+<li><code>MatchIt</code>: <a href="https://cran.r-project.org/web/packages/MatchIt/vignettes/matchit.pdf" class="uri">https://cran.r-project.org/web/packages/MatchIt/vignettes/matchit.pdf</a></li>
+<li><code>Cobalt</code>: (optional library for matching plots and extra features): <a href="https://cran.r-project.org/web/packages/cobalt/vignettes/cobalt_A0_basic_use.html" class="uri">https://cran.r-project.org/web/packages/cobalt/vignettes/cobalt_A0_basic_use.html</a></li>
+<li><code>kableExtra</code>: (for formatting tables): <a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html" class="uri">https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html</a></li>
+<li><code>Stargazer</code>: (for formatting model output): <a href="https://www.jakeruss.com/cheatsheets/stargazer/" class="uri">https://www.jakeruss.com/cheatsheets/stargazer/</a></li>
+<li>Video overview of matching concepts: <a href="https://fr.coursera.org/lecture/crash-course-in-causality/overview-of-matching-JQfPC" class="uri">https://fr.coursera.org/lecture/crash-course-in-causality/overview-of-matching-JQfPC</a></li>
+</ol>
+<hr />
+</div>
+</div>
+<div id="comparing-differences-in-means-and-balance-tables" class="section level2">
+<h2>Comparing Differences in Means and Balance Tables</h2>
+<p>As you may have seen in this week’s application paper, balance tables feature prominently in work that utilizes matching.</p>
+<p>In binary treatment setups, <strong>balance tables</strong> present an overview of the difference in means for the groups accross covariates.</p>
+<p>Let’s take the dataset as an example to review how to compare differences in means and build balance tables in <strong>R</strong>. There are multiple ways to explore these kinds of questions. In this lab we will leverage t-tests to check the statistical significance of the difference in means.</p>
+<p>In other words, we want to know whether the observed differences in average value of a variable between the two groups or samples can be due to random chance (our null hypothesis).</p>
+<hr />
+<div id="t-tests-in-r" class="section level3">
+<h3>T-tests in R</h3>
+<p>In this case, let’s imagine we want to check the statistical significance of the differences in the composition of the catholic and public school samples in the <code>w3povrty</code> (under the poverty line) variable.</p>
+<p>The general syntax for a t-test is simply as follows. The vectors refer to the variables whose mean you want to compare.</p>
+<pre class="r"><code>t.test(y ~ x, data = your_data)</code></pre>
+<hr />
+<h4 style="color:#CC0055;">
+Exercise
+</h4>
+<pre class="r"><code>t.test(w3povrty ~ catholic, data = ecls_df)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  w3povrty by catholic
+## t = 26.495, df = 4034.6, p-value &lt; 2.2e-16
+## alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+## 95 percent confidence interval:
+##  0.1678107 0.1946307
+## sample estimates:
+## mean in group 0 mean in group 1 
+##      0.21918633      0.03796562</code></pre>
+<ul>
+<li>What does the <em>group 0</em> mean tell us?</li>
+<li>What does the <em>group 1</em> mean tell us?</li>
+<li>Is the difference between catholic school and public school students statistically significant?</li>
+</ul>
+<hr />
+</div>
+<div id="balance-tables-in-r" class="section level3">
+<h3>Balance tables in R</h3>
+<p>Now let’s take a look at how can we create a simple and good looking balance table. The idea here is to compare the mean values of different variables across populations or groups. In our case, let’s see whether the catholic and public school groups differ across the covariates in the dataset:</p>
+<p>Here is one way to create the table <span style="color:#CC0055;"><strong>(you can adapt this code for the assignment)</strong></span>.</p>
+<pre class="r"><code># create a list with the covariates
+list_cov &lt;- c(&quot;race_white&quot;, &quot;race_black&quot;, &quot;race_hispanic&quot;, &quot;race_asian&quot;, &quot;p5numpla&quot;,
+              &quot;p5hmage&quot;, &quot;p5hdage&quot;, &quot;w3daded_hsb&quot;, &quot;w3momed_hsb&quot;, &quot;w3momscr&quot;, &quot;w3dadscr&quot;,
+              &quot;w3income&quot;, &quot;w3povrty&quot;, &quot;p5fstamp&quot;, &quot;c5r2mtsc&quot;, &quot;c5r2mtsc_std&quot;) 
+
+
+ecls_df %&gt;% # our data frame
+  dplyr::summarize_at(list_cov, funs(list(broom::tidy(t.test(. ~ catholic))))) %&gt;% # sequentially run t-tests across all the covariates in the list_cov (note that you have to change the &quot;treatment&quot;)
+  purrr::map(1) %&gt;% # maps into a list
+  dplyr::bind_rows(.id=&#39;variables&#39;) %&gt;% # binds list into a single data frame and names the id column &quot;variables&quot; 
+  dplyr::select(variables, estimate1, estimate2, p.value) %&gt;% # select only the names, group means, and p-values
+  dplyr::mutate_if(is.numeric, round, 3) %&gt;% # round numeric variables to three places
+  knitr::kable(col.names = c(&quot;Variable&quot;, &quot;(Catholic = 0)&quot;, &quot;(Catholic = 1)&quot;, &quot;P value&quot;)) %&gt;% # create kable table and remane headings
+  kableExtra::kable_styling() # style kable table for our knitted document</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Variable
+</th>
+<th style="text-align:right;">
+(Catholic = 0)
+</th>
+<th style="text-align:right;">
+(Catholic = 1)
+</th>
+<th style="text-align:right;">
+P value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+race_white
+</td>
+<td style="text-align:right;">
+0.556
+</td>
+<td style="text-align:right;">
+0.725
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+race_black
+</td>
+<td style="text-align:right;">
+0.136
+</td>
+<td style="text-align:right;">
+0.054
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+race_hispanic
+</td>
+<td style="text-align:right;">
+0.181
+</td>
+<td style="text-align:right;">
+0.131
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+race_asian
+</td>
+<td style="text-align:right;">
+0.066
+</td>
+<td style="text-align:right;">
+0.052
+</td>
+<td style="text-align:right;">
+0.025
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p5numpla
+</td>
+<td style="text-align:right;">
+1.133
+</td>
+<td style="text-align:right;">
+1.093
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p5hmage
+</td>
+<td style="text-align:right;">
+37.561
+</td>
+<td style="text-align:right;">
+39.575
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p5hdage
+</td>
+<td style="text-align:right;">
+40.392
+</td>
+<td style="text-align:right;">
+41.988
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+w3daded_hsb
+</td>
+<td style="text-align:right;">
+0.488
+</td>
+<td style="text-align:right;">
+0.259
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+w3momed_hsb
+</td>
+<td style="text-align:right;">
+0.464
+</td>
+<td style="text-align:right;">
+0.227
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+w3momscr
+</td>
+<td style="text-align:right;">
+43.114
+</td>
+<td style="text-align:right;">
+47.492
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+w3dadscr
+</td>
+<td style="text-align:right;">
+42.713
+</td>
+<td style="text-align:right;">
+46.356
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+w3income
+</td>
+<td style="text-align:right;">
+54889.159
+</td>
+<td style="text-align:right;">
+82074.301
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+w3povrty
+</td>
+<td style="text-align:right;">
+0.219
+</td>
+<td style="text-align:right;">
+0.038
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p5fstamp
+</td>
+<td style="text-align:right;">
+0.129
+</td>
+<td style="text-align:right;">
+0.015
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c5r2mtsc
+</td>
+<td style="text-align:right;">
+50.209
+</td>
+<td style="text-align:right;">
+52.389
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c5r2mtsc_std
+</td>
+<td style="text-align:right;">
+-0.031
+</td>
+<td style="text-align:right;">
+0.194
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 style="color:#CC0055;">
+Exercise
+</h4>
+<ul>
+<li>Are the differences in means significant at conventional levels?</li>
+<li>What differences strike you from the composition of the two samples?</li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="the-effect-of-catholic-school-on-student-achievement" class="section level2">
+<h2>The Effect of Catholic School on Student Achievement</h2>
+<blockquote>
+<p>In this tutorial we’ll analyze the effect of going to Catholic school, as opposed to public school, on student achievement. Because students who attend Catholic school on average are different from students who attend public school, we will use matching to get more credible causal estimates of Catholic schooling.</p>
+</blockquote>
+<hr />
+<div id="exploration-of-the-data" class="section level3">
+<h3>Exploration of the data</h3>
+<pre class="r"><code>ecls_df %&gt;%
+  dplyr::group_by(catholic) %&gt;%
+  dplyr::summarize(n_students = n(),
+            avg_math = mean(c5r2mtsc_std),
+            std_error = sd(c5r2mtsc_std) / sqrt(n_students)) %&gt;% 
+  round(3) %&gt;% # round the results
+  knitr::kable() %&gt;% # create kable table
+  kableExtra::kable_styling() # view kable table</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+catholic
+</th>
+<th style="text-align:right;">
+n_students
+</th>
+<th style="text-align:right;">
+avg_math
+</th>
+<th style="text-align:right;">
+std_error
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+9568
+</td>
+<td style="text-align:right;">
+-0.031
+</td>
+<td style="text-align:right;">
+0.010
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1510
+</td>
+<td style="text-align:right;">
+0.194
+</td>
+<td style="text-align:right;">
+0.022
+</td>
+</tr>
+</tbody>
+</table>
+<p>We can see that we have many more students that did not attend Catholic school than those who did. Also, the Catholic school students have a higher average math score.</p>
+<hr />
+</div>
+<div id="naive-average-treatment-effect-nate" class="section level3">
+<h3>Naive Average Treatment Effect (NATE)</h3>
+<p>We can naively compare the students on their standardized math scores (c5r2mtsc_std). As you remember, the Naive Average Treatment Effect (NATE) is the difference in the means of the observed outcomes of the two groups:</p>
+<p><span class="math display">\[NATE = E(y^1 | D = 1) -  E(y^0 | D = 0)\]</span></p>
+<p>In this case, the NATE would be difference between the average math scores.</p>
+<hr />
+<div id="nate-manually" class="section level4">
+<h4>NATE manually</h4>
+<p>Do you remember what we did in the last section?</p>
+<p>We could substract the <code>avg_math</code> for the <em>catholic = 1</em> and the <code>avg_math</code> for the <em>catholic = 0</em></p>
+<p><span class="math display">\[NATE = 0.194 - (-0.031)\]</span>
+<span class="math display">\[NATE = 0.194 + 0.031 = 0.225\]</span></p>
+<hr />
+</div>
+<div id="nate-with-t.test" class="section level4">
+<h4>NATE with <code>t.test()</code></h4>
+<pre class="r"><code>t.test(c5r2mtsc_std ~ catholic, data = ecls_df)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  c5r2mtsc_std by catholic
+## t = -9.1069, df = 2214.5, p-value &lt; 2.2e-16
+## alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+## 95 percent confidence interval:
+##  -0.2727988 -0.1761292
+## sample estimates:
+## mean in group 0 mean in group 1 
+##     -0.03059583      0.19386817</code></pre>
+<hr />
+</div>
+<div id="nate-with-lm" class="section level4">
+<h4>NATE with <code>lm()</code></h4>
+<pre class="r"><code>lm(c5r2mtsc_std ~ catholic, data = ecls_df) %&gt;% 
+  stargazer::stargazer(.,type = &quot;html&quot;)</code></pre>
+<table style="text-align:center">
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="1" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+c5r2mtsc_std
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+catholic
+</td>
+<td>
+0.224<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.028)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+-0.031<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.010)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+11,078
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.006
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.006
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+0.997 (df = 11076)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+66.096<sup>***</sup> (df = 1; 11076)
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+<hr />
+<h4 style="color:#CC0055;">
+Exercise
+</h4>
+<ul>
+<li>What parallels do you find between substracting the manually extracted means, the t-test, and the linear regression?</li>
+</ul>
+<hr />
+</div>
+</div>
+</div>
+<div id="matching-with-matchit" class="section level2">
+<h2>Matching with <code>MatchIt</code></h2>
+<p><code>MatchIt</code> is designed for causal inference with a dichotomous treatment variable and a set of pretreatment control variables. Any number or type of dependent variables can be used.</p>
+<p>We have three steps:</p>
+<ul>
+<li>Perform the match with <code>MatchIt::matchit()</code></li>
+<li>Create a new data frame with the matched data with <code>MatchIt::match.data()</code> or <code>MatchIt::get_matches()</code></li>
+<li>Model</li>
+</ul>
+<p>The basic syntax is as follows:</p>
+<pre class="r"><code>match_process &lt;- MatchIt::matchit(treatment ~ x1 + x2, data = mydata) # NOTE. We include treatment ~ covariates
+matched_df &lt;- MatchIt::get_matches(match_process) #when matching with replacement
+matched_df &lt;- MatchIt::match.data(match_process) #for other cases
+matched_model &lt;- lm(outcome ~ trearment, data = matched_df)</code></pre>
+<p>where treat is the dichotomous treatment variable, and x1 and x2 are pre-treatment co-variates, all of which are contained in the data frame <em>mydata</em>.</p>
+<p><div class="alert alert-note">
+  <div>
+    <strong>As you can see, the outcome variable is not included in the matching procedure.</strong>
+  </div>
+</div>
+</p>
+<hr />
+<p><code>MatchIt</code> is capable of using several matching <em>methods</em>:</p>
+<ul>
+<li><p>Exact (<em>method = “exact”</em>): The simplest version of matching is exact. This technique matches each treated unit to all possible control units with exactly the same values on all the covariates, forming subclasses such that within each subclass all units (treatment and control) have the same covariate values.</p></li>
+<li><p>Subclassification (<em>method = “subclass”</em>): When there are many covariates (or some covariates can take a large number of values),
+finding sufficient exact matches will often be impossible. The goal of subclassification is to form subclasses, such that in each of them the distribution (rather than the exact values) of covariates for the treated and control groups are as similar as possible.</p></li>
+<li><p>Nearest Neighbor (<em>method = “nearest”</em>): Nearest neighbor matching selects the best control matches for each individual
+in the treatment group. Matching is done using a distance measure (propensity score) specified by the distance option (default = logit).</p></li>
+<li><p>As well as optimal matching, full matching, genetic matching, and coarsened exact matching, all of which are detailed in the documentation.</p></li>
+</ul>
+<p>A few additional arguments are important to know about:</p>
+<ul>
+<li><p><em>distance</em>: this refers to propensity scores. There are many options for how to calculate these within MatchIt.</p></li>
+<li><p><em>discard</em>: specifies whether to discard units that fall outside some measure of support of the distance measure (default is “none”, discard no units). For example, if some treated units have extremely high propensity scores that are higher than any control units, we could drop those.</p></li>
+<li><p><em>replace</em>: a logical value indicating whether each control unit can be matched to more than one treated unit (default is <em>replace = FALSE</em>, each control unit is used at most once).</p></li>
+<li><p><em>ratio</em>: the number of control units to match to each treated unit (default is <em>ratio = 1</em>).</p></li>
+<li><p>There are also some optional arguments for most of the matching methods, which you can read about in the documentation if you are interested.</p></li>
+</ul>
+<hr />
+<div id="exact-matching" class="section level3">
+<h3>Exact Matching</h3>
+<p>We can use a combination of the results from our balance table and theory to identify which variables to use for matching. Let’s perform an exact match with:</p>
+<ul>
+<li>race_white: Is the student white (1) or not (0)?</li>
+<li>p5hmage: Mother’s age</li>
+<li>w3income: Family income</li>
+<li>p5numpla: Number of places the student has lived for at least 4 months</li>
+<li>w3momed_hsb: Is the mother’s education level high-school or below (1) or some college or more (0)?</li>
+</ul>
+<pre class="r"><code># first we must omit missing values (MatchIt does not allow missings)
+match_data &lt;- ecls_df %&gt;% 
+  dplyr::select(catholic, c5r2mtsc_std, race_white, p5hmage, 
+                w3income, p5numpla, w3momed_hsb) %&gt;% 
+  na.omit() 
+
+
+# perform exact match
+exact_match &lt;- MatchIt::matchit(catholic ~ race_white + p5hmage + w3income +
+                                p5numpla + w3momed_hsb, 
+                                method = &quot;exact&quot;, 
+                                data = match_data)
+
+# Try seeing the output in the console with summary(exact_match)
+
+# grab the matched data into a new data frame
+data_exact_match &lt;- MatchIt::match.data(exact_match)
+
+# estimate effect again with new data frame
+exact_match_model &lt;- lm(c5r2mtsc_std ~ catholic, data = data_exact_match)</code></pre>
+<pre class="r"><code>stargazer::stargazer(exact_match_model, type = &quot;html&quot;)</code></pre>
+<table style="text-align:center">
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="1" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+c5r2mtsc_std
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+catholic
+</td>
+<td>
+-0.101<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.030)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+0.319<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.015)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+5,405
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.002
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.002
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+0.934 (df = 5403)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+11.340<sup>***</sup> (df = 1; 5403)
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+<p>Now we can see that the mean in the group that did not attend Catholic school is actually about 0.10 higher than the mean for those who did. The results are statistically significant given that the confidence interval does not contain zero, and we have a fairly small p-value.</p>
+<hr />
+</div>
+<div id="propensity-scores" class="section level3">
+<h3>Propensity Scores</h3>
+<p>If we want to perform non-exact matching, we can use <strong>propensity scores</strong>. We can generate these manually using a logit model on the unmatched data set.</p>
+<p>When we extract <strong>propensity scores</strong>, we model the propensity of each unit of falling under the treatment group based on their values on a set of covariates. This is how we would do this manually:</p>
+<pre class="r"><code># create a new column with income by the thousands for more interpretable output
+ecls_df &lt;- ecls_df %&gt;% 
+  dplyr::mutate(w3income_1k = w3income / 1000) 
+
+# estimate logit model
+m_ps &lt;- glm(catholic ~ race_white + w3income_1k + 
+            p5hmage + p5numpla + w3momed_hsb,
+            family = binomial(link = &quot;logit&quot;), # you can also use a probit link here
+            data = ecls_df)
+
+# extract predicted probabilities
+# type = &quot;response&quot; option tells R to output probabilities of the form P(Y = 1|X)
+prs_df &lt;- dplyr::tibble(pr_score = predict(m_ps, type = &quot;response&quot;),
+                     catholic = m_ps$model$catholic) # the actual values</code></pre>
+<p>Let’s plot the propensity scores by treatment group to explore common support:</p>
+<pre class="r"><code># Histogram
+ggplot(prs_df, aes(x = pr_score, fill = factor(catholic))) +
+  geom_histogram(alpha = 0.5) +
+  theme_minimal() +
+  theme(legend.position = &quot;bottom&quot;) +
+  labs(title = &quot;Propensity Score Distribution: Treatment and Control Groups&quot;,
+       x = &quot;Propensity Score&quot;,
+       y = &quot;Count&quot;,
+       fill = &quot;Catholic School Attendance&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/110490691-de004c80-80f0-11eb-9c52-6b036f0c4efb.png" width="85%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Density plot
+ggplot(prs_df, aes(x = pr_score, fill = factor(catholic))) +
+  geom_density(alpha = 0.5) +
+  theme_minimal() +
+  theme(legend.position = &quot;bottom&quot;) +
+  labs(title = &quot;Propensity Score Distribution: Treatment and Control Groups&quot;,
+       x = &quot;Propensity Score&quot;,
+       y = &quot;Density&quot;,
+       fill = &quot;Catholic School Attendance&quot;) </code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/110490704-df317980-80f0-11eb-85d6-e5a1e7d4dc55.png" width="85%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Jittered point plot
+ggplot(prs_df, aes(x = pr_score, y = factor(catholic), color = factor(catholic))) +
+  geom_jitter() +
+  theme_minimal() +
+  theme(legend.position = &quot;bottom&quot;) +
+  labs(title = &quot;Propensity Score Distribution: Treatment and Control Groups&quot;,
+       x = &quot;Propensity Score&quot;,
+       y = &quot;Group&quot;,
+       color = &quot;Catholic School Attendance&quot;) 
+</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/110490710-e062a680-80f0-11eb-94bb-c080d19296ea.png" width="85%" style="display: block; margin: auto;" /></p>
+<hr />
+<h4 style="color:#CC0055;">
+Exercise
+</h4>
+<ul>
+<li>What do these plots tell us?</li>
+</ul>
+<hr />
+</div>
+<div id="non-exact-matching" class="section level3">
+<h3>Non-Exact Matching</h3>
+<p><code>MatchIt</code> can generate propensity scores itself, so we don’t need to manually go through the process above. Let’s try putting together a non-exact matching formula yourself! Try:</p>
+<ul>
+<li>nearest neighbor matching</li>
+<li>with replacement</li>
+<li>with a one-to-one ratio</li>
+<li>on the <em>match_data</em> dataset</li>
+</ul>
+<pre class="r"><code>one_match &lt;- MatchIt::matchit(catholic ~ race_white + w3income + p5hmage +
+                              p5numpla + w3momed_hsb,
+                              method = &quot;nearest&quot;, 
+                              ratio = 1, 
+                              replace = TRUE,
+                              data = match_data)
+
+summary(one_match)</code></pre>
+<pre><code>## 
+## Call:
+## MatchIt::matchit(formula = catholic ~ race_white + w3income + 
+##     p5hmage + p5numpla + w3momed_hsb, data = match_data, method = &quot;nearest&quot;, 
+##     replace = TRUE, ratio = 1)
+## 
+## Summary of Balance for All Data:
+##             Means Treated Means Control Std. Mean Diff. Var. Ratio eCDF Mean
+## distance           0.1927        0.1379          0.6486     1.0007    0.2086
+## race_white         0.7411        0.5914          0.3418          .    0.1497
+## w3income       82568.9357    55485.0210          0.5777     1.1373    0.1565
+## p5hmage           39.5932       37.5658          0.3874     0.6383    0.0408
+## p5numpla           1.0917        1.1298         -0.1242     0.6132    0.0076
+## w3momed_hsb        0.2234        0.4609         -0.5703          .    0.2375
+##             eCDF Max
+## distance      0.3109
+## race_white    0.1497
+## w3income      0.3062
+## p5hmage       0.1893
+## p5numpla      0.0277
+## w3momed_hsb   0.2375
+## 
+## 
+## Summary of Balance for Matched Data:
+##             Means Treated Means Control Std. Mean Diff. Var. Ratio eCDF Mean
+## distance           0.1927        0.1927          0.0000     0.9954    0.0000
+## race_white         0.7411        0.7493         -0.0186          .    0.0081
+## w3income       82568.9357    81775.6653          0.0169     1.0052    0.0036
+## p5hmage           39.5932       39.6169         -0.0045     1.0179    0.0015
+## p5numpla           1.0917        1.0777          0.0459     1.1580    0.0031
+## w3momed_hsb        0.2234        0.2226          0.0018          .    0.0007
+##             eCDF Max Std. Pair Dist.
+## distance      0.0030          0.0001
+## race_white    0.0081          0.0625
+## w3income      0.0081          0.0396
+## p5hmage       0.0074          0.1131
+## p5numpla      0.0126          0.0846
+## w3momed_hsb   0.0007          0.0586
+## 
+## Percent Balance Improvement:
+##             Std. Mean Diff. Var. Ratio eCDF Mean eCDF Max
+## distance              100.0     -552.2     100.0     99.0
+## race_white             94.6          .      94.6     94.6
+## w3income               97.1       95.9      97.7     97.3
+## p5hmage                98.8       96.0      96.2     96.1
+## p5numpla               63.1       70.0      59.2     54.6
+## w3momed_hsb            99.7          .      99.7     99.7
+## 
+## Sample Sizes:
+##               Control Treated
+## All           7915.      1352
+## Matched (ESS)  187.29    1352
+## Matched        510.      1352
+## Unmatched     7405.         0
+## Discarded        0.         0</code></pre>
+<p>We can interpret the resulting output as follows:</p>
+<ul>
+<li>Summary of balance for all data: Comparison of the means for all the data without matching</li>
+<li>Summary of balance for matched data: Comparison of means for matched data. Looking for them to become similar.</li>
+<li>Percent balance improvement: Higher is better, close to 100 is ideal.</li>
+<li>Sample sizes: How many units were matched in the control/treatment groups.</li>
+</ul>
+<p>Now, let’s plot the propensity scores for the treated and untreated units.</p>
+<pre class="r"><code># simple plot - check out the cobalt package for nicer options, or use ggplot2 to create your own!
+plot(one_match, type = &quot;hist&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/110490714-e193d380-80f0-11eb-88ca-b5f8fee948af.png" width="85%" style="display: block; margin: auto;" /></p>
+<p>Let’s extract the data from <em>one_match</em> and creating a balance table like the one we did before, just this time using the new data. Scroll down for the answer when you’re ready.</p>
+<pre class="r"><code># grab data set
+data_prop_match &lt;- MatchIt::get_matches(one_match)
+
+# create list of covariates for the table
+list_cov &lt;- c(&quot;race_white&quot;, &quot;p5hmage&quot;, &quot;w3income&quot;, &quot;p5numpla&quot;, &quot;w3momed_hsb&quot;)
+
+data_prop_match %&gt;% # our data frame
+  dplyr::summarize_at(list_cov, funs(list(broom::tidy(t.test(. ~ catholic))))) %&gt;% # sequentially run t-tests across all the covariates in the list_cov (note that you have to change the &quot;treatment&quot;)
+  purrr::map(1) %&gt;% # maps into a list
+  dplyr::bind_rows(.id=&#39;variables&#39;) %&gt;% # binds list into a single data frame and names the id column &quot;variables&quot; 
+  dplyr::select(variables, estimate1, estimate2, p.value) %&gt;% # select only the names, group means, and p-values
+  dplyr::mutate_if(is.numeric, round, 3) %&gt;% # round numeric variables to three places
+  knitr::kable(col.names = c(&quot;Variable&quot;, &quot;Control (Catholic = 0)&quot;, &quot;Treat (Catholic = 1)&quot;, &quot;P value&quot;)) %&gt;% # create kable table and rename headings
+  kableExtra::kable_styling() # style kable table for our knitted document</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Variable
+</th>
+<th style="text-align:right;">
+Control (Catholic = 0)
+</th>
+<th style="text-align:right;">
+Treat (Catholic = 1)
+</th>
+<th style="text-align:right;">
+P value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+race_white
+</td>
+<td style="text-align:right;">
+0.749
+</td>
+<td style="text-align:right;">
+0.741
+</td>
+<td style="text-align:right;">
+0.628
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p5hmage
+</td>
+<td style="text-align:right;">
+39.617
+</td>
+<td style="text-align:right;">
+39.593
+</td>
+<td style="text-align:right;">
+0.906
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+w3income
+</td>
+<td style="text-align:right;">
+81775.665
+</td>
+<td style="text-align:right;">
+82568.936
+</td>
+<td style="text-align:right;">
+0.659
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p5numpla
+</td>
+<td style="text-align:right;">
+1.078
+</td>
+<td style="text-align:right;">
+1.092
+</td>
+<td style="text-align:right;">
+0.216
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+w3momed_hsb
+</td>
+<td style="text-align:right;">
+0.223
+</td>
+<td style="text-align:right;">
+0.223
+</td>
+<td style="text-align:right;">
+0.963
+</td>
+</tr>
+</tbody>
+</table>
+<p>Those means look very close. Hooray.</p>
+<p>Finally, let’s estimate on the matched data set:</p>
+<pre class="r"><code>prop_match_model &lt;- lm(c5r2mtsc_std ~ catholic, data = data_prop_match)
+stargazer::stargazer(prop_match_model, type = &quot;text&quot;)</code></pre>
+<pre><code>## 
+## ===============================================
+##                         Dependent variable:    
+##                     ---------------------------
+##                            c5r2mtsc_std        
+## -----------------------------------------------
+## catholic                      -0.038           
+##                               (0.037)          
+##                                                
+## Constant                     0.248***          
+##                               (0.026)          
+##                                                
+## -----------------------------------------------
+## Observations                   2,704           
+## R2                            0.0004           
+## Adjusted R2                   0.00003          
+## Residual Std. Error      0.955 (df = 2702)     
+## F Statistic            1.068 (df = 1; 2702)    
+## ===============================================
+## Note:               *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>As with the exact matching, we can see that those that did not attend Catholic school performed better on the test than those who did. Still, we see that our results in this instance are not statistically significant.</p>
+</div>
+</div>
+
+          </div>
+
+          
+
+
+
+          
+          
+          <div class="article-widget">
+            
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/2022-spring-stats2/materials/session-5/slides/" rel="next">05 - Slides</a>
+  </div>
+  
+  
+</div>
+
+          </div>
+          
+        </div>
+
+        <div class="body-footer">
+          <p>Last updated on Jan 1, 0001</p>
+
+          
+
+
+
+
+
+          
+
+
+
+
+          
+
+
+  
+  
+
+
+
+        </div>
+
+      </article>
+
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/latex.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+    <script>
+      anchors.add();
+    </script>
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+        <div class="search-hit-content">
+          <div class="search-hit-name">
+            <a href="{{relpermalink}}">{{title}}</a>
+            <div class="article-metadata search-hit-type">{{type}}</div>
+            <p class="search-hit-description">{{snippet}}</p>
+          </div>
+        </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+      
+      
+      
+      
+      
+      
+      
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+      
+    
+    
+    <script src="/2022-spring-stats2/en/js/wowchemy.min.e5856c0a0618a04dd7b1e07451b5f341.js"></script>
+
+    
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+
+
+</body>
+</html>

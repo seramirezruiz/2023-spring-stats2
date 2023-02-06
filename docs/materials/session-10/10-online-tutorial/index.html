@@ -1,0 +1,1616 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.0.0-beta.2 for Hugo" />
+  
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Sebastian Ramirez Ruiz" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Welcome Introduction! Welcome to our tenth tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.
+During this week’s lecture you were introduced to Moderation and Heterogeneous Effects." />
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-10/10-online-tutorial/" />
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    <meta name="theme-color" content="#1565c0" />
+  
+
+  
+  
+    
+    <script src="/2022-spring-stats2/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous" media="print" onload="this.media='all'">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/2022-spring-stats2/css/wowchemy.dd90b8698d7ba5e114b9de5647a585e5.css" />
+
+  
+
+
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+    <link rel="manifest" href="/2022-spring-stats2/index.webmanifest" />
+  
+
+  <link rel="icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_32x32_fill_lanczos_center_2.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_180x180_fill_lanczos_center_2.png" />
+
+  <link rel="canonical" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-10/10-online-tutorial/" />
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary" />
+  
+  <meta property="og:site_name" content="| Tutorials - Spring 2022 |" />
+  <meta property="og:url" content="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-10/10-online-tutorial/" />
+  <meta property="og:title" content="Moderation and Heterogeneous Effects | | Tutorials - Spring 2022 |" />
+  <meta property="og:description" content="Welcome Introduction! Welcome to our tenth tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.
+During this week’s lecture you were introduced to Moderation and Heterogeneous Effects." /><meta property="og:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" />
+    <meta property="twitter:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" /><meta property="og:locale" content="en-us" />
+  
+    
+    
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+
+
+
+
+  <title>Moderation and Heterogeneous Effects | | Tutorials - Spring 2022 |</title>
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/2022-spring-stats2/js/wowchemy-init.min.d876f1a6b98701f9238f2313b512a26f.js"></script>
+
+  
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-end" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/2022-spring-stats2/materials/"><span>Materials</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+        
+      
+        
+      
+
+      
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    
+
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+          Moderation and Heterogeneous Effects in R
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/2022-spring-stats2/materials/"><i class="fas fa-arrow-left pr-1"></i>Materials</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/2022-spring-stats2/materials/session-10/">Moderation and Heterogeneous Effects in R</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  <li class=""><a href="/2022-spring-stats2/materials/session-10/slides/">Slides</a></li>
+
+
+
+  <li class="active"><a href="/2022-spring-stats2/materials/session-10/10-online-tutorial/">Moderation and Heterogeneous Effects</a></li>
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      
+
+      
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <article class="article">
+
+        <div class="docs-article-container">
+          
+            
+  <nav class="d-none d-md-flex" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      
+  
+  
+  
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/">
+      
+        Home
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/">
+      
+        Materials
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/session-10/">
+      
+        Moderation and Heterogeneous Effects in R
+      
+    </a>
+  </li>
+
+
+      <li class="breadcrumb-item active" aria-current="page">
+        Moderation and Heterogeneous Effects
+      </li>
+    </ol>
+  </nav>
+
+
+          
+
+          <h1>Moderation and Heterogeneous Effects</h1>
+
+          <div class="article-style">
+            
+<script src="/2022-spring-stats2rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<script src="/2022-spring-stats2rmarkdown-libs/kePrint/kePrint.js"></script>
+<link href="/2022-spring-stats2rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
+
+
+<div id="welcome" class="section level2">
+<h2>Welcome</h2>
+<div id="introduction" class="section level3">
+<h3>Introduction!</h3>
+<p>Welcome to our tenth tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.</p>
+<p>During this week’s lecture you were introduced to Moderation and Heterogeneous Effects.</p>
+<p>In this lab session we will:</p>
+<ul>
+<li>Learn how to perform interaction models with <code>lm()</code></li>
+<li>Learn how to extract marginal/partial effects with <code>margins::margins()</code> and predictive margins with <code>ggeffects::::ggeffect()</code></li>
+<li>Learn how to vectorize multiple ifelse() statements with <code>dplyr::case_when()</code></li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="measuring-the-effect-of-an-information-intervention-on-peace-agreement-support" class="section level2">
+<h2>Measuring the effect of an information intervention on peace agreement support</h2>
+<p>The country of Absurdistan has had an ongoing civil conflict for the past 60 years. The fighting between national government forces and guerrilla members from the National Revolutionary Army (NRA) has lead to more than 200,000 deaths, 8 million internally displaced persons, and countless victims between 1960 to 2020.</p>
+<p>The civil war in Absurdistan has been a low-intensity asymmetric war. The legacies of the conflict have been bore largely by regions in the periphery of the country. Large cities and industrial regions have been spared from most of the fighting.</p>
+<p>The government and the leadership of the NRA reached a peace agreement a couple of months ago; however, the agreement has been received poorly by the general population of Absurdistan. The opposition party the Undemocratic Center (UC) has allegedly ran campaigns misrepresenting the contents of the agreement in partisan media outlets and social media.</p>
+<p>The Special Envoy for Peace has established a taskforce to design a strategy to increase support for the peace agreement. Many in the taskforce suspect that if the public were properly informed about the agreement reached, the levels of support would be higher.</p>
+<p>You are hired as a scientific consultant for the taskforce. You run a survey experiment on a sample of 1000 respondents. You randomly assign respondents to watch an educational 2 minute video about the peace agreement.</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/d/d6/Flag_of_Peace_%28Proposal%29.PNG" style="display: block; margin: auto;" /></p>
+<hr />
+<div id="packages" class="section level4">
+<h4>Packages</h4>
+<pre class="r"><code>set.seed(42) #for consistent results
+
+library(dplyr) # to wrangle our data
+library(tidyr) # to wrangle our data - pivot_longer()
+library(ggplot2) # to render our graphs
+library(readr) # for loading the .csv data
+library(janitor) # for data management and tabyl()
+library(kableExtra) # to render better formatted tables
+library(modelsummary) # to format your model output
+
+library(margins) #for calculating MARGINAL/PARTIAL EFFECT
+library(ggeffects) # easily calculating PREDICTIVE MARGINS</code></pre>
+<hr />
+</div>
+</div>
+<div id="exploratory-analysis" class="section level2">
+<h2>Exploratory analysis</h2>
+<pre class="r"><code>moderation_df &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/seramirezruiz/hertiestats2/master/data/moderation_df.csv&quot;) # simulated data
+names(moderation_df) # to check the names of the variables in our data</code></pre>
+<pre><code>## [1] &quot;subject_id&quot;          &quot;treatment&quot;           &quot;victim_verbose&quot;     
+## [4] &quot;victim&quot;              &quot;female&quot;              &quot;female_verbose&quot;     
+## [7] &quot;support_thermometer&quot;</code></pre>
+<p>Our dataset <em>moderation_df</em>, contains the following information:</p>
+<ul>
+<li><code>subject_id</code>: A unique numeric identification for each respondent</li>
+<li><code>treatment</code>: A binary marker for treatment</li>
+<li><code>victim_verbose</code>: A verbose binary marker of the respondents’ victimhood status (Not a Victim-Victim)</li>
+<li><code>victim</code>: A numeric binary marker of the respondents’ victimhood status (0-1)</li>
+<li><code>female</code>: A numeric binary marker of the respondents’ sex (0-1)</li>
+<li><code>female_verbose</code>: A verbose binary marker of the respondents’ sex (Male-Female)</li>
+<li><code>support_thermometer</code>: A continuous measure of support for the agreement (0-100)</li>
+</ul>
+<hr />
+<div id="lets-explore-who-is-in-our-sample" class="section level4">
+<h4>Let’s explore who is in our sample</h4>
+<p>We can use what we have learned about the <em>janitor::tabyl()</em> function, to check who was in our sample:</p>
+<pre class="r"><code>moderation_df %&gt;% 
+  janitor::tabyl(treatment) %&gt;% 
+  knitr::kable(col.names = c(&quot;Treatment&quot;, &quot;N&quot;, &quot;Percent, %&quot;)) %&gt;% # create kable table
+  kableExtra::kable_styling() # view kable table</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Treatment
+</th>
+<th style="text-align:right;">
+N
+</th>
+<th style="text-align:right;">
+Percent, %
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>moderation_df %&gt;% 
+  janitor::tabyl(treatment, victim_verbose) %&gt;% 
+  janitor::adorn_totals(c(&quot;row&quot;, &quot;col&quot;)) %&gt;%
+  knitr::kable(col.names = c(&quot;Treatment&quot;, &quot;Not a victim&quot;, &quot;Victim&quot;, &quot;Total&quot;)) %&gt;% # create kable table
+  kableExtra::kable_styling() %&gt;% # view kable table
+  kableExtra::add_header_above(c(&quot;&quot;, &quot;Victimization status&quot; = 2, &quot;&quot;))</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Victimization status
+</div>
+</th>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Treatment
+</th>
+<th style="text-align:right;">
+Not a victim
+</th>
+<th style="text-align:right;">
+Victim
+</th>
+<th style="text-align:right;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+500
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+500
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+1000
+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
+<div id="lets-explore-visually-the-observed-levels-of-public-support-for-the-agreement" class="section level4">
+<h4>Let’s explore visually the observed levels of public support for the agreement</h4>
+<pre class="r"><code>ggplot(moderation_df, aes(x = support_thermometer)) +
+  geom_density(fill = &quot;#af8dc3&quot;, alpha = 0.5) +
+  theme_minimal() +
+  labs(x = &quot;Support thermometer&quot;,
+       y = &quot;Density&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/115588495-1ccc1980-a2cf-11eb-958a-214b2ba1e233.png" style="display: block; margin: auto;" /></p>
+<hr />
+<p><strong><span style="color:#4B0082;">What do we see in this graph?</span></strong></p>
+<hr />
+</div>
+<div id="lets-explore-visually-the-observed-levels-of-public-support-for-the-agreement-conditional-on-the-treatment-status" class="section level4">
+<h4>Let’s explore visually the observed levels of public support for the agreement conditional on the treatment status</h4>
+<pre class="r"><code>ggplot(moderation_df, aes(x = support_thermometer, fill = factor(treatment))) +
+  geom_density(alpha = 0.5) +
+  theme_minimal() +
+  labs(x = &quot;Support thermometer&quot;,
+       y = &quot;Density&quot;,
+       fill = &quot;Treatment&quot;) +
+  theme(legend.position = &quot;bottom&quot;) +
+  scale_fill_manual(name = &quot; &quot;, # changes to fill dimension
+                     values = c(&quot;#a7a8aa&quot;, &quot;#cc0055&quot;),
+                     labels = c(&quot;Control&quot;, &quot;Treatment&quot;)) </code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/115588502-1dfd4680-a2cf-11eb-9ed1-31e0945508d2.png" style="display: block; margin: auto;" /></p>
+<hr />
+<p><strong><span style="color:#4B0082;">What do we see through these distributions?</span></strong></p>
+<hr />
+</div>
+<div id="lets-explore-visually-the-observed-levels-of-public-support-for-the-agreement-conditional-on-the-treatment-and-victimhood-status" class="section level4">
+<h4>Let’s explore visually the observed levels of public support for the agreement conditional on the treatment and victimhood status</h4>
+<pre class="r"><code>ggplot(moderation_df, aes(x = support_thermometer, fill = factor(treatment))) +
+  geom_density(alpha = 0.5) +
+  facet_grid(treatment~victim_verbose) +
+  theme_bw() +
+  labs(x = &quot;Support thermometer&quot;,
+       y = &quot;Density&quot;,
+       fill = &quot;Treatment&quot;) +
+  theme(legend.position = &quot;bottom&quot;) +
+  scale_fill_manual(name = &quot; &quot;, # changes to fill dimension
+                     values = c(&quot;#a7a8aa&quot;, &quot;#cc0055&quot;),
+                     labels = c(&quot;Control&quot;, &quot;Treatment&quot;)) </code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/115588507-1f2e7380-a2cf-11eb-8ab6-adc5066fa4f1.png" style="display: block; margin: auto;" /></p>
+<hr />
+<p><strong><span style="color:#4B0082;">What patterns do we see here?</span></strong></p>
+<hr />
+</div>
+</div>
+<div id="modeling-and-estimating" class="section level2">
+<h2>Modeling and estimating</h2>
+<p>During this week’s lecture, we learned that we can explicitly model heterogeneity in treatment effects for subgroups. Thus, we can address the tension between having to do inference at the group level, and the recognition of individual differences.</p>
+<p>The analysis of heterogeneity can be very important for the design of our strategy. There are competing theories about the effects of conflict victimization on political behavior and attitudes. Some of the literature points to victims developing pro-social attitudes, while others suggest that victims become intransigent towards out-groups.</p>
+<p><strong>Could factual information about the peace agreement be received differently by victims and non-victims?</strong></p>
+<hr />
+<div id="how-to-estimate-heterogenous-treatment-effects" class="section level4">
+<h4>How to estimate heterogenous treatment effects</h4>
+<p>Heterogeneous treatment effects are usually estimated with regression models that include an interaction between the treatment and the moderator. In our case, the formula would look like this:</p>
+<p><span class="math display">\[Y_{i} = β_0 + β_1D_{i} + β_2Victim_{i} + β_3D_i * Victim_{i}+ ϵ_i\]</span></p>
+<ul>
+<li><span class="math inline">\(β_0\)</span>: Constant</li>
+<li><span class="math inline">\(β_1\)</span>: Effect of <span class="math inline">\(D_i\)</span> on <span class="math inline">\(Y_i\)</span> if <span class="math inline">\(Victim_i\)</span> is zero</li>
+<li><span class="math inline">\(β_2\)</span>: Effect of <span class="math inline">\(Victim_i\)</span> on <span class="math inline">\(Y_i\)</span> if <span class="math inline">\(D_i\)</span> is zero</li>
+<li><span class="math inline">\(β_3\)</span>: Difference in treatment effects of <span class="math inline">\(D_i\)</span> depending on <span class="math inline">\(Victim_i\)</span></li>
+</ul>
+<p>or in <code>lm()</code> terms (same result):</p>
+<pre class="r"><code>lm(outcome ~ treatment + moderator + (treatment*moderator))
+lm(outcome ~ treatment + moderator + treatment:moderator)
+lm(outcome ~ treatment * moderator)</code></pre>
+<p><em>Think of the</em> <strong>switch logic</strong> <em>posed by Prof. Munzert</em></p>
+<hr />
+</div>
+<div id="lets-model-our-results" class="section level3">
+<h3>Let’s model our results</h3>
+<p>We will move forward by creating two models:</p>
+<ul>
+<li>A <strong>naive model</strong>, where we will regress <code>support_thermometer</code> on <code>treatment</code>.</li>
+<li>An <strong>interaction model</strong>, where we will add an interaction between <code>treatment</code> and <code>victim</code></li>
+</ul>
+<hr />
+</div>
+<div id="naive-modeling" class="section level3">
+<h3>Naive modeling</h3>
+<pre class="r"><code>naive_model &lt;- lm(support_thermometer ~ treatment, data = moderation_df)</code></pre>
+<pre class="r"><code>modelsummary::modelsummary(naive_model, 
+                           fmt = 2,
+                           gof_omit = &quot;AIC|BIC|Log.Lik.&quot;,
+                           statistic = &quot;conf.int&quot;,
+                           stars = T)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Model 1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+35.05***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[33.63, 36.48]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treatment
+</td>
+<td style="text-align:center;">
+18.90***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+[16.88, 20.91]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+1000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.254
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.253
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:center;">
+339.360
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border:0;" colspan="100%">
+<sup></sup> + p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001
+</td>
+</tr>
+</tfoot>
+</table>
+<hr />
+<p><strong><span style="color:#4B0082;">What does this model tell us?</span></strong></p>
+<p>The naive model suggests that the subjects that the support for the peace agreement is about 18.9 percentage points higher on average for the subjects that watched the educational video. We suspect, however, that the video may affect differently victims from non-victims of the conflict.</p>
+<hr />
+<div id="here-is-a-visual-illustration-of-the-values-rendered-by-the-naive-regression" class="section level4">
+<h4>Here is a visual illustration of the values rendered by the naive regression</h4>
+<pre class="r"><code>ggplot(moderation_df, aes(x = support_thermometer, fill = factor(treatment))) +
+  geom_density(alpha = 0.5) +
+  theme_minimal() +
+  geom_vline(xintercept = 35.055, linetype = &quot;longdash&quot;, color = &quot;#a7a8aa&quot;) + #D=0 (just beta0)
+  geom_vline(xintercept = 35.055 + 18.898, linetype = &quot;longdash&quot;, color = &quot;#cc0055&quot;) + #D=1 (beta0+beta1) +
+  geom_text(aes(label = &quot;ß0&quot;, x = 35.055 + 3, y = 0.04), color = &quot;#a7a8aa&quot;) + # we add the 3 to repel from the line
+  geom_text(aes(label = &quot;ß0 + ß1&quot;, x = 35.055 + 18.898 + 6, y = 0.04 ), color = &quot;#cc0055&quot;) + # we add the 6 to repel from the line
+  labs(x = &quot;Support thermometer&quot;,
+       y = &quot;Density&quot;,
+       fill = &quot;Treatment&quot;) +
+  theme(legend.position = &quot;bottom&quot;) +
+  scale_fill_manual(name = &quot; &quot;, # changes to fill dimension
+                     values = c(&quot;#a7a8aa&quot;, &quot;#cc0055&quot;),
+                     labels = c(&quot;Control&quot;, &quot;Treatment&quot;)) </code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/115588509-1f2e7380-a2cf-11eb-810f-355b34f64639.png" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+</div>
+<div id="interaction-model" class="section level3">
+<h3>Interaction model</h3>
+<p>Following any of the different formats renders the same results.</p>
+<pre class="r"><code>interaction_model &lt;- lm(support_thermometer ~ treatment + victim + (treatment*victim), data = moderation_df)
+interaction_model_2 &lt;- lm(support_thermometer ~ treatment + victim + treatment:victim, data = moderation_df)
+interaction_model_3 &lt;- lm(support_thermometer ~ treatment*victim, data = moderation_df)</code></pre>
+<pre class="r"><code>modelsummary::modelsummary(list(interaction_model, interaction_model_2, interaction_model_3), 
+                           fmt = 2,
+                           gof_omit = &quot;AIC|BIC|Log.Lik.&quot;,
+                           statistic = &quot;conf.int&quot;,
+                           stars = T)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Model 1
+</th>
+<th style="text-align:center;">
+Model 2
+</th>
+<th style="text-align:center;">
+Model 3
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+27.93***
+</td>
+<td style="text-align:center;">
+27.93***
+</td>
+<td style="text-align:center;">
+27.93***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[26.85, 29.00]
+</td>
+<td style="text-align:center;">
+[26.85, 29.00]
+</td>
+<td style="text-align:center;">
+[26.85, 29.00]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treatment
+</td>
+<td style="text-align:center;">
+8.01***
+</td>
+<td style="text-align:center;">
+8.01***
+</td>
+<td style="text-align:center;">
+8.01***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[6.49, 9.53]
+</td>
+<td style="text-align:center;">
+[6.49, 9.53]
+</td>
+<td style="text-align:center;">
+[6.49, 9.53]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+victim
+</td>
+<td style="text-align:center;">
+14.26***
+</td>
+<td style="text-align:center;">
+14.26***
+</td>
+<td style="text-align:center;">
+14.26***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[12.73, 15.78]
+</td>
+<td style="text-align:center;">
+[12.73, 15.78]
+</td>
+<td style="text-align:center;">
+[12.73, 15.78]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treatment × victim
+</td>
+<td style="text-align:center;">
+21.77***
+</td>
+<td style="text-align:center;">
+21.77***
+</td>
+<td style="text-align:center;">
+21.77***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+[19.62, 23.92]
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+[19.62, 23.92]
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+[19.62, 23.92]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+1000
+</td>
+<td style="text-align:center;">
+1000
+</td>
+<td style="text-align:center;">
+1000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.787
+</td>
+<td style="text-align:center;">
+0.787
+</td>
+<td style="text-align:center;">
+0.787
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.786
+</td>
+<td style="text-align:center;">
+0.786
+</td>
+<td style="text-align:center;">
+0.786
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:center;">
+1227.193
+</td>
+<td style="text-align:center;">
+1227.193
+</td>
+<td style="text-align:center;">
+1227.193
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border:0;" colspan="100%">
+<sup></sup> + p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001
+</td>
+</tr>
+</tfoot>
+</table>
+<hr />
+<p><strong><span style="color:#4B0082;">What does this model tell us?</span></strong></p>
+<ul>
+<li><span class="math inline">\(β_0\)</span>: Constant = The average support for non-victims who were not exposed to the video was 27.92</li>
+<li><span class="math inline">\(β_1\)</span>: Effect of <span class="math inline">\(D_i\)</span> on <span class="math inline">\(Y_i\)</span> if <span class="math inline">\(Victim_i\)</span> is zero = The educational video results in an increase of about 8 percentage points of the peace agreement for the non-victims</li>
+<li><span class="math inline">\(β_2\)</span>: Effect of <span class="math inline">\(Victim_i\)</span> on <span class="math inline">\(Y_i\)</span> if <span class="math inline">\(D_i\)</span> is zero = On average, victims’ support for the peace agreement is 14.3 percentage points higher than that of the non-victims in the control group</li>
+<li><span class="math inline">\(β_3\)</span>: Difference in treatment effects of <span class="math inline">\(D_i\)</span> depending on <span class="math inline">\(Victim_i\)</span> = The educational video results in an additional increase for victims of about 21.8 percentage points, compared to the effect for non-victims</li>
+</ul>
+<hr />
+<div id="here-is-a-visual-illustration-of-the-values-rendered-by-the-model-with-interaction-terms" class="section level4">
+<h4>Here is a visual illustration of the values rendered by the model with interaction terms</h4>
+<pre class="r"><code>moderation_df %&gt;%
+  dplyr::group_by(treatment,victim_verbose) %&gt;%
+  dplyr::mutate(avg_support = mean(support_thermometer)) %&gt;%
+ggplot(., aes(x = support_thermometer, fill = factor(treatment))) +
+  geom_density(alpha = 0.5) +
+  geom_vline(aes(xintercept = avg_support), linetype = &quot;longdash&quot;) +
+  facet_grid(treatment~victim_verbose) +
+  theme_bw() +
+  labs(x = &quot;Support thermometer&quot;,
+       y = &quot;Density&quot;,
+       fill = &quot;Treatment&quot;) +
+  theme(legend.position = &quot;bottom&quot;) +
+  scale_fill_manual(name = &quot; &quot;, # changes to fill dimension
+                     values = c(&quot;#a7a8aa&quot;, &quot;#cc0055&quot;),
+                     labels = c(&quot;Control&quot;, &quot;Treatment&quot;))</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/115588510-1fc70a00-a2cf-11eb-8583-4d4e52576709.png" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+</div>
+</div>
+<div id="extracting-marginalpartial-effects-from-our-interaction-models" class="section level2">
+<h2>Extracting marginal/partial effects from our interaction models</h2>
+<p>For this portion, we are interested in <strong>marginal/partial effects</strong>, which we will extract through the <code>margins()</code> function from the <code>margins</code> package.</p>
+<p>Some packages in <strong>R</strong> aimed at rendering <strong>marginal effects</strong> do render the <strong>predictive margins</strong> instead. For the purposes of the class, when asked to render marginal or partial effects you are expected to render them as introduced in the lecture (i.e., <span class="math inline">\(\frac{\partial Y_i}{\partial {D}_i}\)</span>). When asked for this, you will utilize <code>margins::margins()</code>.</p>
+<p>You can check the documentation <a href="http://cran.uni-muenster.de/web/packages/margins/vignettes/Introduction.html">here</a>. The syntax for the <code>margins()</code> function for extracting partial effects of the treatment at different levels of the moderator is the following:</p>
+<pre class="r"><code>margins::margins(name_of_your_model, variables = &quot;treatment_var&quot;, at = list(moderator_variable = c(&quot;value1&quot;, &quot;value2&quot;, &quot;value3&quot;))</code></pre>
+<p>Let’s say we are interested in the <strong>marginal/partial effect</strong> of our video treatment for victims and non-victims. We would do:</p>
+<pre class="r"><code>summary(margins::margins(interaction_model, variables = &quot;treatment&quot;, at = list(victim = c(0,1))))</code></pre>
+<pre><code>##     factor victim     AME     SE       z      p   lower   upper
+##  treatment 0.0000  8.0125 0.7757 10.3288 0.0000  6.4921  9.5330
+##  treatment 1.0000 29.7831 0.7758 38.3895 0.0000 28.2626 31.3037</code></pre>
+<hr />
+<div id="lets-plot-the-marginalpartial-effect-of-the-treatment-for-victims-and-non-victims" class="section level4">
+<h4>Let’s plot the marginal/partial effect of the treatment for victims and non-victims</h4>
+<pre class="r"><code>pe_margins &lt;- margins::margins(interaction_model, variables = &quot;treatment&quot;, at = list(victim = c(0,1)))
+
+pe_plotting &lt;- summary(pe_margins) %&gt;% #NOTE we use the summary output, instead of the margins object
+  dplyr::select(victim, AME, lower, upper) %&gt;% # you will need to adapt this based your moderator
+  dplyr::mutate(victim_labels = ifelse(victim == 1, &quot;Victim&quot;, &quot;No Victim&quot;)) # you may not need this to create labels for the assignment
+
+ggplot(pe_plotting, aes(x = victim_labels,
+                        y = AME)) +
+  geom_point(size = 1.5) +
+  geom_segment(aes(x = victim_labels, xend = victim_labels, y = lower, yend = upper), size = 0.5) + # render whiskers from confidence intervals
+  theme_minimal() +
+  scale_y_continuous(limits = c(0,45)) + # you may need to change the limits for your plots based on the specific effects of your application
+  labs(x = &quot;Respondent status\n&quot;,
+       y = &quot;\nPartial effect of educational video&quot;, 
+       caption = &quot;Note: You can utilize it to describe what the plot illustrates during your assignment.&quot;) + 
+  coord_flip() # to flip the plot
+</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/115588511-1fc70a00-a2cf-11eb-8fc5-bf545210cb2c.png" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+</div>
+<div id="extracting-predictive-margins-from-our-interaction-models" class="section level2">
+<h2>Extracting predictive margins from our interaction models</h2>
+<p>For this portion, we are interested in <strong>predictive margins</strong>. In here, our interest is to return the expectation for each level of a predictor. We will extract this through the <code>ggeffects()</code> function from the <code>ggeffects</code> package. You can check the documentation <a href="https://strengejacke.github.io/ggeffects/index.html">here</a>. The syntax is the following:</p>
+<pre class="r"><code>ggeffects::ggeffect(name_of_your_model, terms = c(&quot;termA&quot;, &quot;termB&quot;))</code></pre>
+<p>Let’s say we are interested in the <strong>predictive margins</strong> for all out victim and treatment permutations. We would do:</p>
+<pre class="r"><code>ggeffects::ggeffect(interaction_model, terms = c(&quot;victim&quot;,&quot;treatment&quot;))</code></pre>
+<pre><code>## # Predicted values of support_thermometer
+## # x = victim
+## 
+## # treatment = 0
+## 
+## x | Predicted |         95% CI
+## ------------------------------
+## 0 |     27.93 | [26.85, 29.00]
+## 1 |     42.18 | [41.11, 43.26]
+## 
+## # treatment = 1
+## 
+## x | Predicted |         95% CI
+## ------------------------------
+## 0 |     35.94 | [34.86, 37.02]
+## 1 |     71.97 | [70.89, 73.04]</code></pre>
+<hr />
+<div id="lets-plot-these-predictive-margins" class="section level4">
+<h4>Let’s plot these predictive margins</h4>
+<p>In this exercise we will meet a very important function from <code>dplyr</code>, <code>dplyr::case_when()</code>. <strong>This function allows us to vectorize multiple ifelse() statements</strong>. The syntax is the following:</p>
+<pre class="r"><code>dplyr::case_when(condition ~ what to do if met)</code></pre>
+<p>Let’s see it at play.</p>
+<pre class="r"><code>extracted_me &lt;-  ggeffects::ggeffect(interaction_model, terms = c(&quot;victim&quot;,&quot;treatment&quot;)) %&gt;%
+  dplyr::mutate(group_labels = dplyr::case_when(x == 1 &amp; group == 1 ~ &quot;Victim (1) - Treatment (1)&quot;,
+                                                x == 1 &amp; group == 0 ~ &quot;Victim (1) - Treatment (0)&quot;,
+                                                x == 0 &amp; group == 1 ~ &quot;Victim (0) - Treatment (1)&quot;,
+                                                x == 0 &amp; group == 0 ~ &quot;Victim (0) - Treatment (0)&quot;
+  )) # adding labels to (x,group) combinations for the plot
+
+extracted_me
+
+ggplot(extracted_me, aes(x = group_labels, 
+                         y= predicted, 
+                         fill = x,
+                         alpha = group
+                         )) +
+  geom_bar(stat = &quot;identity&quot;) + 
+  geom_point(size = 1.5) +
+  geom_segment(aes(x = group_labels, 
+                   xend = group_labels, 
+                   y = conf.high, 
+                   yend = conf.low), size = 0.5) + # render whiskers from confidence intervals
+  theme_minimal() +
+  labs(x = &quot;\nRespondent status&quot;,
+       y = &quot;Predictive margins&quot;,
+       fill = &quot;Treatment&quot;,
+       caption = &quot;Note: You can utilize it to describe what the plot illustrates during your assignment.&quot;) +
+  theme(legend.position = &quot;note&quot;) +
+  scale_alpha_manual(values=c(0.6, 1))
+</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/115588514-205fa080-a2cf-11eb-8164-2be8272196d3.png" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+</div>
+<div id="drafting-some-brief-recommedations" class="section level2">
+<h2>Drafting some brief recommedations</h2>
+<p>After conducting your experiment, you report back to the taskforce. Based on your results, you suggest that the educational videos may be a useful tool to encourage the wider public to hold a warmer opinion about the peace agreement. You also tell the taskforce that, although the videos have an average positive effect, they affect with a higher intensity victims of the conflict. You suggest to develop alternative strategies to tackle the non-victims, so that they do not fall through the cracks.</p>
+<p><img src="https://media.giphy.com/media/rrLt0FcGrDeBq/giphy.gif" style="display: block; margin: auto;" /></p>
+</div>
+
+          </div>
+
+          
+
+
+
+          
+          
+          <div class="article-widget">
+            
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/2022-spring-stats2/materials/session-10/slides/" rel="next">10 - Slides</a>
+  </div>
+  
+  
+</div>
+
+          </div>
+          
+        </div>
+
+        <div class="body-footer">
+          <p>Last updated on Jan 1, 0001</p>
+
+          
+
+
+
+
+
+          
+
+
+
+
+          
+
+
+  
+  
+
+
+
+        </div>
+
+      </article>
+
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/latex.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+    <script>
+      anchors.add();
+    </script>
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+        <div class="search-hit-content">
+          <div class="search-hit-name">
+            <a href="{{relpermalink}}">{{title}}</a>
+            <div class="article-metadata search-hit-type">{{type}}</div>
+            <p class="search-hit-description">{{snippet}}</p>
+          </div>
+        </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+      
+      
+      
+      
+      
+      
+      
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+      
+    
+    
+    <script src="/2022-spring-stats2/en/js/wowchemy.min.e5856c0a0618a04dd7b1e07451b5f341.js"></script>
+
+    
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+
+
+</body>
+</html>

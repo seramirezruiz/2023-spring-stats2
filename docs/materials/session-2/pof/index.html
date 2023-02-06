@@ -1,0 +1,1526 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.0.0-beta.2 for Hugo" />
+  
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Sebastian Ramirez Ruiz" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="The POF in practice Let&#39;s revisit the example from our slides once again.
+Say we are interested in assessing the premise of Allport&#39;s hypothesis about interpersonal contact being conducive to reducing intergroup prejudice." />
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-2/pof/" />
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    <meta name="theme-color" content="#1565c0" />
+  
+
+  
+  
+    
+    <script src="/2022-spring-stats2/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous" media="print" onload="this.media='all'">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/2022-spring-stats2/css/wowchemy.dd90b8698d7ba5e114b9de5647a585e5.css" />
+
+  
+
+
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+    <link rel="manifest" href="/2022-spring-stats2/index.webmanifest" />
+  
+
+  <link rel="icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_32x32_fill_lanczos_center_2.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_180x180_fill_lanczos_center_2.png" />
+
+  <link rel="canonical" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-2/pof/" />
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary" />
+  
+  <meta property="og:site_name" content="| Tutorials - Spring 2022 |" />
+  <meta property="og:url" content="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-2/pof/" />
+  <meta property="og:title" content="The Potential Outcomes Framework | | Tutorials - Spring 2022 |" />
+  <meta property="og:description" content="The POF in practice Let&#39;s revisit the example from our slides once again.
+Say we are interested in assessing the premise of Allport&#39;s hypothesis about interpersonal contact being conducive to reducing intergroup prejudice." /><meta property="og:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" />
+    <meta property="twitter:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" /><meta property="og:locale" content="en-us" />
+  
+    
+    
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+
+
+
+
+  <title>The Potential Outcomes Framework | | Tutorials - Spring 2022 |</title>
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/2022-spring-stats2/js/wowchemy-init.min.d876f1a6b98701f9238f2313b512a26f.js"></script>
+
+  
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-end" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/2022-spring-stats2/materials/"><span>Materials</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+        
+      
+        
+      
+
+      
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    
+
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+          Foundations
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/2022-spring-stats2/materials/"><i class="fas fa-arrow-left pr-1"></i>Materials</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/2022-spring-stats2/materials/session-2/">Foundations</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  <li class=""><a href="/2022-spring-stats2/materials/session-2/slides/">Slides</a></li>
+
+
+
+  <li class=""><a href="/2022-spring-stats2/materials/session-2/data-manipulation/">Introduction to Data Manipulation</a></li>
+
+
+
+  <li class="active"><a href="/2022-spring-stats2/materials/session-2/pof/">The Potential Outcomes Framework</a></li>
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      
+
+      
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <article class="article">
+
+        <div class="docs-article-container">
+          
+            
+  <nav class="d-none d-md-flex" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      
+  
+  
+  
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/">
+      
+        Home
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/">
+      
+        Materials
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/session-2/">
+      
+        Foundations
+      
+    </a>
+  </li>
+
+
+      <li class="breadcrumb-item active" aria-current="page">
+        The Potential Outcomes Framework
+      </li>
+    </ol>
+  </nav>
+
+
+          
+
+          <h1>The Potential Outcomes Framework</h1>
+
+          <div class="article-style">
+            
+<script src="/2021-spring-stats2rmarkdown-libs/kePrint/kePrint.js"></script>
+
+
+<div id="the-pof-in-practice" class="section level1">
+<h1>The POF in practice</h1>
+<p>Let's revisit the example from our slides once again.</p>
+<p>Say we are interested in assessing the premise of Allport's hypothesis about interpersonal contact being conducive to reducing intergroup prejudice.</p>
+<p>We are studying a set of (<span class="math inline">\(n=8\)</span>) students assigned to a dorm room with a person from their own ethnic group <strong>(contact=0)</strong> and from a different group <strong>(contact=1)</strong>.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Student (i)</th>
+<th align="center">Prejudice (C=0)</th>
+<th align="center">Prejudice (C=1)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">6</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">6</td>
+<td align="center">7</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">3</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="center">2</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="center">8</td>
+<td align="center">7</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<div id="data-set" class="section level2">
+<h2>Data set</h2>
+<p>Today we will work with the <code>prejudice_df</code> object. The data frame contains the following four variables:</p>
+<ul>
+<li><code>student_id</code>: numeric student identification</li>
+<li><code>prej_0</code>: prejudice level under <span class="math inline">\(Y_{0i}\)</span> (Contact=0)</li>
+<li><code>prej_1</code>: prejudice level under <span class="math inline">\(Y_{1i}\)</span> (Contact=1)</li>
+<li><code>dorm_type</code>: binary for actual treatment state</li>
+</ul>
+<pre><code>## # A tibble: 8 x 4
+##   student_id prej_0 prej_1 dorm_type
+##        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;
+## 1          1      6      5         0
+## 2          2      4      2         1
+## 3          3      4      4         0
+## 4          4      6      7         0
+## 5          5      3      1         1
+## 6          6      2      2         1
+## 7          7      8      7         0
+## 8          8      4      5         0</code></pre>
+<hr />
+</div>
+</div>
+<div id="treatment-effects" class="section level1">
+<h1>Treatment Effects</h1>
+<div id="a-individual-treatment-effect-ite" class="section level2">
+<h2>a) Individual Treatment Effect (ITE)</h2>
+<p>We assume from the <em>potential outcomes framework</em> that each subject has a <strong>potential outcome</strong> under both treatment states. Let's take the first student in the list as an example.</p>
+<p><img src="https://user-images.githubusercontent.com/54796579/92996733-20641a80-f50e-11ea-8b55-a17da3d8b36f.png" width="65%" style="display: block; margin: auto;" /></p>
+<p>The figure illustrates the <strong>potential outcomes</strong> for <em>Student 1</em>.</p>
+<p>We see that in a reality where <em>Student 1</em> is assigned to in-group dorm <strong>(contact=0)</strong> their levels of prejudice are <em>6</em>. On the contrary, in a reality where <em>Student 1</em> is assigned to co-ethnic dorm <strong>(contact=1)</strong> their levels of prejudice are <em>5</em>.</p>
+<p>From this illustration, we can gather the <strong>individual treatment effect (ITE)</strong> for student one. The <strong>ITE</strong> is equal to the values under treatment <em>(contact=1)</em> minus to the values without treatment <em>(contact=0)</em> or <span class="math inline">\(ITE = y_{1i} - y_{0i}\)</span>.</p>
+<p><span class="math display">\[ITE = 5 - 6 = -1\]</span></p>
+<p><div class="alert alert-note">
+  <div>
+    <p>As it was put in Cunningham&rsquo;s book:</p></p>
+<p>The ITE is a “comparison of two states of the world” (Cunningham, 2021): individuals are exposed to contact, and not exposed to it.</p>
+
+  </div>
+</div>
+
+<p>Evidently, each subject can only be observed in one treatment state at any point in time in real life. This is known as the <strong>fundamental problem</strong> (Holland, 1986) of causal inference. <strong>The Individual Treatment Effect (ITE) in reality is unattainable.</strong> Still, it provides us with a conceptual foundation for causal estimation.</p>
+<p><strong>Exercise:</strong> <em>Our data are coming from a world with perfect information. In that sense, we have both potential outcomes <code>prej_0</code> and <code>prej_1</code>. Can you think of a way to calculate the</em> <strong>ITE</strong> <em>for the eight students with one of the <code>dplyr</code> verbs we learned in the previous section?</em></p>
+<details class="spoiler "  id="spoiler-1">
+  <summary>Hint</summary>
+  <p>Can you think of a way we can use the verb <code>mutate()</code></p>
+</details>
+<details class="spoiler "  id="spoiler-2">
+  <summary>Answer</summary>
+  <p><pre class="r"><code>#you can employ dplyr::mutate() to create the new variable ite
+prejudice_df %&gt;% 
+  dplyr::mutate(ite = prej_1 - prej_0)</code></pre>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+student_id
+</th>
+<th style="text-align:right;">
+prej_0
+</th>
+<th style="text-align:right;">
+prej_1
+</th>
+<th style="text-align:right;">
+dorm_type
+</th>
+<th style="text-align:right;">
+ite
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+-1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+-2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+-2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+-1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+</p>
+</details>
+<hr />
+</div>
+<div id="average-treatment-effect-ate" class="section level2">
+<h2>Average Treatment Effect (ATE)</h2>
+<p>Normally, we are not interested in the estimates of individual subjects, but rather a population. The <strong>Average Treatment Effect (ATE)</strong> is the difference in the average potential outcomes of the population.</p>
+<p><span class="math display">\[ATE = E(Y_{1i}) - E(Y_{0i})\]</span></p>
+<p>In other words, the <strong>ATE</strong> is the average <strong>ITE</strong> of all the subjects in the population. As you can see, <strong>the ATE as defined in the formula is also not attainable</strong>. Can you think why?</p>
+<p><strong>Exercise:</strong> <em>Since our data are coming from a world with perfect information. Can you think of a way to calculate the</em> <strong>ATE</strong> <em>for the eight students based on what we learned last week?</em></p>
+<details class="spoiler "  id="spoiler-3">
+  <summary>Hint</summary>
+  <p>We have already extracted the ite with <code>mutate()</code>. We know that the the ATE is the averge of every subject's ITE. Do you remember <code>summarize()</code>?</p>
+</details>
+<details class="spoiler "  id="spoiler-4">
+  <summary>Answer</summary>
+  <p><pre class="r"><code>#we know that the ATE is the averge of every subject&#39;s ITE. Do you remember dplyr::summarize()?
+#how can we use the verbs from last week to get the average treatment effect?
+
+prejudice_df %&gt;%
+  dplyr::mutate(ite = prej_1 - prej_0) %&gt;%
+  dplyr::summarize(ate=mean(ite))</code></pre>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+ate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+-0.5
+</td>
+</tr>
+</tbody>
+</table>
+</p>
+</details>
+<hr />
+</div>
+<div id="the-average-treatment-effect-among-the-treated-and-control-att-and-atc" class="section level2">
+<h2>The Average Treatment Effect Among the Treated and Control (ATT) and (ATC)</h2>
+<p>The names for these two estimates are very self-explanatory. These two estimates are simply the average treatment effects conditional on the group subjects are assigned to.</p>
+<p>The average treatment effect on the treated <strong>ATT</strong> is defined as the difference in the average potential outcomes for those subjects who were treated: <span class="math display">\[ATT = E(Y_{1i}-Y_{0i} | D = 1)\]</span></p>
+<p>The average treatment effect under control <strong>ATC</strong> is defined as the difference in the average potential outcomes for those subjects who were not treated: <span class="math display">\[ATC = E(Y_{1i}-Y_{0i} | D = 0)\]</span></p>
+<p><strong>Exercise:</strong> <em>Since our data are coming from a world with perfect information. Can you think of a way to calculate the</em> <strong>ATT</strong> <em>and</em> <strong>ATC</strong> <em>for the eight students based on what we learned last week?</em></p>
+<details class="spoiler "  id="spoiler-5">
+  <summary>Hint</summary>
+  <p>We have already extracted the ite with <code>mutate()</code>. We know that the ATT and ATC are the average of every subject's ITE grouped by their treatment status. Do you remember how the combination of <code>group_by()</code> and <code>summarize()</code> worked?</p>
+</details>
+<details class="spoiler "  id="spoiler-6">
+  <summary>Answer</summary>
+  <p><pre class="r"><code>#we know that the ATT and ATC are the average of every subject&#39;s ITE grouped by their treatment status. Do you remember how the combination of dplyr::group_by() and dplyr::summarize() worked?
+#how can we use the verbs from last week to get the average treatment effect on the treated and untreated?
+
+prejudice_df %&gt;%
+  dplyr::mutate(ite = prej_1 - prej_0) %&gt;%
+  dplyr::group_by(dorm_type) %&gt;%
+  dplyr::summarize(treatment_effects=mean(ite))</code></pre>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+dorm_type
+</th>
+<th style="text-align:right;">
+treatment_effects
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+-1.333333
+</td>
+</tr>
+</tbody>
+</table>
+</p>
+</details>
+<hr />
+</div>
+<div id="the-naive-average-treatment-effect-nate" class="section level2">
+<h2>The Naive Average Treatment Effect (NATE)</h2>
+<p>So far, we have worked with perfect information. Still, we know that in reality we can only observe subjects in one treatment state. This is the information we <strong>do</strong> have.</p>
+<p><img src="https://user-images.githubusercontent.com/54796579/93014681-527b8800-f5b3-11ea-98f2-200e42f49bd4.png" width="65%" style="display: block; margin: auto;" /></p>
+<div class="alert alert-note">
+  <div>
+    The <strong>Naive Average Treatment Effect (NATE)</strong> is the calculation we can compute based on the observed outcomes.
+  </div>
+</div>
+
+<p><span class="math display">\[NATE = E(Y_{1i}|D{i}=1) - E(Y_{0i}|D{i}=0)\]</span> *<em>reads in English as: &quot;The expected average outcome under treatment for those treated minus the expected average outcome under control for those not treated&quot;</em></p>
+<p><strong>Exercise:</strong> <em>Can you think of a way to calculate the</em> <strong>NATE</strong> <em>for the eight students employing the new <code>observed_prej</code> variable?</em></p>
+<pre class="r"><code>prejudice_df %&gt;%
+  dplyr::mutate(observed_prej = ifelse(dorm_type == 1, prej_1, prej_0))</code></pre>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+student_id
+</th>
+<th style="text-align:right;">
+prej_0
+</th>
+<th style="text-align:right;">
+prej_1
+</th>
+<th style="text-align:right;">
+dorm_type
+</th>
+<th style="text-align:right;">
+observed_prej
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+</tbody>
+</table>
+<details class="spoiler "  id="spoiler-8">
+  <summary>Hint</summary>
+  <p>We have already extracted the average observed outcomes depending on the treatment status with <code>mutate()</code>. We know that the NATE is the difference in average observed outcomes grouped by their treatment status. Do you remember how the combination of <code>group_by()</code> and <code>summarize()</code> worked?</p>
+</details>
+<details class="spoiler "  id="spoiler-9">
+  <summary>Answer</summary>
+  <p><pre class="r"><code>#we know that the NATE is the difference in average observed outcomes grouped by their treatment status. Do you remember how the combination of dplyr::group_by() and dplyr::summarize() worked?
+
+prejudice_df %&gt;%
+  dplyr::mutate(observed_prej = ifelse(dorm_type == 1, prej_1, prej_0)) %&gt;%
+  dplyr::group_by(dorm_type) %&gt;%
+  dplyr::summarize(mean(observed_prej))
+  
+#You can just substract the values</code></pre>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+dorm_type
+</th>
+<th style="text-align:right;">
+mean(observed_prej)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+5.600000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1.666667
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>You can just substract the values</strong></p>
+</p>
+</details>
+<hr />
+<p><em>Note.</em> The ìfelse() function is a very handy tool to have. It allows us to generate conditional statements. The syntax is the following:</p>
+<pre class="r"><code>ifelse(condition_to_meet, what_to_do_if_met, what_to_do_if_not_met)</code></pre>
+<p><em>In the case of <code>observed_prej</code>, we ask</em> <strong>R</strong> <em>to create a new variable, where if the subject is in a co-ethnic dorm, we print the prejudice value under treatment. If that condition is not met, we print the prejudice value under control.</em></p>
+<hr />
+<hr />
+</div>
+</div>
+<div id="bias" class="section level1">
+<h1>Bias</h1>
+<div id="bias-1" class="section level2">
+<h2>Bias</h2>
+<p>During the lecture, we met two sources of bias:</p>
+<p><img src="https://user-images.githubusercontent.com/54796579/93015117-13e7cc80-f5b7-11ea-8281-dde25922a883.png" width="65%" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+<div id="baseline-bias" class="section level2">
+<h2>Baseline bias</h2>
+<p>Baseline bias—also known as selection bias— is difference in expected outcomes in the absence of treatment for the actual treatment and control group. In other words, these are the underlying differences that individuals in either group start off with.</p>
+<hr />
+</div>
+<div id="differential-treatment-effect-bias" class="section level2">
+<h2>Differential treatment effect bias</h2>
+<p>Differential treatment effect bias — also known as Heterogeneous Treatment Effect (HTE) bias — is the difference in returns to treatment (the treatment effect) between the treatment and control group, multiplied by the share of the population in control. In other words, this type of bias relates to the dissimilarities stemming for ways in which individuals in either group are affected differently by the treatment.</p>
+<p><strong>We will let you think about these for the mock assignment</strong></p>
+<p><strong>Exercise:</strong> <em>Since our data are coming from a world with perfect information. Can you think of a way to explore the existence</em> <strong>baseline bias</strong> <em>in our data?</em></p>
+<details class="spoiler "  id="spoiler-10">
+  <summary>Hint</summary>
+  <p>We know that the baseline bias is the difference in average observed outcomes under control grouped by their treatment status. Do you remember how the combination of dplyr::group_by() and dplyr::summarize() worked?</p>
+</details>
+<p><strong>Exercise:</strong> <em>Since our data are coming from a world with perfect information. Can you think of a way to explore the existence</em> <strong>differential treatment effect bias</strong> <em>in our data?</em></p>
+<details class="spoiler "  id="spoiler-11">
+  <summary>Hint</summary>
+  <p>We know that the differential treatment effect bias is the difference in difference in the average of every subject's ITE grouped by their treatment status (or the difference between ATT and ATCs). Maybe you can go back an check how to get the average treatment effect on the treated and untreated.</p>
+</details>
+</div>
+</div>
+
+          </div>
+
+          
+
+
+
+          
+          
+          <div class="article-widget">
+            
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/2022-spring-stats2/materials/session-2/data-manipulation/" rel="next">Introduction to Data Manipulation</a>
+  </div>
+  
+  
+</div>
+
+          </div>
+          
+        </div>
+
+        <div class="body-footer">
+          <p>Last updated on Jan 1, 0001</p>
+
+          
+
+
+
+
+
+          
+
+
+
+
+          
+
+
+  
+  
+
+
+
+        </div>
+
+      </article>
+
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/latex.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+    <script>
+      anchors.add();
+    </script>
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+        <div class="search-hit-content">
+          <div class="search-hit-name">
+            <a href="{{relpermalink}}">{{title}}</a>
+            <div class="article-metadata search-hit-type">{{type}}</div>
+            <p class="search-hit-description">{{snippet}}</p>
+          </div>
+        </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+      
+      
+      
+      
+      
+      
+      
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+      
+    
+    
+    <script src="/2022-spring-stats2/en/js/wowchemy.min.e5856c0a0618a04dd7b1e07451b5f341.js"></script>
+
+    
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+
+
+</body>
+</html>

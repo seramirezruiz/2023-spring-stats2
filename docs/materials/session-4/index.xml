@@ -1,0 +1,909 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>📊 04 - The Backdoor Criterion and Regression | | Tutorials - Spring 2022 |</title>
+    <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-4/</link>
+      <atom:link href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-4/index.xml" rel="self" type="application/rss+xml" />
+    <description>📊 04 - The Backdoor Criterion and Regression</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sun, 28 Feb 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
+      <title>📊 04 - The Backdoor Criterion and Regression</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-4/</link>
+    </image>
+    
+    <item>
+      <title>04 - Slides</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-4/slides/</link>
+      <pubDate>Sun, 28 Feb 2021 00:00:00 +0000</pubDate>
+      <guid>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-4/slides/</guid>
+      <description>&lt;h2 id=&#34;slides&#34;&gt;Slides&lt;/h2&gt;
+&lt;iframe src=&#34;../w4_regression.pdf#view=fit&#34; width=&#34;100%&#34; height=&#34;500px&#34;&gt;
+    &lt;/iframe&gt;
+&lt;!--
+## Courses in this program
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure &gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;featured.jpg&#34; &gt;
+
+
+  &lt;img src=&#34;featured.jpg&#34; alt=&#34;&#34;  &gt;
+&lt;/a&gt;
+
+
+
+&lt;/figure&gt;
+
+
+&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    The parameter $\mu$ is the mean or expectation of the distribution.
+$\sigma$ is its standard deviation.
+The variance of the distribution is $\sigma^{2}$.
+  &lt;/div&gt;
+&lt;/div&gt;
+
+--&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>The Backdoor Criterion and Basics of Regression in R</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-4/04-online-tutorial/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-4/04-online-tutorial/</guid>
+      <description>
+
+
+&lt;div id=&#34;welcome&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Welcome&lt;/h2&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Introduction!&lt;/h3&gt;
+&lt;p&gt;Welcome to our fourth tutorial for the Statistics II: Statistical Modeling &amp;amp; Causal Inference (with R) course.&lt;/p&gt;
+&lt;p&gt;During this week&#39;s lecture you reviewed bivariate and multiple linear regressions. You also learned how Directed Acyclic Graphs (DAGs) can be leveraged to gather causal estimates.&lt;/p&gt;
+&lt;p&gt;In this lab session we will:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Use the &lt;code&gt;ggdag&lt;/code&gt; and &lt;code&gt;dagitty&lt;/code&gt; packages to assess your modeling strategy&lt;/li&gt;
+&lt;li&gt;Review how to run regression models using &lt;strong&gt;R&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Illustrate omitted variable and collider bias&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;packages&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Packages&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# These are the libraries we will use today. Make sure to install them in your console in case you have not done so previously.
+set.seed(42) #for consistent results in randomization
+library(wooldridge) # To get our example&amp;#39;s dataset 
+library(tidyverse) # To use dplyr functions and the pipe operator when needed
+library(ggplot2) # To visualize data (this package is also loaded by library(tidyverse))
+library(ggdag) # To dagify and plot our DAG objects in R
+library(dagitty) # To perform analysis in our DAG objects in R
+library(stargazer) # To render nicer regression output
+data(&amp;quot;wage1&amp;quot;) # calls the wage1 dataset from the woorldridge package&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;working-with-dags-in-r&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Working with DAGs in R&lt;/h2&gt;
+&lt;p&gt;Last week we learned about the general syntax of the &lt;code&gt;ggdag&lt;/code&gt; package:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;We created &lt;strong&gt;dagified&lt;/strong&gt; objects with &lt;code&gt;ggdag::dagify()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;We plotted our DAGs with &lt;code&gt;ggdag::ggdag()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;We discussed how to specify the coordinates of our nodes with a coordinate list&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Today, we will learn how the &lt;code&gt;ggdag&lt;/code&gt; and &lt;code&gt;dagitty&lt;/code&gt; packages can help us illustrate our paths and adjustment sets to fulfill the &lt;strong&gt;backdoor criterion&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Let&#39;s take one of the DAGs from our review slides:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;coord_dag &amp;lt;- list(
+  x = c(d = 0, p = 0, b = 1, a = 1 , c = 2, y = 2),
+  y = c(d = 0, p = 2, b = 1, a = -1, c = 2, y = 0)
+)
+
+our_dag &amp;lt;- ggdag::dagify(d ~ p + a, # p and a pointing at d
+                         b ~ p + c, # p and c pointing at b
+                         y ~ d + a + c, # d, a, and c pointing at y
+                         coords = coord_dag, # our coordinates from the list up there
+                         exposure = &amp;quot;d&amp;quot;, # we declare out exposure variable
+                         outcome = &amp;quot;y&amp;quot;) # we declare out outcome variable
+
+ggdag::ggdag(our_dag) + 
+  theme_dag() # equivalent to theme_void()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/109506958-85043900-7a9e-11eb-8183-50a985ca1195.png&#34; width=&#34;85%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;learning-about-our-paths-and-what-adjustments-we-need&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Learning about our paths and what adjustments we need&lt;/h3&gt;
+&lt;p&gt;As you have seen, when we &lt;strong&gt;dagify&lt;/strong&gt; a DAG in &lt;strong&gt;R&lt;/strong&gt; a &lt;em&gt;dagitty&lt;/em&gt; object is created. These objects tell &lt;strong&gt;R&lt;/strong&gt; that we are dealing with DAGs.&lt;/p&gt;
+&lt;p&gt;This is very important because in addition to plotting them, &lt;strong&gt;we can do analyses on the DAG objects&lt;/strong&gt;. A package that complements &lt;code&gt;ggdag&lt;/code&gt; is the &lt;code&gt;dagitty&lt;/code&gt; package.&lt;/p&gt;
+&lt;p&gt;Today, we will focus on two functions from the &lt;code&gt;dagitty&lt;/code&gt; package:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;dagitty::paths()&lt;/code&gt;: Returns a list with two components: &lt;strong&gt;paths&lt;/strong&gt;, which gives the actual paths, and &lt;strong&gt;open&lt;/strong&gt;, which shows whether each path is open (d-connected) or closed (d-separated).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dagitty::adjustmentSets()&lt;/code&gt;: Lists the sets of covariates that would allow for unbiased estimation of causal effects, &lt;strong&gt;assuming that the causal graph is correct&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We just need to input our DAG object.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;paths&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Paths&lt;/h4&gt;
+&lt;p&gt;Let&#39;s see how the output of the &lt;code&gt;dagitty::paths&lt;/code&gt; function looks like:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dagitty::paths(our_dag)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## $paths
+## [1] &amp;quot;d -&amp;gt; y&amp;quot;                &amp;quot;d &amp;lt;- a -&amp;gt; y&amp;quot;           &amp;quot;d &amp;lt;- p -&amp;gt; b &amp;lt;- c -&amp;gt; y&amp;quot;
+## 
+## $open
+## [1]  TRUE  TRUE FALSE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We see under &lt;code&gt;$paths&lt;/code&gt; the three paths we declared during the manual exercise:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;d -&amp;gt; y&lt;/li&gt;
+&lt;li&gt;d &amp;lt;- a -&amp;gt; y&lt;/li&gt;
+&lt;li&gt;d &amp;lt;- p -&amp;gt; b &amp;lt;- c -&amp;gt; y&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Additionally, &lt;code&gt;$open&lt;/code&gt; tells us whether each path is open. In this case, we see that the second path is the only open non-causal path, so we would need to condition on &lt;strong&gt;a&lt;/strong&gt; to close it.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;We can also use &lt;code&gt;ggdag&lt;/code&gt; to present the open paths visually with the &lt;code&gt;ggdag_paths()&lt;/code&gt; function, as such:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggdag::ggdag_paths(our_dag) +
+  theme_dag()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/109506962-86356600-7a9e-11eb-8207-df83d670a43e.png&#34; width=&#34;85%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;covariate-adjustment&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Covariate adjustment&lt;/h4&gt;
+&lt;p&gt;In addition to listing all the paths and sorting the backdoors manually, we can use the &lt;code&gt;dagitty::adjustmentSets()&lt;/code&gt; function.&lt;/p&gt;
+&lt;p&gt;With this function, we just need to input our DAG object and it will return the different sets of adjustments.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dagitty::adjustmentSets(our_dag)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## { a }&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For example, in this DAG there is only one option. We need to control for &lt;strong&gt;a&lt;/strong&gt;.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;We can also use &lt;code&gt;ggdag&lt;/code&gt; to present the open paths visually with the &lt;code&gt;ggdag_adjustment_set()&lt;/code&gt; function, as such:&lt;/p&gt;
+&lt;p&gt;Also, do not forget to set the argument &lt;code&gt;shadow = TRUE&lt;/code&gt;, so that the arrows from the adjusted nodes are included.&lt;/p&gt;
+&lt;pre class=&#34;3&#34;&gt;&lt;code&gt;ggdag::ggdag_adjustment_set(our_dag, shadow = T) +
+  theme_dag()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/109506965-87669300-7a9e-11eb-8d6c-ed01a9e3aa41.png&#34; width=&#34;85%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h4&#34;&gt;If you want to learn more about DAGs in R
+&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ggdag&lt;/code&gt; documentation: &lt;a href=&#34;https://ggdag.malco.io/&#34; class=&#34;uri&#34;&gt;https://ggdag.malco.io/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dagitty&lt;/code&gt; vignette: &lt;a href=&#34;https://cran.r-project.org/web/packages/dagitty/dagitty.pdf&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/dagitty/dagitty.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;What is `dagitty: &lt;a href=&#34;https://cran.r-project.org/web/packages/dagitty/vignettes/dagitty4semusers.html&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/dagitty/vignettes/dagitty4semusers.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;NOW LET&#39;S MOVE TO REGRESSION&lt;/strong&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;introduction-to-regression&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction to Regression&lt;/h2&gt;
+&lt;p&gt;Linear regression is largely used to predict the value of an outcome variable based on one or more input explanatory variables. As we previously discussed, regression addresses a simple mechanical problem, namely, &lt;strong&gt;what is our best guess of y given an observed x&lt;/strong&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Regression can be utilized without thinking about causes as a &lt;em&gt;predictive&lt;/em&gt; or &lt;em&gt;summarizing&lt;/em&gt; tool&lt;/li&gt;
+&lt;li&gt;It would not be appropiate to give causal interpretations to any &lt;span class=&#34;math inline&#34;&gt;\(\beta\)&lt;/span&gt;, unless we establish the fulfilment of centain assumptions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;bivariate-regression&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Bivariate regression&lt;/h3&gt;
+&lt;p&gt;In bivariate regression, we are modeling a variable &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; as a mathematical function of one variable &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;. We can generalize this in a mathematical equation as such:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[y = \beta_{0} + \beta{1}x + ϵ\]&lt;/span&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;multiple-linear-regression&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Multiple linear regression&lt;/h3&gt;
+&lt;p&gt;In multiple linear regression, we are modeling a variable &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; as a mathematical function of multiple variables &lt;span class=&#34;math inline&#34;&gt;\((x, z, m)\)&lt;/span&gt;. We can generalize this in a mathematical equation as such:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[y = \beta_{0} + \beta_{1}x + \beta_{2}z + \beta_{3}m + ϵ\]&lt;/span&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exploratory-questions&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Exploratory questions&lt;/h2&gt;
+&lt;p&gt;Let&#39;s illustrate this with an example&lt;/p&gt;
+&lt;p&gt;We will use the &lt;code&gt;wage1&lt;/code&gt; dataset from the &lt;code&gt;wooldridge&lt;/code&gt; package. These are data from the 1976 Current Population Survey used by Jeffrey M. Wooldridge with pedagogical purposes in his book on Introductory Econometrics.&lt;/p&gt;
+&lt;p&gt;If you want to check the contents of the &lt;code&gt;wage1&lt;/code&gt; data frame, you can type &lt;code&gt;?wage1&lt;/code&gt; in your console&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;visualizing&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Visualizing&lt;/h3&gt;
+&lt;h4 style=&#34;color:#800080;&#34;&gt;
+With regression we can answer &lt;strong&gt;EXPLORATORY QUESTIONS&lt;/strong&gt;. For example:
+&lt;/h4&gt;
+&lt;h5&gt;
+What is the relationship between education and respondents&#39; salaries?
+&lt;/h5&gt;
+&lt;p&gt;We can start by exploring the relationship visually with our newly attained &lt;code&gt;ggplot2&lt;/code&gt; skills:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(wage1, aes(x = educ, y = wage)) +
+  geom_point(color = &amp;quot;grey60&amp;quot;) +
+  geom_smooth(method = &amp;quot;lm&amp;quot;, se = F, color = &amp;quot;#CC0055&amp;quot;) +
+  theme_minimal() +
+  labs(x = &amp;quot;Years of education&amp;quot;,
+       y = &amp;quot;Hourly wage (USD)&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/109506967-87ff2980-7a9e-11eb-8cca-36756b8c502e.png&#34; width=&#34;85%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-lm-function&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The &lt;code&gt;lm()&lt;/code&gt; function&lt;/h3&gt;
+&lt;p&gt;This question can be formalized mathematically as:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[Hourly\ wage = \beta_0 + \beta_1Years\ of\ education + ϵ\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Our interest here would be to build a model that predicts the hourly wage of a respondent (&lt;strong&gt;our outcome variable&lt;/strong&gt;) using the years of education (&lt;strong&gt;our explanatory variable&lt;/strong&gt;). Fortunately for us, &lt;strong&gt;R&lt;/strong&gt; provides us with a very intuitive syntax to model regressions.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The general syntax for running a regression model in R is the following:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;your_model_biv &amp;lt;- lm(outcome_variable ~ explanarory_variable, data = your_dataset) #for a bivariate regression
+your_model_mult &amp;lt;- lm(outcome_variable ~ explanarory_variable_1 + explanarory_variable_2, data = your_dataset) #for multiple regression&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now let&#39;s create our own model and save it into the &lt;code&gt;model_1&lt;/code&gt; object, based on the bivariate regression we specified above in which &lt;code&gt;wage&lt;/code&gt; is our outcome variable, &lt;code&gt;educ&lt;/code&gt; is our explanatory variable, and our data come from the &lt;code&gt;wage1&lt;/code&gt; object:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;model_1 &amp;lt;- lm(wage ~ educ, data = wage1)&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;summary-and-broomtidy&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;code&gt;summary()&lt;/code&gt; and &lt;code&gt;broom::tidy()&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;We have created an object that contains the coefficients, standard errors and further information from your model. In order to see the estimates, you could use the base R function &lt;code&gt;summary()&lt;/code&gt;. &lt;strong&gt;This function is very useful when you want to print your results in your console.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Alternatively, you can use the &lt;code&gt;tidy()&lt;/code&gt; function from the &lt;code&gt;broom&lt;/code&gt; package. The function constructs a data frame that summarizes the model’s statistical findings. You can see what else you can do with broom by running: vignette(“broom”). &lt;strong&gt;The &lt;code&gt;broom::tidy()&lt;/code&gt; function is useful when you want to store the values for future use (e.g., visualizing them)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Let&#39;s try both options in the console up there. You just need to copy this code below the &lt;code&gt;model_1&lt;/code&gt; code.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(model_1)
+broom::tidy(model_1)&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exercise&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Exercise&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[Hourly\ wage = \beta_0 + \beta_1Years\ of\ education + ϵ\]&lt;/span&gt;&lt;/p&gt;
+&lt;center&gt;
+&lt;table style=&#34;text-align:center&#34;&gt;
+&lt;tr&gt;
+&lt;td colspan=&#34;2&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;em&gt;Dependent variable:&lt;/em&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+&lt;/td&gt;
+&lt;td colspan=&#34;1&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+Hourly wage
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan=&#34;2&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+Years of education
+&lt;/td&gt;
+&lt;td&gt;
+0.541&lt;sup&gt;***&lt;/sup&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+(0.053)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+Constant
+&lt;/td&gt;
+&lt;td&gt;
+-0.905
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+(0.685)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan=&#34;2&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+Observations
+&lt;/td&gt;
+&lt;td&gt;
+526
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+R&lt;sup&gt;2&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;
+0.165
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+Adjusted R&lt;sup&gt;2&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;
+0.163
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+Residual Std. Error
+&lt;/td&gt;
+&lt;td&gt;
+3.378 (df = 524)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+F Statistic
+&lt;/td&gt;
+&lt;td&gt;
+103.363&lt;sup&gt;***&lt;/sup&gt; (df = 1; 524)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan=&#34;2&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;em&gt;Note:&lt;/em&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;
+&lt;sup&gt;&lt;em&gt;&lt;/sup&gt;p&amp;lt;0.1; &lt;sup&gt;&lt;strong&gt;&lt;/sup&gt;p&amp;lt;0.05; &lt;sup&gt;&lt;/strong&gt;&lt;/em&gt;&lt;/sup&gt;p&amp;lt;0.01
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/center&gt;
+&lt;p style=&#34;color:#CC0055;&#34;&gt;
+How would you interpret the results of our &lt;code&gt;model_1&lt;/code&gt;?
+&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;What does the constant mean?&lt;/li&gt;
+&lt;li&gt;What does the &lt;code&gt;educ&lt;/code&gt; coefficient mean?&lt;/li&gt;
+&lt;li&gt;Do these coefficient carry any causal meaning?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;adding-more-nuance-to-our-models&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Adding more nuance to our models&lt;/h2&gt;
+&lt;p&gt;As we have discussed in previous sessions we live in a very complex world. It is very likely that our exploration of the relationship between education and respondents&#39; salaries is open to multiple sources of bias.&lt;/p&gt;
+&lt;p&gt;Looking back at 1976 US, can you think of possible variables inside the mix?&lt;/p&gt;
+&lt;p&gt;
+How about the &lt;span style=&#34;color:#CC0055;&#34;&gt;sex&lt;/span&gt; or the &lt;span style=&#34;color:#800080;&#34;&gt;ethnicity&lt;/span&gt; of a worker?
+&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;lets-explore-this-visually&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Let&#39;s explore this visually&lt;/h3&gt;
+&lt;h5&gt;
+What is the relationship between education and respondents&#39; salaries &lt;span style=&#34;color:#CC0055;&#34;&gt;conditional on the sex of the worker&lt;/span&gt;?
+&lt;/h5&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(wage1, aes(x = educ, y = wage, color = as.factor(female))) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(method = &amp;quot;lm&amp;quot;, se = F) +
+  theme_minimal() +
+  labs(x = &amp;quot;Years of education&amp;quot;,
+       y = &amp;quot;Hourly wage (USD)&amp;quot;,
+       color = &amp;quot;Female&amp;quot;) +
+  theme(legend.position = &amp;quot;bottom&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/109506969-87ff2980-7a9e-11eb-80b9-ce388816ecc0.png&#34; width=&#34;85%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Check what happens when we replace the &lt;code&gt;color = as.factor(female)&lt;/code&gt; for &lt;code&gt;color = female&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;What insights can we gather from this graph?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;multiple-linear-regression-1&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Multiple linear regression&lt;/h3&gt;
+&lt;p&gt;This question can be formalized mathematically as:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[Hourly\ wage = \beta_0 + \beta_1Years\ of\ education + \beta_2Female + ϵ\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Our interest here would be to build a model that predicts the hourly wage of a respondent (&lt;strong&gt;our outcome variable&lt;/strong&gt;) using the years of education and their sex (&lt;strong&gt;our explanatory variables&lt;/strong&gt;).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Let&#39;s remember the syntax for running a regression model in R:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;your_model_biv &amp;lt;- lm(outcome_variable ~ explanarory_variable, data = your_dataset) #for a bivariate regression
+your_model_mult &amp;lt;- lm(outcome_variable ~ explanarory_variable_1 + explanarory_variable_2, data = your_dataset) #for multiple regression&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now let&#39;s create our own model, save it into the &lt;code&gt;model_2&lt;/code&gt; object, and print the results based on the formula regression we specified above in which &lt;code&gt;wage&lt;/code&gt; is our outcome variable, &lt;code&gt;educ&lt;/code&gt; and &lt;code&gt;female&lt;/code&gt; are our explanatory variables, and our data come from the &lt;code&gt;wage1&lt;/code&gt; object:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;model_2 &amp;lt;- lm(wage ~ educ + female, data = wage1)
+summary(model_2)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = wage ~ educ + female, data = wage1)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.9890 -1.8702 -0.6651  1.0447 15.4998 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&amp;gt;|t|)    
+## (Intercept)  0.62282    0.67253   0.926    0.355    
+## educ         0.50645    0.05039  10.051  &amp;lt; 2e-16 ***
+## female      -2.27336    0.27904  -8.147 2.76e-15 ***
+## ---
+## Signif. codes:  0 &amp;#39;***&amp;#39; 0.001 &amp;#39;**&amp;#39; 0.01 &amp;#39;*&amp;#39; 0.05 &amp;#39;.&amp;#39; 0.1 &amp;#39; &amp;#39; 1
+## 
+## Residual standard error: 3.186 on 523 degrees of freedom
+## Multiple R-squared:  0.2588, Adjusted R-squared:  0.256 
+## F-statistic: 91.32 on 2 and 523 DF,  p-value: &amp;lt; 2.2e-16&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exercise-1&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Exercise&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[Hourly\ wage = \beta_0 + \beta_1Years\ of\ education + \beta_2Female + ϵ\]&lt;/span&gt;&lt;/p&gt;
+&lt;table style=&#34;text-align:center&#34;&gt;
+&lt;tr&gt;
+&lt;td colspan=&#34;2&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;em&gt;Dependent variable:&lt;/em&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+&lt;/td&gt;
+&lt;td colspan=&#34;1&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+Hourly wage
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan=&#34;2&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+Years of education
+&lt;/td&gt;
+&lt;td&gt;
+0.506&lt;sup&gt;***&lt;/sup&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+(0.050)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+Female
+&lt;/td&gt;
+&lt;td&gt;
+-2.273&lt;sup&gt;***&lt;/sup&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+(0.279)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+Constant
+&lt;/td&gt;
+&lt;td&gt;
+0.623
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+(0.673)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan=&#34;2&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+Observations
+&lt;/td&gt;
+&lt;td&gt;
+526
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+R&lt;sup&gt;2&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;
+0.259
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+Adjusted R&lt;sup&gt;2&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;
+0.256
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+Residual Std. Error
+&lt;/td&gt;
+&lt;td&gt;
+3.186 (df = 523)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+F Statistic
+&lt;/td&gt;
+&lt;td&gt;
+91.315&lt;sup&gt;***&lt;/sup&gt; (df = 2; 523)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan=&#34;2&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;em&gt;Note:&lt;/em&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;
+&lt;sup&gt;&lt;em&gt;&lt;/sup&gt;p&amp;lt;0.1; &lt;sup&gt;&lt;strong&gt;&lt;/sup&gt;p&amp;lt;0.05; &lt;sup&gt;&lt;/strong&gt;&lt;/em&gt;&lt;/sup&gt;p&amp;lt;0.01
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p style=&#34;color:#CC0055;&#34;&gt;
+How would you interpret the results of our &lt;code&gt;model_2&lt;/code&gt;?
+&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;What does the constant mean?&lt;/li&gt;
+&lt;li&gt;What does the &lt;code&gt;educ&lt;/code&gt; coefficient mean?&lt;/li&gt;
+&lt;li&gt;What does the &lt;code&gt;female&lt;/code&gt; coefficient mean?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;predicting-from-our-models&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Predicting from our models&lt;/h3&gt;
+&lt;p&gt;As we discussed previously, when we do not have our &lt;strong&gt;causal inference&lt;/strong&gt; hats on, the main goal of linear regression is to predict an outcome value on the basis of one or multiple predictor variables.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;R&lt;/strong&gt; has a generic function &lt;code&gt;predict()&lt;/code&gt; that helps us arrive at the predicted values on the basis of our explanatory variables.&lt;/p&gt;
+&lt;p&gt;The syntax of &lt;code&gt;predict()&lt;/code&gt; is the following:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;predict(name_of_the_model, newdata = data.frame(explanatory1 = value, explanatory2 = value))&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Say that based on our &lt;code&gt;model_2&lt;/code&gt;, we are interested in the expected average hourly wage of a woman with 15 years of education.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;predict(model_2, newdata = data.frame(educ = 15, female = 1))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##        1 
+## 5.946237&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;What does this result tell us?&lt;/li&gt;
+&lt;li&gt;What happens when you change &lt;code&gt;female&lt;/code&gt; to 0? What does the result mean?&lt;/li&gt;
+&lt;li&gt;Can you think of a way to find the difference in the expected hourly wage between a male with 16 years of education and a female with 17?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;predict(model_2, newdata = data.frame(educ = 16, female = 0)) - predict(model_2, newdata = data.frame(educ = 15, female =0))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##         1 
+## 0.5064521&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;quiz&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Quiz&lt;/h2&gt;
+&lt;p&gt;Here are some questions for you. Note that there are multiple ways to reach the same answer:&lt;/p&gt;
+&lt;p&gt;What is the expected hourly wage of a male with 15 years of education?&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: lower-alpha&#34;&gt;
+&lt;li&gt;$8.22&lt;/li&gt;
+&lt;li&gt;$9.50&lt;/li&gt;
+&lt;li&gt;5.34&lt;/li&gt;
+&lt;li&gt;$3&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr /&gt;
+&lt;p&gt;How much more on average does a male worker earn than a female counterpart?&amp;quot;,&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: lower-alpha&#34;&gt;
+&lt;li&gt;$2.27&lt;/li&gt;
+&lt;li&gt;In our data, males on average earn less than females&lt;/li&gt;
+&lt;li&gt;$1.20&lt;/li&gt;
+&lt;li&gt;$4.50&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr /&gt;
+&lt;p&gt;How much more is a worker expected to earn for every additional year of education, keeping sex constant?&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: lower-alpha&#34;&gt;
+&lt;li&gt;$0.90&lt;/li&gt;
+&lt;li&gt;$1.20&lt;/li&gt;
+&lt;li&gt;$0.5&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;dags-and-modeling&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;DAGs and modeling&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/94547573-b8bd0780-024f-11eb-9565-03b1d1109c3b.png&#34; width=&#34;80%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;As we can remember from our slides, we were introduced to a set of &lt;strong&gt;key&lt;/strong&gt; rules in understanding how to employ DAGs to guide our modeling strategy.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A path is open or unblocked at non-colliders (confounders or mediators)&lt;/li&gt;
+&lt;li&gt;A path is (naturally) blocked at colliders&lt;/li&gt;
+&lt;li&gt;An open path induces statistical association between two variables&lt;/li&gt;
+&lt;li&gt;Absence of an open path implies statistical independence&lt;/li&gt;
+&lt;li&gt;Two variables are d-connected if there is an open path between them&lt;/li&gt;
+&lt;li&gt;Two variables are d-separated if the path between them is blocked&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In this portion of the tutorial we will demonstrate how different bias come to work when we model our relationships of interest.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what-happens-when-we-control-for-a-collider&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What happens when we control for a collider?&lt;/h2&gt;
+&lt;h4 style=&#34;color:#CC5500&#34;&gt;
+The case for beauty, talent, and celebrity (What happens when we control for a collider?)
+&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/94370219-0706c500-00ef-11eb-814b-05ab715ee2e0.png&#34; width=&#34;80%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;As it is showcased from our DAG, we assume that earning celebrity status is a function of an individuals beauty and talent.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;We will simulate data that reflects this assumptions&lt;/strong&gt;. In our world, someone gains celebrity status if the sum of units of beauty and celebrity are greater than 8.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# beauty - 1000 observations with mean 5 units of beauty and sd 1.5 (arbitrary scale)
+beauty &amp;lt;- rnorm(1000, 5, 1.5)
+
+# talent - 1000 observations with mean 3 units of talent and sd 1 (arbitrary scale)
+talent &amp;lt;- rnorm(1000, 3, 1)
+
+# celebrity - binary
+celebrity_status &amp;lt;-  ifelse(beauty + talent &amp;gt; 8, &amp;quot;Celebrity&amp;quot; , &amp;quot;Not Celebrity&amp;quot;) # celebrity if the sum of units  are greater than 8
+
+celebrity_df &amp;lt;- dplyr::tibble(beauty, talent, celebrity_status) # we make a df with our values
+
+head(celebrity_df, 10)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 10 x 3
+##    beauty talent celebrity_status
+##     &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;           
+##  1   7.06 5.33   Celebrity       
+##  2   4.15 3.52   Not Celebrity   
+##  3   5.54 3.97   Celebrity       
+##  4   5.95 3.38   Celebrity       
+##  5   5.61 2.00   Not Celebrity   
+##  6   4.84 2.40   Not Celebrity   
+##  7   7.27 3.17   Celebrity       
+##  8   4.86 0.0715 Not Celebrity   
+##  9   8.03 2.15   Celebrity       
+## 10   4.91 3.80   Celebrity&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;p&gt;In this case, as our simulation suggest, we have a &lt;strong&gt;collider structure&lt;/strong&gt;. We can see that celebrity can be a function of beauty or talent. Also, we can infer from the way we defined the variables that &lt;strong&gt;beauty and talent are d-separated (ie. the path between them is closed because celebrity is a collider)&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Say you are interested in researching the relationship between &lt;strong&gt;beauty&lt;/strong&gt; and &lt;strong&gt;talent&lt;/strong&gt; for your Master&#39;s thesis, while doing your literature review you encounter a series of papers that find a negative relationship between the two and state that more beautiful people tend to be less talented. The model that these teams of the researchers used was the following:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[Y_{Talent} = \beta_0 + \beta_1Beauty + \beta_2Celebrity\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Your scientific hunch makes you believe that celebrity is a collider and that by controlling for it in their models, the researchers are inducing &lt;strong&gt;collider bias&lt;/strong&gt;, or &lt;strong&gt;endogenous bias&lt;/strong&gt;. You decide to move forward with your thesis by laying out a criticism to previous work on the field, given that you consider the formalization of their models is erroneous. You utilize the same data previous papers used, but based on your logic, you do not control for celebrity status. This is what you find:&lt;/p&gt;
+&lt;div id=&#34;true-model&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;True model&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;true_model_celebrity &amp;lt;- lm(talent ~ beauty, data = celebrity_df)
+summary(true_model_celebrity)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = talent ~ beauty, data = celebrity_df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.9225 -0.6588 -0.0083  0.6628  3.5877 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&amp;gt;|t|)    
+## (Intercept) 2.962209   0.107595  27.531   &amp;lt;2e-16 ***
+## beauty      0.006545   0.020755   0.315    0.753    
+## ---
+## Signif. codes:  0 &amp;#39;***&amp;#39; 0.001 &amp;#39;**&amp;#39; 0.01 &amp;#39;*&amp;#39; 0.05 &amp;#39;.&amp;#39; 0.1 &amp;#39; &amp;#39; 1
+## 
+## Residual standard error: 0.9865 on 998 degrees of freedom
+## Multiple R-squared:  9.964e-05,  Adjusted R-squared:  -0.0009023 
+## F-statistic: 0.09945 on 1 and 998 DF,  p-value: 0.7526&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(celebrity_df, aes(x=beauty, 
+                         y=talent)) +
+  geom_point() +
+  geom_smooth(method = &amp;quot;lm&amp;quot;, se = F) +
+  theme_minimal() +
+  theme(legend.position = &amp;quot;bottom&amp;quot;) +
+  labs(x = &amp;quot;Beauty&amp;quot;,
+       y = &amp;quot;Talent&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/109508058-b6313900-7a9f-11eb-92c6-16551885f993.png&#34; width=&#34;85%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;biased-model-from-previous-literature&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Biased model from previous literature&lt;/h4&gt;
+&lt;p&gt;Let&#39;s see:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;biased_model_celibrity &amp;lt;- lm(talent ~ beauty + celebrity_status, data = celebrity_df)
+summary(biased_model_celibrity)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = talent ~ beauty + celebrity_status, data = celebrity_df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.4244 -0.5394  0.0110  0.5064  2.9429 
+## 
+## Coefficients:
+##                               Estimate Std. Error t value Pr(&amp;gt;|t|)    
+## (Intercept)                    5.37834    0.13983   38.46   &amp;lt;2e-16 ***
+## beauty                        -0.32668    0.02265  -14.43   &amp;lt;2e-16 ***
+## celebrity_statusNot Celebrity -1.51375    0.06808  -22.24   &amp;lt;2e-16 ***
+## ---
+## Signif. codes:  0 &amp;#39;***&amp;#39; 0.001 &amp;#39;**&amp;#39; 0.01 &amp;#39;*&amp;#39; 0.05 &amp;#39;.&amp;#39; 0.1 &amp;#39; &amp;#39; 1
+## 
+## Residual standard error: 0.807 on 997 degrees of freedom
+## Multiple R-squared:  0.3316, Adjusted R-squared:  0.3302 
+## F-statistic: 247.3 on 2 and 997 DF,  p-value: &amp;lt; 2.2e-16&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(celebrity_df, aes(x=beauty, y=talent, color = celebrity_status)) +
+  geom_point() +
+  geom_smooth(method = &amp;quot;lm&amp;quot;, se = F) +
+  theme_minimal() +
+  theme(legend.position = &amp;quot;bottom&amp;quot;) +
+  labs(x = &amp;quot;Beauty&amp;quot;,
+       y = &amp;quot;Talent&amp;quot;,
+       color = &amp;quot;&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/109508067-b8939300-7a9f-11eb-8f48-dd090d63234c.png&#34; width=&#34;85%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;As we can see, by controlling for a collider, the previous literature was inducing to a non-existent association between beauty and talent, also known as &lt;strong&gt;collider&lt;/strong&gt; or &lt;strong&gt;endogenous bias&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what-happens-when-we-fail-to-control-for-a-confounder&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What happens when we fail to control for a confounder?&lt;/h2&gt;
+&lt;h4 style=&#34;color:#32CD32;&#34;&gt;
+Shoe size and salary (What happens when we fail to control for a confounder?)
+&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/94558922-cd55cb80-0260-11eb-9b03-ff54416014a7.png&#34; width=&#34;80%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# sex - replicate male and female 500 times each
+sex &amp;lt;- rep(c(&amp;quot;Male&amp;quot;, &amp;quot;Female&amp;quot;), each = 500) 
+
+# shoe size - random number with mean 38 and sd 4, plus 4 if the observation is male
+shoesize &amp;lt;- rnorm(1000, 38, 2) +  (4 * as.numeric(sex == &amp;quot;Male&amp;quot;))
+
+# salary - a random number with mean 25 and sd 2, plus 5 if the observation is male
+salary &amp;lt;- rnorm(1000, 25, 2) + (5 * as.numeric(sex == &amp;quot;Male&amp;quot;))
+
+salary_df &amp;lt;- dplyr::tibble(sex, shoesize, salary)
+
+head(salary_df, 10)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 10 x 3
+##    sex   shoesize salary
+##    &amp;lt;chr&amp;gt;    &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;
+##  1 Male      42.5   28.6
+##  2 Male      41.4   28.4
+##  3 Male      38.6   29.2
+##  4 Male      38.0   27.7
+##  5 Male      39.4   32.2
+##  6 Male      42.7   28.2
+##  7 Male      41.7   32.6
+##  8 Male      40.5   27.1
+##  9 Male      40.4   31.7
+## 10 Male      43.1   28.8&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Say now one of your peers tells you about this new study that suggests that &lt;strong&gt;shoe size&lt;/strong&gt; has an effect on an individuals&#39; &lt;strong&gt;salary&lt;/strong&gt;. You are a bit skeptic and read it. The model that these researchers apply is the following:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[Y_{Salary} = \beta_0 + \beta_1ShoeSize\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Your scientific hunch makes you believe that this relationship could be confounded by the &lt;strong&gt;sex&lt;/strong&gt; of the respondent. You think that by failing to control for sex in their models, the researchers are inducing &lt;strong&gt;omitted variable bias&lt;/strong&gt;. You decide to open their replication files and control for sex. This is what you find:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[Y_{Salary} = \beta_0 + \beta_1ShoeSize + \beta_2Sex\]&lt;/span&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;true-model-1&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;True model&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;true_model_salary &amp;lt;- lm(salary ~ shoesize + sex, data = salary_df)
+summary(true_model_salary)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = salary ~ shoesize + sex, data = salary_df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -6.2341 -1.3698 -0.0501  1.3595  6.4303 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&amp;gt;|t|)    
+## (Intercept) 25.73879    1.15886  22.210   &amp;lt;2e-16 ***
+## shoesize    -0.02030    0.03044  -0.667    0.505    
+## sexMale      5.05924    0.17616  28.720   &amp;lt;2e-16 ***
+## ---
+## Signif. codes:  0 &amp;#39;***&amp;#39; 0.001 &amp;#39;**&amp;#39; 0.01 &amp;#39;*&amp;#39; 0.05 &amp;#39;.&amp;#39; 0.1 &amp;#39; &amp;#39; 1
+## 
+## Residual standard error: 1.981 on 997 degrees of freedom
+## Multiple R-squared:  0.6129, Adjusted R-squared:  0.6121 
+## F-statistic: 789.2 on 2 and 997 DF,  p-value: &amp;lt; 2.2e-16&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(salary_df, aes(x=shoesize, y=salary, color = sex)) +
+  geom_point() +
+  geom_smooth(method = &amp;quot;lm&amp;quot;, se = F) +
+  theme_minimal() +
+  theme(legend.position = &amp;quot;bottom&amp;quot;) +
+  labs(x = &amp;quot;Shoe size&amp;quot;,
+       y = &amp;quot;Salary&amp;quot;,
+       color = &amp;quot;&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/109508071-b9c4c000-7a9f-11eb-9790-f67e51100516.png&#34; width=&#34;85%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;biased-model-from-previous-literature-1&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Biased model from previous literature&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;biased_model_salary &amp;lt;- lm(salary ~ shoesize, data = salary_df)
+summary(biased_model_salary)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = salary ~ shoesize, data = salary_df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -7.8777 -1.9101 -0.0511  1.8496  7.9774 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&amp;gt;|t|)    
+## (Intercept)  3.68865    1.17280   3.145  0.00171 ** 
+## shoesize     0.59429    0.02925  20.319  &amp;lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &amp;#39;***&amp;#39; 0.001 &amp;#39;**&amp;#39; 0.01 &amp;#39;*&amp;#39; 0.05 &amp;#39;.&amp;#39; 0.1 &amp;#39; &amp;#39; 1
+## 
+## Residual standard error: 2.676 on 998 degrees of freedom
+## Multiple R-squared:  0.2926, Adjusted R-squared:  0.2919 
+## F-statistic: 412.9 on 1 and 998 DF,  p-value: &amp;lt; 2.2e-16&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(salary_df, aes(x=shoesize, y=salary)) +
+  geom_point() +
+  geom_smooth(method = &amp;quot;lm&amp;quot;, se = F) +
+  theme_minimal() +
+  labs(x = &amp;quot;Shoe size&amp;quot;,
+       y = &amp;quot;Salary&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/109508075-ba5d5680-7a9f-11eb-92e2-2f845bb5c5ec.png&#34; width=&#34;85%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;As we can see, by failing to control for a confounder, the previous literature was creating a non-existent association between shoe size and salary, incurring in &lt;strong&gt;ommited variable bias&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

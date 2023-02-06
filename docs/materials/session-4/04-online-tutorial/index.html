@@ -1,0 +1,1724 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.0.0-beta.2 for Hugo" />
+  
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Sebastian Ramirez Ruiz" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Welcome Introduction! Welcome to our fourth tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.
+During this week&#39;s lecture you reviewed bivariate and multiple linear regressions." />
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-4/04-online-tutorial/" />
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    <meta name="theme-color" content="#1565c0" />
+  
+
+  
+  
+    
+    <script src="/2022-spring-stats2/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous" media="print" onload="this.media='all'">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/2022-spring-stats2/css/wowchemy.dd90b8698d7ba5e114b9de5647a585e5.css" />
+
+  
+
+
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+    <link rel="manifest" href="/2022-spring-stats2/index.webmanifest" />
+  
+
+  <link rel="icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_32x32_fill_lanczos_center_2.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_180x180_fill_lanczos_center_2.png" />
+
+  <link rel="canonical" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-4/04-online-tutorial/" />
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary" />
+  
+  <meta property="og:site_name" content="| Tutorials - Spring 2022 |" />
+  <meta property="og:url" content="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-4/04-online-tutorial/" />
+  <meta property="og:title" content="The Backdoor Criterion and Basics of Regression in R | | Tutorials - Spring 2022 |" />
+  <meta property="og:description" content="Welcome Introduction! Welcome to our fourth tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.
+During this week&#39;s lecture you reviewed bivariate and multiple linear regressions." /><meta property="og:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" />
+    <meta property="twitter:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" /><meta property="og:locale" content="en-us" />
+  
+    
+    
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+
+
+
+
+  <title>The Backdoor Criterion and Basics of Regression in R | | Tutorials - Spring 2022 |</title>
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/2022-spring-stats2/js/wowchemy-init.min.d876f1a6b98701f9238f2313b512a26f.js"></script>
+
+  
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-end" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/2022-spring-stats2/materials/"><span>Materials</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+        
+      
+        
+      
+
+      
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    
+
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+          DAGs and Regression
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/2022-spring-stats2/materials/"><i class="fas fa-arrow-left pr-1"></i>Materials</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/2022-spring-stats2/materials/session-4/">DAGs and Regression</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  <li class=""><a href="/2022-spring-stats2/materials/session-4/slides/">Slides</a></li>
+
+
+
+  <li class="active"><a href="/2022-spring-stats2/materials/session-4/04-online-tutorial/">The Backdoor Criterion and Basics of Regression in R</a></li>
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      
+
+      
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <article class="article">
+
+        <div class="docs-article-container">
+          
+            
+  <nav class="d-none d-md-flex" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      
+  
+  
+  
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/">
+      
+        Home
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/">
+      
+        Materials
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/session-4/">
+      
+        DAGs and Regression
+      
+    </a>
+  </li>
+
+
+      <li class="breadcrumb-item active" aria-current="page">
+        The Backdoor Criterion and Basics of Regression in R
+      </li>
+    </ol>
+  </nav>
+
+
+          
+
+          <h1>The Backdoor Criterion and Basics of Regression in R</h1>
+
+          <div class="article-style">
+            
+
+
+<div id="welcome" class="section level2">
+<h2>Welcome</h2>
+<div id="introduction" class="section level3">
+<h3>Introduction!</h3>
+<p>Welcome to our fourth tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.</p>
+<p>During this week's lecture you reviewed bivariate and multiple linear regressions. You also learned how Directed Acyclic Graphs (DAGs) can be leveraged to gather causal estimates.</p>
+<p>In this lab session we will:</p>
+<ul>
+<li>Use the <code>ggdag</code> and <code>dagitty</code> packages to assess your modeling strategy</li>
+<li>Review how to run regression models using <strong>R</strong></li>
+<li>Illustrate omitted variable and collider bias</li>
+</ul>
+<hr />
+<div id="packages" class="section level4">
+<h4>Packages</h4>
+<pre class="r"><code># These are the libraries we will use today. Make sure to install them in your console in case you have not done so previously.
+set.seed(42) #for consistent results in randomization
+library(wooldridge) # To get our example&#39;s dataset 
+library(tidyverse) # To use dplyr functions and the pipe operator when needed
+library(ggplot2) # To visualize data (this package is also loaded by library(tidyverse))
+library(ggdag) # To dagify and plot our DAG objects in R
+library(dagitty) # To perform analysis in our DAG objects in R
+library(stargazer) # To render nicer regression output
+data(&quot;wage1&quot;) # calls the wage1 dataset from the woorldridge package</code></pre>
+<hr />
+</div>
+</div>
+</div>
+<div id="working-with-dags-in-r" class="section level2">
+<h2>Working with DAGs in R</h2>
+<p>Last week we learned about the general syntax of the <code>ggdag</code> package:</p>
+<ul>
+<li>We created <strong>dagified</strong> objects with <code>ggdag::dagify()</code></li>
+<li>We plotted our DAGs with <code>ggdag::ggdag()</code></li>
+<li>We discussed how to specify the coordinates of our nodes with a coordinate list</li>
+</ul>
+<p>Today, we will learn how the <code>ggdag</code> and <code>dagitty</code> packages can help us illustrate our paths and adjustment sets to fulfill the <strong>backdoor criterion</strong></p>
+<p>Let's take one of the DAGs from our review slides:</p>
+<pre class="r"><code>coord_dag &lt;- list(
+  x = c(d = 0, p = 0, b = 1, a = 1 , c = 2, y = 2),
+  y = c(d = 0, p = 2, b = 1, a = -1, c = 2, y = 0)
+)
+
+our_dag &lt;- ggdag::dagify(d ~ p + a, # p and a pointing at d
+                         b ~ p + c, # p and c pointing at b
+                         y ~ d + a + c, # d, a, and c pointing at y
+                         coords = coord_dag, # our coordinates from the list up there
+                         exposure = &quot;d&quot;, # we declare out exposure variable
+                         outcome = &quot;y&quot;) # we declare out outcome variable
+
+ggdag::ggdag(our_dag) + 
+  theme_dag() # equivalent to theme_void()</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/109506958-85043900-7a9e-11eb-8183-50a985ca1195.png" width="85%" style="display: block; margin: auto;" /></p>
+<hr />
+<div id="learning-about-our-paths-and-what-adjustments-we-need" class="section level3">
+<h3>Learning about our paths and what adjustments we need</h3>
+<p>As you have seen, when we <strong>dagify</strong> a DAG in <strong>R</strong> a <em>dagitty</em> object is created. These objects tell <strong>R</strong> that we are dealing with DAGs.</p>
+<p>This is very important because in addition to plotting them, <strong>we can do analyses on the DAG objects</strong>. A package that complements <code>ggdag</code> is the <code>dagitty</code> package.</p>
+<p>Today, we will focus on two functions from the <code>dagitty</code> package:</p>
+<ul>
+<li><code>dagitty::paths()</code>: Returns a list with two components: <strong>paths</strong>, which gives the actual paths, and <strong>open</strong>, which shows whether each path is open (d-connected) or closed (d-separated).</li>
+<li><code>dagitty::adjustmentSets()</code>: Lists the sets of covariates that would allow for unbiased estimation of causal effects, <strong>assuming that the causal graph is correct</strong>.</li>
+</ul>
+<p>We just need to input our DAG object.</p>
+<hr />
+<div id="paths" class="section level4">
+<h4>Paths</h4>
+<p>Let's see how the output of the <code>dagitty::paths</code> function looks like:</p>
+<pre class="r"><code>dagitty::paths(our_dag)</code></pre>
+<pre><code>## $paths
+## [1] &quot;d -&gt; y&quot;                &quot;d &lt;- a -&gt; y&quot;           &quot;d &lt;- p -&gt; b &lt;- c -&gt; y&quot;
+## 
+## $open
+## [1]  TRUE  TRUE FALSE</code></pre>
+<p>We see under <code>$paths</code> the three paths we declared during the manual exercise:</p>
+<ul>
+<li>d -&gt; y</li>
+<li>d &lt;- a -&gt; y</li>
+<li>d &lt;- p -&gt; b &lt;- c -&gt; y</li>
+</ul>
+<p>Additionally, <code>$open</code> tells us whether each path is open. In this case, we see that the second path is the only open non-causal path, so we would need to condition on <strong>a</strong> to close it.</p>
+<hr />
+<p>We can also use <code>ggdag</code> to present the open paths visually with the <code>ggdag_paths()</code> function, as such:</p>
+<pre class="r"><code>ggdag::ggdag_paths(our_dag) +
+  theme_dag()</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/109506962-86356600-7a9e-11eb-8207-df83d670a43e.png" width="85%" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+<div id="covariate-adjustment" class="section level4">
+<h4>Covariate adjustment</h4>
+<p>In addition to listing all the paths and sorting the backdoors manually, we can use the <code>dagitty::adjustmentSets()</code> function.</p>
+<p>With this function, we just need to input our DAG object and it will return the different sets of adjustments.</p>
+<pre class="r"><code>dagitty::adjustmentSets(our_dag)</code></pre>
+<pre><code>## { a }</code></pre>
+<p>For example, in this DAG there is only one option. We need to control for <strong>a</strong>.</p>
+<hr />
+<p>We can also use <code>ggdag</code> to present the open paths visually with the <code>ggdag_adjustment_set()</code> function, as such:</p>
+<p>Also, do not forget to set the argument <code>shadow = TRUE</code>, so that the arrows from the adjusted nodes are included.</p>
+<pre class="3"><code>ggdag::ggdag_adjustment_set(our_dag, shadow = T) +
+  theme_dag()</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/109506965-87669300-7a9e-11eb-8d6c-ed01a9e3aa41.png" width="85%" style="display: block; margin: auto;" /></p>
+<hr />
+<h4">If you want to learn more about DAGs in R
+</h4>
+<ul>
+<li><code>ggdag</code> documentation: <a href="https://ggdag.malco.io/" class="uri">https://ggdag.malco.io/</a></li>
+<li><code>dagitty</code> vignette: <a href="https://cran.r-project.org/web/packages/dagitty/dagitty.pdf" class="uri">https://cran.r-project.org/web/packages/dagitty/dagitty.pdf</a></li>
+<li>What is `dagitty: <a href="https://cran.r-project.org/web/packages/dagitty/vignettes/dagitty4semusers.html" class="uri">https://cran.r-project.org/web/packages/dagitty/vignettes/dagitty4semusers.html</a></li>
+</ul>
+<p><strong>NOW LET'S MOVE TO REGRESSION</strong></p>
+<hr />
+</div>
+</div>
+</div>
+<div id="introduction-to-regression" class="section level2">
+<h2>Introduction to Regression</h2>
+<p>Linear regression is largely used to predict the value of an outcome variable based on one or more input explanatory variables. As we previously discussed, regression addresses a simple mechanical problem, namely, <strong>what is our best guess of y given an observed x</strong>.</p>
+<ul>
+<li>Regression can be utilized without thinking about causes as a <em>predictive</em> or <em>summarizing</em> tool</li>
+<li>It would not be appropiate to give causal interpretations to any <span class="math inline">\(\beta\)</span>, unless we establish the fulfilment of centain assumptions</li>
+</ul>
+<hr />
+<div id="bivariate-regression" class="section level3">
+<h3>Bivariate regression</h3>
+<p>In bivariate regression, we are modeling a variable <span class="math inline">\(y\)</span> as a mathematical function of one variable <span class="math inline">\(x\)</span>. We can generalize this in a mathematical equation as such:</p>
+<p><span class="math display">\[y = \beta_{0} + \beta{1}x + ϵ\]</span></p>
+<hr />
+</div>
+<div id="multiple-linear-regression" class="section level3">
+<h3>Multiple linear regression</h3>
+<p>In multiple linear regression, we are modeling a variable <span class="math inline">\(y\)</span> as a mathematical function of multiple variables <span class="math inline">\((x, z, m)\)</span>. We can generalize this in a mathematical equation as such:</p>
+<p><span class="math display">\[y = \beta_{0} + \beta_{1}x + \beta_{2}z + \beta_{3}m + ϵ\]</span></p>
+<hr />
+</div>
+</div>
+<div id="exploratory-questions" class="section level2">
+<h2>Exploratory questions</h2>
+<p>Let's illustrate this with an example</p>
+<p>We will use the <code>wage1</code> dataset from the <code>wooldridge</code> package. These are data from the 1976 Current Population Survey used by Jeffrey M. Wooldridge with pedagogical purposes in his book on Introductory Econometrics.</p>
+<p>If you want to check the contents of the <code>wage1</code> data frame, you can type <code>?wage1</code> in your console</p>
+<hr />
+<div id="visualizing" class="section level3">
+<h3>Visualizing</h3>
+<h4 style="color:#800080;">
+With regression we can answer <strong>EXPLORATORY QUESTIONS</strong>. For example:
+</h4>
+<h5>
+What is the relationship between education and respondents' salaries?
+</h5>
+<p>We can start by exploring the relationship visually with our newly attained <code>ggplot2</code> skills:</p>
+<pre class="r"><code>ggplot(wage1, aes(x = educ, y = wage)) +
+  geom_point(color = &quot;grey60&quot;) +
+  geom_smooth(method = &quot;lm&quot;, se = F, color = &quot;#CC0055&quot;) +
+  theme_minimal() +
+  labs(x = &quot;Years of education&quot;,
+       y = &quot;Hourly wage (USD)&quot;) </code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/109506967-87ff2980-7a9e-11eb-8cca-36756b8c502e.png" width="85%" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+<div id="the-lm-function" class="section level3">
+<h3>The <code>lm()</code> function</h3>
+<p>This question can be formalized mathematically as:</p>
+<p><span class="math display">\[Hourly\ wage = \beta_0 + \beta_1Years\ of\ education + ϵ\]</span></p>
+<p>Our interest here would be to build a model that predicts the hourly wage of a respondent (<strong>our outcome variable</strong>) using the years of education (<strong>our explanatory variable</strong>). Fortunately for us, <strong>R</strong> provides us with a very intuitive syntax to model regressions.</p>
+<p><strong>The general syntax for running a regression model in R is the following:</strong></p>
+<pre class="r"><code>your_model_biv &lt;- lm(outcome_variable ~ explanarory_variable, data = your_dataset) #for a bivariate regression
+your_model_mult &lt;- lm(outcome_variable ~ explanarory_variable_1 + explanarory_variable_2, data = your_dataset) #for multiple regression</code></pre>
+<p>Now let's create our own model and save it into the <code>model_1</code> object, based on the bivariate regression we specified above in which <code>wage</code> is our outcome variable, <code>educ</code> is our explanatory variable, and our data come from the <code>wage1</code> object:</p>
+<pre class="r"><code>model_1 &lt;- lm(wage ~ educ, data = wage1)</code></pre>
+<hr />
+</div>
+<div id="summary-and-broomtidy" class="section level3">
+<h3><code>summary()</code> and <code>broom::tidy()</code></h3>
+<p>We have created an object that contains the coefficients, standard errors and further information from your model. In order to see the estimates, you could use the base R function <code>summary()</code>. <strong>This function is very useful when you want to print your results in your console.</strong></p>
+<p>Alternatively, you can use the <code>tidy()</code> function from the <code>broom</code> package. The function constructs a data frame that summarizes the model’s statistical findings. You can see what else you can do with broom by running: vignette(“broom”). <strong>The <code>broom::tidy()</code> function is useful when you want to store the values for future use (e.g., visualizing them)</strong></p>
+<p>Let's try both options in the console up there. You just need to copy this code below the <code>model_1</code> code.</p>
+<pre class="r"><code>summary(model_1)
+broom::tidy(model_1)</code></pre>
+<hr />
+</div>
+<div id="exercise" class="section level3">
+<h3>Exercise</h3>
+<p><span class="math display">\[Hourly\ wage = \beta_0 + \beta_1Years\ of\ education + ϵ\]</span></p>
+<center>
+<table style="text-align:center">
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="1" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+Hourly wage
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Years of education
+</td>
+<td>
+0.541<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.053)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+-0.905
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.685)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+526
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.165
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.163
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+3.378 (df = 524)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+103.363<sup>***</sup> (df = 1; 524)
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+</center>
+<p style="color:#CC0055;">
+How would you interpret the results of our <code>model_1</code>?
+</p>
+<ul>
+<li>What does the constant mean?</li>
+<li>What does the <code>educ</code> coefficient mean?</li>
+<li>Do these coefficient carry any causal meaning?</li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="adding-more-nuance-to-our-models" class="section level2">
+<h2>Adding more nuance to our models</h2>
+<p>As we have discussed in previous sessions we live in a very complex world. It is very likely that our exploration of the relationship between education and respondents' salaries is open to multiple sources of bias.</p>
+<p>Looking back at 1976 US, can you think of possible variables inside the mix?</p>
+<p>
+How about the <span style="color:#CC0055;">sex</span> or the <span style="color:#800080;">ethnicity</span> of a worker?
+</p>
+<hr />
+<div id="lets-explore-this-visually" class="section level3">
+<h3>Let's explore this visually</h3>
+<h5>
+What is the relationship between education and respondents' salaries <span style="color:#CC0055;">conditional on the sex of the worker</span>?
+</h5>
+<pre class="r"><code>ggplot(wage1, aes(x = educ, y = wage, color = as.factor(female))) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(method = &quot;lm&quot;, se = F) +
+  theme_minimal() +
+  labs(x = &quot;Years of education&quot;,
+       y = &quot;Hourly wage (USD)&quot;,
+       color = &quot;Female&quot;) +
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/109506969-87ff2980-7a9e-11eb-80b9-ce388816ecc0.png" width="85%" style="display: block; margin: auto;" /></p>
+<p><strong>Check what happens when we replace the <code>color = as.factor(female)</code> for <code>color = female</code></strong></p>
+<ul>
+<li>What insights can we gather from this graph?</li>
+</ul>
+<hr />
+</div>
+<div id="multiple-linear-regression-1" class="section level3">
+<h3>Multiple linear regression</h3>
+<p>This question can be formalized mathematically as:</p>
+<p><span class="math display">\[Hourly\ wage = \beta_0 + \beta_1Years\ of\ education + \beta_2Female + ϵ\]</span></p>
+<p>Our interest here would be to build a model that predicts the hourly wage of a respondent (<strong>our outcome variable</strong>) using the years of education and their sex (<strong>our explanatory variables</strong>).</p>
+<p><strong>Let's remember the syntax for running a regression model in R:</strong></p>
+<pre class="r"><code>your_model_biv &lt;- lm(outcome_variable ~ explanarory_variable, data = your_dataset) #for a bivariate regression
+your_model_mult &lt;- lm(outcome_variable ~ explanarory_variable_1 + explanarory_variable_2, data = your_dataset) #for multiple regression</code></pre>
+<p>Now let's create our own model, save it into the <code>model_2</code> object, and print the results based on the formula regression we specified above in which <code>wage</code> is our outcome variable, <code>educ</code> and <code>female</code> are our explanatory variables, and our data come from the <code>wage1</code> object:</p>
+<pre class="r"><code>model_2 &lt;- lm(wage ~ educ + female, data = wage1)
+summary(model_2)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = wage ~ educ + female, data = wage1)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.9890 -1.8702 -0.6651  1.0447 15.4998 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.62282    0.67253   0.926    0.355    
+## educ         0.50645    0.05039  10.051  &lt; 2e-16 ***
+## female      -2.27336    0.27904  -8.147 2.76e-15 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.186 on 523 degrees of freedom
+## Multiple R-squared:  0.2588, Adjusted R-squared:  0.256 
+## F-statistic: 91.32 on 2 and 523 DF,  p-value: &lt; 2.2e-16</code></pre>
+<hr />
+</div>
+<div id="exercise-1" class="section level3">
+<h3>Exercise</h3>
+<p><span class="math display">\[Hourly\ wage = \beta_0 + \beta_1Years\ of\ education + \beta_2Female + ϵ\]</span></p>
+<table style="text-align:center">
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="1" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+Hourly wage
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Years of education
+</td>
+<td>
+0.506<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.050)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Female
+</td>
+<td>
+-2.273<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.279)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+0.623
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.673)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+526
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.259
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.256
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+3.186 (df = 523)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+91.315<sup>***</sup> (df = 2; 523)
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+<p style="color:#CC0055;">
+How would you interpret the results of our <code>model_2</code>?
+</p>
+<ul>
+<li>What does the constant mean?</li>
+<li>What does the <code>educ</code> coefficient mean?</li>
+<li>What does the <code>female</code> coefficient mean?</li>
+</ul>
+<hr />
+</div>
+<div id="predicting-from-our-models" class="section level3">
+<h3>Predicting from our models</h3>
+<p>As we discussed previously, when we do not have our <strong>causal inference</strong> hats on, the main goal of linear regression is to predict an outcome value on the basis of one or multiple predictor variables.</p>
+<p><strong>R</strong> has a generic function <code>predict()</code> that helps us arrive at the predicted values on the basis of our explanatory variables.</p>
+<p>The syntax of <code>predict()</code> is the following:</p>
+<pre class="r"><code>predict(name_of_the_model, newdata = data.frame(explanatory1 = value, explanatory2 = value))</code></pre>
+<blockquote>
+<p>Say that based on our <code>model_2</code>, we are interested in the expected average hourly wage of a woman with 15 years of education.</p>
+</blockquote>
+<pre class="r"><code>predict(model_2, newdata = data.frame(educ = 15, female = 1))</code></pre>
+<pre><code>##        1 
+## 5.946237</code></pre>
+<ul>
+<li>What does this result tell us?</li>
+<li>What happens when you change <code>female</code> to 0? What does the result mean?</li>
+<li>Can you think of a way to find the difference in the expected hourly wage between a male with 16 years of education and a female with 17?</li>
+</ul>
+<pre class="r"><code>predict(model_2, newdata = data.frame(educ = 16, female = 0)) - predict(model_2, newdata = data.frame(educ = 15, female =0))</code></pre>
+<pre><code>##         1 
+## 0.5064521</code></pre>
+</div>
+</div>
+<div id="quiz" class="section level2">
+<h2>Quiz</h2>
+<p>Here are some questions for you. Note that there are multiple ways to reach the same answer:</p>
+<p>What is the expected hourly wage of a male with 15 years of education?</p>
+<ol style="list-style-type: lower-alpha">
+<li>$8.22</li>
+<li>$9.50</li>
+<li>5.34</li>
+<li>$3</li>
+</ol>
+<hr />
+<p>How much more on average does a male worker earn than a female counterpart?&quot;,</p>
+<ol style="list-style-type: lower-alpha">
+<li>$2.27</li>
+<li>In our data, males on average earn less than females</li>
+<li>$1.20</li>
+<li>$4.50</li>
+</ol>
+<hr />
+<p>How much more is a worker expected to earn for every additional year of education, keeping sex constant?</p>
+<ol style="list-style-type: lower-alpha">
+<li>$0.90</li>
+<li>$1.20</li>
+<li>$0.5</li>
+</ol>
+<hr />
+</div>
+<div id="dags-and-modeling" class="section level2">
+<h2>DAGs and modeling</h2>
+<p><img src="https://user-images.githubusercontent.com/54796579/94547573-b8bd0780-024f-11eb-9565-03b1d1109c3b.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>As we can remember from our slides, we were introduced to a set of <strong>key</strong> rules in understanding how to employ DAGs to guide our modeling strategy.</p>
+<ul>
+<li>A path is open or unblocked at non-colliders (confounders or mediators)</li>
+<li>A path is (naturally) blocked at colliders</li>
+<li>An open path induces statistical association between two variables</li>
+<li>Absence of an open path implies statistical independence</li>
+<li>Two variables are d-connected if there is an open path between them</li>
+<li>Two variables are d-separated if the path between them is blocked</li>
+</ul>
+<p>In this portion of the tutorial we will demonstrate how different bias come to work when we model our relationships of interest.</p>
+<hr />
+</div>
+<div id="what-happens-when-we-control-for-a-collider" class="section level2">
+<h2>What happens when we control for a collider?</h2>
+<h4 style="color:#CC5500">
+The case for beauty, talent, and celebrity (What happens when we control for a collider?)
+</h4>
+<p><img src="https://user-images.githubusercontent.com/54796579/94370219-0706c500-00ef-11eb-814b-05ab715ee2e0.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>As it is showcased from our DAG, we assume that earning celebrity status is a function of an individuals beauty and talent.</p>
+<p><strong>We will simulate data that reflects this assumptions</strong>. In our world, someone gains celebrity status if the sum of units of beauty and celebrity are greater than 8.</p>
+<pre class="r"><code># beauty - 1000 observations with mean 5 units of beauty and sd 1.5 (arbitrary scale)
+beauty &lt;- rnorm(1000, 5, 1.5)
+
+# talent - 1000 observations with mean 3 units of talent and sd 1 (arbitrary scale)
+talent &lt;- rnorm(1000, 3, 1)
+
+# celebrity - binary
+celebrity_status &lt;-  ifelse(beauty + talent &gt; 8, &quot;Celebrity&quot; , &quot;Not Celebrity&quot;) # celebrity if the sum of units  are greater than 8
+
+celebrity_df &lt;- dplyr::tibble(beauty, talent, celebrity_status) # we make a df with our values
+
+head(celebrity_df, 10)</code></pre>
+<pre><code>## # A tibble: 10 x 3
+##    beauty talent celebrity_status
+##     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;           
+##  1   7.06 5.33   Celebrity       
+##  2   4.15 3.52   Not Celebrity   
+##  3   5.54 3.97   Celebrity       
+##  4   5.95 3.38   Celebrity       
+##  5   5.61 2.00   Not Celebrity   
+##  6   4.84 2.40   Not Celebrity   
+##  7   7.27 3.17   Celebrity       
+##  8   4.86 0.0715 Not Celebrity   
+##  9   8.03 2.15   Celebrity       
+## 10   4.91 3.80   Celebrity</code></pre>
+<hr />
+<p>In this case, as our simulation suggest, we have a <strong>collider structure</strong>. We can see that celebrity can be a function of beauty or talent. Also, we can infer from the way we defined the variables that <strong>beauty and talent are d-separated (ie. the path between them is closed because celebrity is a collider)</strong>.</p>
+<p>Say you are interested in researching the relationship between <strong>beauty</strong> and <strong>talent</strong> for your Master's thesis, while doing your literature review you encounter a series of papers that find a negative relationship between the two and state that more beautiful people tend to be less talented. The model that these teams of the researchers used was the following:</p>
+<p><span class="math display">\[Y_{Talent} = \beta_0 + \beta_1Beauty + \beta_2Celebrity\]</span></p>
+<p>Your scientific hunch makes you believe that celebrity is a collider and that by controlling for it in their models, the researchers are inducing <strong>collider bias</strong>, or <strong>endogenous bias</strong>. You decide to move forward with your thesis by laying out a criticism to previous work on the field, given that you consider the formalization of their models is erroneous. You utilize the same data previous papers used, but based on your logic, you do not control for celebrity status. This is what you find:</p>
+<div id="true-model" class="section level4">
+<h4>True model</h4>
+<pre class="r"><code>true_model_celebrity &lt;- lm(talent ~ beauty, data = celebrity_df)
+summary(true_model_celebrity)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = talent ~ beauty, data = celebrity_df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.9225 -0.6588 -0.0083  0.6628  3.5877 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 2.962209   0.107595  27.531   &lt;2e-16 ***
+## beauty      0.006545   0.020755   0.315    0.753    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.9865 on 998 degrees of freedom
+## Multiple R-squared:  9.964e-05,  Adjusted R-squared:  -0.0009023 
+## F-statistic: 0.09945 on 1 and 998 DF,  p-value: 0.7526</code></pre>
+<pre class="r"><code>ggplot(celebrity_df, aes(x=beauty, 
+                         y=talent)) +
+  geom_point() +
+  geom_smooth(method = &quot;lm&quot;, se = F) +
+  theme_minimal() +
+  theme(legend.position = &quot;bottom&quot;) +
+  labs(x = &quot;Beauty&quot;,
+       y = &quot;Talent&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/109508058-b6313900-7a9f-11eb-92c6-16551885f993.png" width="85%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="biased-model-from-previous-literature" class="section level4">
+<h4>Biased model from previous literature</h4>
+<p>Let's see:</p>
+<pre class="r"><code>biased_model_celibrity &lt;- lm(talent ~ beauty + celebrity_status, data = celebrity_df)
+summary(biased_model_celibrity)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = talent ~ beauty + celebrity_status, data = celebrity_df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.4244 -0.5394  0.0110  0.5064  2.9429 
+## 
+## Coefficients:
+##                               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                    5.37834    0.13983   38.46   &lt;2e-16 ***
+## beauty                        -0.32668    0.02265  -14.43   &lt;2e-16 ***
+## celebrity_statusNot Celebrity -1.51375    0.06808  -22.24   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.807 on 997 degrees of freedom
+## Multiple R-squared:  0.3316, Adjusted R-squared:  0.3302 
+## F-statistic: 247.3 on 2 and 997 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>ggplot(celebrity_df, aes(x=beauty, y=talent, color = celebrity_status)) +
+  geom_point() +
+  geom_smooth(method = &quot;lm&quot;, se = F) +
+  theme_minimal() +
+  theme(legend.position = &quot;bottom&quot;) +
+  labs(x = &quot;Beauty&quot;,
+       y = &quot;Talent&quot;,
+       color = &quot;&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/109508067-b8939300-7a9f-11eb-8f48-dd090d63234c.png" width="85%" style="display: block; margin: auto;" /></p>
+<blockquote>
+<p>As we can see, by controlling for a collider, the previous literature was inducing to a non-existent association between beauty and talent, also known as <strong>collider</strong> or <strong>endogenous bias</strong>.</p>
+</blockquote>
+<hr />
+</div>
+</div>
+<div id="what-happens-when-we-fail-to-control-for-a-confounder" class="section level2">
+<h2>What happens when we fail to control for a confounder?</h2>
+<h4 style="color:#32CD32;">
+Shoe size and salary (What happens when we fail to control for a confounder?)
+</h4>
+<p><img src="https://user-images.githubusercontent.com/54796579/94558922-cd55cb80-0260-11eb-9b03-ff54416014a7.png" width="80%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># sex - replicate male and female 500 times each
+sex &lt;- rep(c(&quot;Male&quot;, &quot;Female&quot;), each = 500) 
+
+# shoe size - random number with mean 38 and sd 4, plus 4 if the observation is male
+shoesize &lt;- rnorm(1000, 38, 2) +  (4 * as.numeric(sex == &quot;Male&quot;))
+
+# salary - a random number with mean 25 and sd 2, plus 5 if the observation is male
+salary &lt;- rnorm(1000, 25, 2) + (5 * as.numeric(sex == &quot;Male&quot;))
+
+salary_df &lt;- dplyr::tibble(sex, shoesize, salary)
+
+head(salary_df, 10)</code></pre>
+<pre><code>## # A tibble: 10 x 3
+##    sex   shoesize salary
+##    &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Male      42.5   28.6
+##  2 Male      41.4   28.4
+##  3 Male      38.6   29.2
+##  4 Male      38.0   27.7
+##  5 Male      39.4   32.2
+##  6 Male      42.7   28.2
+##  7 Male      41.7   32.6
+##  8 Male      40.5   27.1
+##  9 Male      40.4   31.7
+## 10 Male      43.1   28.8</code></pre>
+<p>Say now one of your peers tells you about this new study that suggests that <strong>shoe size</strong> has an effect on an individuals' <strong>salary</strong>. You are a bit skeptic and read it. The model that these researchers apply is the following:</p>
+<p><span class="math display">\[Y_{Salary} = \beta_0 + \beta_1ShoeSize\]</span></p>
+<p>Your scientific hunch makes you believe that this relationship could be confounded by the <strong>sex</strong> of the respondent. You think that by failing to control for sex in their models, the researchers are inducing <strong>omitted variable bias</strong>. You decide to open their replication files and control for sex. This is what you find:</p>
+<p><span class="math display">\[Y_{Salary} = \beta_0 + \beta_1ShoeSize + \beta_2Sex\]</span></p>
+<hr />
+<div id="true-model-1" class="section level4">
+<h4>True model</h4>
+<pre class="r"><code>true_model_salary &lt;- lm(salary ~ shoesize + sex, data = salary_df)
+summary(true_model_salary)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = salary ~ shoesize + sex, data = salary_df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -6.2341 -1.3698 -0.0501  1.3595  6.4303 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 25.73879    1.15886  22.210   &lt;2e-16 ***
+## shoesize    -0.02030    0.03044  -0.667    0.505    
+## sexMale      5.05924    0.17616  28.720   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.981 on 997 degrees of freedom
+## Multiple R-squared:  0.6129, Adjusted R-squared:  0.6121 
+## F-statistic: 789.2 on 2 and 997 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>ggplot(salary_df, aes(x=shoesize, y=salary, color = sex)) +
+  geom_point() +
+  geom_smooth(method = &quot;lm&quot;, se = F) +
+  theme_minimal() +
+  theme(legend.position = &quot;bottom&quot;) +
+  labs(x = &quot;Shoe size&quot;,
+       y = &quot;Salary&quot;,
+       color = &quot;&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/109508071-b9c4c000-7a9f-11eb-9790-f67e51100516.png" width="85%" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+<div id="biased-model-from-previous-literature-1" class="section level4">
+<h4>Biased model from previous literature</h4>
+<pre class="r"><code>biased_model_salary &lt;- lm(salary ~ shoesize, data = salary_df)
+summary(biased_model_salary)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = salary ~ shoesize, data = salary_df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -7.8777 -1.9101 -0.0511  1.8496  7.9774 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  3.68865    1.17280   3.145  0.00171 ** 
+## shoesize     0.59429    0.02925  20.319  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.676 on 998 degrees of freedom
+## Multiple R-squared:  0.2926, Adjusted R-squared:  0.2919 
+## F-statistic: 412.9 on 1 and 998 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>ggplot(salary_df, aes(x=shoesize, y=salary)) +
+  geom_point() +
+  geom_smooth(method = &quot;lm&quot;, se = F) +
+  theme_minimal() +
+  labs(x = &quot;Shoe size&quot;,
+       y = &quot;Salary&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/109508075-ba5d5680-7a9f-11eb-92e2-2f845bb5c5ec.png" width="85%" style="display: block; margin: auto;" /></p>
+<blockquote>
+<p>As we can see, by failing to control for a confounder, the previous literature was creating a non-existent association between shoe size and salary, incurring in <strong>ommited variable bias</strong>.</p>
+</blockquote>
+</div>
+</div>
+
+          </div>
+
+          
+
+
+
+          
+          
+          <div class="article-widget">
+            
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/2022-spring-stats2/materials/session-4/slides/" rel="next">04 - Slides</a>
+  </div>
+  
+  
+</div>
+
+          </div>
+          
+        </div>
+
+        <div class="body-footer">
+          <p>Last updated on Jan 1, 0001</p>
+
+          
+
+
+
+
+
+          
+
+
+
+
+          
+
+
+  
+  
+
+
+
+        </div>
+
+      </article>
+
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/latex.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+    <script>
+      anchors.add();
+    </script>
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+        <div class="search-hit-content">
+          <div class="search-hit-name">
+            <a href="{{relpermalink}}">{{title}}</a>
+            <div class="article-metadata search-hit-type">{{type}}</div>
+            <p class="search-hit-description">{{snippet}}</p>
+          </div>
+        </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+      
+      
+      
+      
+      
+      
+      
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+      
+    
+    
+    <script src="/2022-spring-stats2/en/js/wowchemy.min.e5856c0a0618a04dd7b1e07451b5f341.js"></script>
+
+    
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+
+
+</body>
+</html>

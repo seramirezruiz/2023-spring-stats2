@@ -1,0 +1,801 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>📊 10 - Moderation and Heterogeneous Effects | | Tutorials - Spring 2022 |</title>
+    <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-10/</link>
+      <atom:link href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-10/index.xml" rel="self" type="application/rss+xml" />
+    <description>📊 10 - Moderation and Heterogeneous Effects</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
+      <title>📊 10 - Moderation and Heterogeneous Effects</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-10/</link>
+    </image>
+    
+    <item>
+      <title>10 - Slides</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-10/slides/</link>
+      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
+      <guid>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-10/slides/</guid>
+      <description>&lt;h2 id=&#34;slides&#34;&gt;Slides&lt;/h2&gt;
+&lt;iframe src=&#34;../w10-moderation.pdf#view=fit&#34; width=&#34;100%&#34; height=&#34;500px&#34;&gt;
+    &lt;/iframe&gt;
+&lt;!--
+## Courses in this program
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure &gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;featured.jpg&#34; &gt;
+
+
+  &lt;img src=&#34;featured.jpg&#34; alt=&#34;&#34;  &gt;
+&lt;/a&gt;
+
+
+
+&lt;/figure&gt;
+
+
+&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    The parameter $\mu$ is the mean or expectation of the distribution.
+$\sigma$ is its standard deviation.
+The variance of the distribution is $\sigma^{2}$.
+  &lt;/div&gt;
+&lt;/div&gt;
+
+--&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Moderation and Heterogeneous Effects</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-10/10-online-tutorial/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-10/10-online-tutorial/</guid>
+      <description>
+&lt;script src=&#34;https://seramirezruiz.github.io/2022-spring-stats2/2022-spring-stats2rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://seramirezruiz.github.io/2022-spring-stats2/2022-spring-stats2rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://seramirezruiz.github.io/2022-spring-stats2/2022-spring-stats2rmarkdown-libs/lightable/lightable.css&#34; rel=&#34;stylesheet&#34; /&gt;
+
+
+&lt;div id=&#34;welcome&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Welcome&lt;/h2&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Introduction!&lt;/h3&gt;
+&lt;p&gt;Welcome to our tenth tutorial for the Statistics II: Statistical Modeling &amp;amp; Causal Inference (with R) course.&lt;/p&gt;
+&lt;p&gt;During this week’s lecture you were introduced to Moderation and Heterogeneous Effects.&lt;/p&gt;
+&lt;p&gt;In this lab session we will:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Learn how to perform interaction models with &lt;code&gt;lm()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Learn how to extract marginal/partial effects with &lt;code&gt;margins::margins()&lt;/code&gt; and predictive margins with &lt;code&gt;ggeffects::::ggeffect()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Learn how to vectorize multiple ifelse() statements with &lt;code&gt;dplyr::case_when()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;measuring-the-effect-of-an-information-intervention-on-peace-agreement-support&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Measuring the effect of an information intervention on peace agreement support&lt;/h2&gt;
+&lt;p&gt;The country of Absurdistan has had an ongoing civil conflict for the past 60 years. The fighting between national government forces and guerrilla members from the National Revolutionary Army (NRA) has lead to more than 200,000 deaths, 8 million internally displaced persons, and countless victims between 1960 to 2020.&lt;/p&gt;
+&lt;p&gt;The civil war in Absurdistan has been a low-intensity asymmetric war. The legacies of the conflict have been bore largely by regions in the periphery of the country. Large cities and industrial regions have been spared from most of the fighting.&lt;/p&gt;
+&lt;p&gt;The government and the leadership of the NRA reached a peace agreement a couple of months ago; however, the agreement has been received poorly by the general population of Absurdistan. The opposition party the Undemocratic Center (UC) has allegedly ran campaigns misrepresenting the contents of the agreement in partisan media outlets and social media.&lt;/p&gt;
+&lt;p&gt;The Special Envoy for Peace has established a taskforce to design a strategy to increase support for the peace agreement. Many in the taskforce suspect that if the public were properly informed about the agreement reached, the levels of support would be higher.&lt;/p&gt;
+&lt;p&gt;You are hired as a scientific consultant for the taskforce. You run a survey experiment on a sample of 1000 respondents. You randomly assign respondents to watch an educational 2 minute video about the peace agreement.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://upload.wikimedia.org/wikipedia/commons/d/d6/Flag_of_Peace_%28Proposal%29.PNG&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;packages&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Packages&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(42) #for consistent results
+
+library(dplyr) # to wrangle our data
+library(tidyr) # to wrangle our data - pivot_longer()
+library(ggplot2) # to render our graphs
+library(readr) # for loading the .csv data
+library(janitor) # for data management and tabyl()
+library(kableExtra) # to render better formatted tables
+library(modelsummary) # to format your model output
+
+library(margins) #for calculating MARGINAL/PARTIAL EFFECT
+library(ggeffects) # easily calculating PREDICTIVE MARGINS&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exploratory-analysis&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Exploratory analysis&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;moderation_df &amp;lt;- readr::read_csv(&amp;quot;https://raw.githubusercontent.com/seramirezruiz/hertiestats2/master/data/moderation_df.csv&amp;quot;) # simulated data
+names(moderation_df) # to check the names of the variables in our data&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;subject_id&amp;quot;          &amp;quot;treatment&amp;quot;           &amp;quot;victim_verbose&amp;quot;     
+## [4] &amp;quot;victim&amp;quot;              &amp;quot;female&amp;quot;              &amp;quot;female_verbose&amp;quot;     
+## [7] &amp;quot;support_thermometer&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Our dataset &lt;em&gt;moderation_df&lt;/em&gt;, contains the following information:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;subject_id&lt;/code&gt;: A unique numeric identification for each respondent&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;treatment&lt;/code&gt;: A binary marker for treatment&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;victim_verbose&lt;/code&gt;: A verbose binary marker of the respondents’ victimhood status (Not a Victim-Victim)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;victim&lt;/code&gt;: A numeric binary marker of the respondents’ victimhood status (0-1)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;female&lt;/code&gt;: A numeric binary marker of the respondents’ sex (0-1)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;female_verbose&lt;/code&gt;: A verbose binary marker of the respondents’ sex (Male-Female)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;support_thermometer&lt;/code&gt;: A continuous measure of support for the agreement (0-100)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;lets-explore-who-is-in-our-sample&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Let’s explore who is in our sample&lt;/h4&gt;
+&lt;p&gt;We can use what we have learned about the &lt;em&gt;janitor::tabyl()&lt;/em&gt; function, to check who was in our sample:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;moderation_df %&amp;gt;% 
+  janitor::tabyl(treatment) %&amp;gt;% 
+  knitr::kable(col.names = c(&amp;quot;Treatment&amp;quot;, &amp;quot;N&amp;quot;, &amp;quot;Percent, %&amp;quot;)) %&amp;gt;% # create kable table
+  kableExtra::kable_styling() # view kable table&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Treatment
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+N
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Percent, %
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+500
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+500
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;moderation_df %&amp;gt;% 
+  janitor::tabyl(treatment, victim_verbose) %&amp;gt;% 
+  janitor::adorn_totals(c(&amp;quot;row&amp;quot;, &amp;quot;col&amp;quot;)) %&amp;gt;%
+  knitr::kable(col.names = c(&amp;quot;Treatment&amp;quot;, &amp;quot;Not a victim&amp;quot;, &amp;quot;Victim&amp;quot;, &amp;quot;Total&amp;quot;)) %&amp;gt;% # create kable table
+  kableExtra::kable_styling() %&amp;gt;% # view kable table
+  kableExtra::add_header_above(c(&amp;quot;&amp;quot;, &amp;quot;Victimization status&amp;quot; = 2, &amp;quot;&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;empty-cells: hide;border-bottom:hidden;&#34; colspan=&#34;1&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; &#34; colspan=&#34;2&#34;&gt;
+&lt;div style=&#34;border-bottom: 1px solid #ddd; padding-bottom: 5px; &#34;&gt;
+Victimization status
+&lt;/div&gt;
+&lt;/th&gt;
+&lt;th style=&#34;empty-cells: hide;border-bottom:hidden;&#34; colspan=&#34;1&#34;&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Treatment
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Not a victim
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Victim
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Total
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+250
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+250
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+500
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+250
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+250
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+500
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Total
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+500
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+500
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;lets-explore-visually-the-observed-levels-of-public-support-for-the-agreement&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Let’s explore visually the observed levels of public support for the agreement&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(moderation_df, aes(x = support_thermometer)) +
+  geom_density(fill = &amp;quot;#af8dc3&amp;quot;, alpha = 0.5) +
+  theme_minimal() +
+  labs(x = &amp;quot;Support thermometer&amp;quot;,
+       y = &amp;quot;Density&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/115588495-1ccc1980-a2cf-11eb-958a-214b2ba1e233.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;&lt;span style=&#34;color:#4B0082;&#34;&gt;What do we see in this graph?&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;lets-explore-visually-the-observed-levels-of-public-support-for-the-agreement-conditional-on-the-treatment-status&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Let’s explore visually the observed levels of public support for the agreement conditional on the treatment status&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(moderation_df, aes(x = support_thermometer, fill = factor(treatment))) +
+  geom_density(alpha = 0.5) +
+  theme_minimal() +
+  labs(x = &amp;quot;Support thermometer&amp;quot;,
+       y = &amp;quot;Density&amp;quot;,
+       fill = &amp;quot;Treatment&amp;quot;) +
+  theme(legend.position = &amp;quot;bottom&amp;quot;) +
+  scale_fill_manual(name = &amp;quot; &amp;quot;, # changes to fill dimension
+                     values = c(&amp;quot;#a7a8aa&amp;quot;, &amp;quot;#cc0055&amp;quot;),
+                     labels = c(&amp;quot;Control&amp;quot;, &amp;quot;Treatment&amp;quot;)) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/115588502-1dfd4680-a2cf-11eb-9ed1-31e0945508d2.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;&lt;span style=&#34;color:#4B0082;&#34;&gt;What do we see through these distributions?&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;lets-explore-visually-the-observed-levels-of-public-support-for-the-agreement-conditional-on-the-treatment-and-victimhood-status&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Let’s explore visually the observed levels of public support for the agreement conditional on the treatment and victimhood status&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(moderation_df, aes(x = support_thermometer, fill = factor(treatment))) +
+  geom_density(alpha = 0.5) +
+  facet_grid(treatment~victim_verbose) +
+  theme_bw() +
+  labs(x = &amp;quot;Support thermometer&amp;quot;,
+       y = &amp;quot;Density&amp;quot;,
+       fill = &amp;quot;Treatment&amp;quot;) +
+  theme(legend.position = &amp;quot;bottom&amp;quot;) +
+  scale_fill_manual(name = &amp;quot; &amp;quot;, # changes to fill dimension
+                     values = c(&amp;quot;#a7a8aa&amp;quot;, &amp;quot;#cc0055&amp;quot;),
+                     labels = c(&amp;quot;Control&amp;quot;, &amp;quot;Treatment&amp;quot;)) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/115588507-1f2e7380-a2cf-11eb-8ab6-adc5066fa4f1.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;&lt;span style=&#34;color:#4B0082;&#34;&gt;What patterns do we see here?&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;modeling-and-estimating&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Modeling and estimating&lt;/h2&gt;
+&lt;p&gt;During this week’s lecture, we learned that we can explicitly model heterogeneity in treatment effects for subgroups. Thus, we can address the tension between having to do inference at the group level, and the recognition of individual differences.&lt;/p&gt;
+&lt;p&gt;The analysis of heterogeneity can be very important for the design of our strategy. There are competing theories about the effects of conflict victimization on political behavior and attitudes. Some of the literature points to victims developing pro-social attitudes, while others suggest that victims become intransigent towards out-groups.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Could factual information about the peace agreement be received differently by victims and non-victims?&lt;/strong&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;how-to-estimate-heterogenous-treatment-effects&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;How to estimate heterogenous treatment effects&lt;/h4&gt;
+&lt;p&gt;Heterogeneous treatment effects are usually estimated with regression models that include an interaction between the treatment and the moderator. In our case, the formula would look like this:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[Y_{i} = β_0 + β_1D_{i} + β_2Victim_{i} + β_3D_i * Victim_{i}+ ϵ_i\]&lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(β_0\)&lt;/span&gt;: Constant&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(β_1\)&lt;/span&gt;: Effect of &lt;span class=&#34;math inline&#34;&gt;\(D_i\)&lt;/span&gt; on &lt;span class=&#34;math inline&#34;&gt;\(Y_i\)&lt;/span&gt; if &lt;span class=&#34;math inline&#34;&gt;\(Victim_i\)&lt;/span&gt; is zero&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(β_2\)&lt;/span&gt;: Effect of &lt;span class=&#34;math inline&#34;&gt;\(Victim_i\)&lt;/span&gt; on &lt;span class=&#34;math inline&#34;&gt;\(Y_i\)&lt;/span&gt; if &lt;span class=&#34;math inline&#34;&gt;\(D_i\)&lt;/span&gt; is zero&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(β_3\)&lt;/span&gt;: Difference in treatment effects of &lt;span class=&#34;math inline&#34;&gt;\(D_i\)&lt;/span&gt; depending on &lt;span class=&#34;math inline&#34;&gt;\(Victim_i\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;or in &lt;code&gt;lm()&lt;/code&gt; terms (same result):&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;lm(outcome ~ treatment + moderator + (treatment*moderator))
+lm(outcome ~ treatment + moderator + treatment:moderator)
+lm(outcome ~ treatment * moderator)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;Think of the&lt;/em&gt; &lt;strong&gt;switch logic&lt;/strong&gt; &lt;em&gt;posed by Prof. Munzert&lt;/em&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;lets-model-our-results&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Let’s model our results&lt;/h3&gt;
+&lt;p&gt;We will move forward by creating two models:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;strong&gt;naive model&lt;/strong&gt;, where we will regress &lt;code&gt;support_thermometer&lt;/code&gt; on &lt;code&gt;treatment&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;An &lt;strong&gt;interaction model&lt;/strong&gt;, where we will add an interaction between &lt;code&gt;treatment&lt;/code&gt; and &lt;code&gt;victim&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;naive-modeling&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Naive modeling&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;naive_model &amp;lt;- lm(support_thermometer ~ treatment, data = moderation_df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;modelsummary::modelsummary(naive_model, 
+                           fmt = 2,
+                           gof_omit = &amp;quot;AIC|BIC|Log.Lik.&amp;quot;,
+                           statistic = &amp;quot;conf.int&amp;quot;,
+                           stars = T)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Model 1
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+(Intercept)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+35.05***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[33.63, 36.48]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+treatment
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+18.90***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;box-shadow: 0px 1px&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;box-shadow: 0px 1px&#34;&gt;
+[16.88, 20.91]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Num.Obs.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+1000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+R2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.254
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+R2 Adj.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.253
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+F
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+339.360
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;tfoot&gt;
+&lt;tr&gt;
+&lt;td style=&#34;padding: 0; border:0;&#34; colspan=&#34;100%&#34;&gt;
+&lt;sup&gt;&lt;/sup&gt; + p &amp;lt; 0.1, * p &amp;lt; 0.05, ** p &amp;lt; 0.01, *** p &amp;lt; 0.001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tfoot&gt;
+&lt;/table&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;&lt;span style=&#34;color:#4B0082;&#34;&gt;What does this model tell us?&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The naive model suggests that the subjects that the support for the peace agreement is about 18.9 percentage points higher on average for the subjects that watched the educational video. We suspect, however, that the video may affect differently victims from non-victims of the conflict.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;here-is-a-visual-illustration-of-the-values-rendered-by-the-naive-regression&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Here is a visual illustration of the values rendered by the naive regression&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(moderation_df, aes(x = support_thermometer, fill = factor(treatment))) +
+  geom_density(alpha = 0.5) +
+  theme_minimal() +
+  geom_vline(xintercept = 35.055, linetype = &amp;quot;longdash&amp;quot;, color = &amp;quot;#a7a8aa&amp;quot;) + #D=0 (just beta0)
+  geom_vline(xintercept = 35.055 + 18.898, linetype = &amp;quot;longdash&amp;quot;, color = &amp;quot;#cc0055&amp;quot;) + #D=1 (beta0+beta1) +
+  geom_text(aes(label = &amp;quot;ß0&amp;quot;, x = 35.055 + 3, y = 0.04), color = &amp;quot;#a7a8aa&amp;quot;) + # we add the 3 to repel from the line
+  geom_text(aes(label = &amp;quot;ß0 + ß1&amp;quot;, x = 35.055 + 18.898 + 6, y = 0.04 ), color = &amp;quot;#cc0055&amp;quot;) + # we add the 6 to repel from the line
+  labs(x = &amp;quot;Support thermometer&amp;quot;,
+       y = &amp;quot;Density&amp;quot;,
+       fill = &amp;quot;Treatment&amp;quot;) +
+  theme(legend.position = &amp;quot;bottom&amp;quot;) +
+  scale_fill_manual(name = &amp;quot; &amp;quot;, # changes to fill dimension
+                     values = c(&amp;quot;#a7a8aa&amp;quot;, &amp;quot;#cc0055&amp;quot;),
+                     labels = c(&amp;quot;Control&amp;quot;, &amp;quot;Treatment&amp;quot;)) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/115588509-1f2e7380-a2cf-11eb-810f-355b34f64639.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;interaction-model&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Interaction model&lt;/h3&gt;
+&lt;p&gt;Following any of the different formats renders the same results.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;interaction_model &amp;lt;- lm(support_thermometer ~ treatment + victim + (treatment*victim), data = moderation_df)
+interaction_model_2 &amp;lt;- lm(support_thermometer ~ treatment + victim + treatment:victim, data = moderation_df)
+interaction_model_3 &amp;lt;- lm(support_thermometer ~ treatment*victim, data = moderation_df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;modelsummary::modelsummary(list(interaction_model, interaction_model_2, interaction_model_3), 
+                           fmt = 2,
+                           gof_omit = &amp;quot;AIC|BIC|Log.Lik.&amp;quot;,
+                           statistic = &amp;quot;conf.int&amp;quot;,
+                           stars = T)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Model 1
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Model 2
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Model 3
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+(Intercept)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+27.93***
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+27.93***
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+27.93***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[26.85, 29.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[26.85, 29.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[26.85, 29.00]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+treatment
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+8.01***
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+8.01***
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+8.01***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[6.49, 9.53]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[6.49, 9.53]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[6.49, 9.53]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+victim
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+14.26***
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+14.26***
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+14.26***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[12.73, 15.78]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[12.73, 15.78]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[12.73, 15.78]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+treatment × victim
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+21.77***
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+21.77***
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+21.77***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;box-shadow: 0px 1px&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;box-shadow: 0px 1px&#34;&gt;
+[19.62, 23.92]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;box-shadow: 0px 1px&#34;&gt;
+[19.62, 23.92]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;box-shadow: 0px 1px&#34;&gt;
+[19.62, 23.92]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Num.Obs.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+1000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+1000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+1000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+R2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.787
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.787
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.787
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+R2 Adj.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.786
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.786
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.786
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+F
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+1227.193
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+1227.193
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+1227.193
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;tfoot&gt;
+&lt;tr&gt;
+&lt;td style=&#34;padding: 0; border:0;&#34; colspan=&#34;100%&#34;&gt;
+&lt;sup&gt;&lt;/sup&gt; + p &amp;lt; 0.1, * p &amp;lt; 0.05, ** p &amp;lt; 0.01, *** p &amp;lt; 0.001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tfoot&gt;
+&lt;/table&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;&lt;span style=&#34;color:#4B0082;&#34;&gt;What does this model tell us?&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(β_0\)&lt;/span&gt;: Constant = The average support for non-victims who were not exposed to the video was 27.92&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(β_1\)&lt;/span&gt;: Effect of &lt;span class=&#34;math inline&#34;&gt;\(D_i\)&lt;/span&gt; on &lt;span class=&#34;math inline&#34;&gt;\(Y_i\)&lt;/span&gt; if &lt;span class=&#34;math inline&#34;&gt;\(Victim_i\)&lt;/span&gt; is zero = The educational video results in an increase of about 8 percentage points of the peace agreement for the non-victims&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(β_2\)&lt;/span&gt;: Effect of &lt;span class=&#34;math inline&#34;&gt;\(Victim_i\)&lt;/span&gt; on &lt;span class=&#34;math inline&#34;&gt;\(Y_i\)&lt;/span&gt; if &lt;span class=&#34;math inline&#34;&gt;\(D_i\)&lt;/span&gt; is zero = On average, victims’ support for the peace agreement is 14.3 percentage points higher than that of the non-victims in the control group&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(β_3\)&lt;/span&gt;: Difference in treatment effects of &lt;span class=&#34;math inline&#34;&gt;\(D_i\)&lt;/span&gt; depending on &lt;span class=&#34;math inline&#34;&gt;\(Victim_i\)&lt;/span&gt; = The educational video results in an additional increase for victims of about 21.8 percentage points, compared to the effect for non-victims&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;here-is-a-visual-illustration-of-the-values-rendered-by-the-model-with-interaction-terms&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Here is a visual illustration of the values rendered by the model with interaction terms&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;moderation_df %&amp;gt;%
+  dplyr::group_by(treatment,victim_verbose) %&amp;gt;%
+  dplyr::mutate(avg_support = mean(support_thermometer)) %&amp;gt;%
+ggplot(., aes(x = support_thermometer, fill = factor(treatment))) +
+  geom_density(alpha = 0.5) +
+  geom_vline(aes(xintercept = avg_support), linetype = &amp;quot;longdash&amp;quot;) +
+  facet_grid(treatment~victim_verbose) +
+  theme_bw() +
+  labs(x = &amp;quot;Support thermometer&amp;quot;,
+       y = &amp;quot;Density&amp;quot;,
+       fill = &amp;quot;Treatment&amp;quot;) +
+  theme(legend.position = &amp;quot;bottom&amp;quot;) +
+  scale_fill_manual(name = &amp;quot; &amp;quot;, # changes to fill dimension
+                     values = c(&amp;quot;#a7a8aa&amp;quot;, &amp;quot;#cc0055&amp;quot;),
+                     labels = c(&amp;quot;Control&amp;quot;, &amp;quot;Treatment&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/115588510-1fc70a00-a2cf-11eb-8583-4d4e52576709.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;extracting-marginalpartial-effects-from-our-interaction-models&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Extracting marginal/partial effects from our interaction models&lt;/h2&gt;
+&lt;p&gt;For this portion, we are interested in &lt;strong&gt;marginal/partial effects&lt;/strong&gt;, which we will extract through the &lt;code&gt;margins()&lt;/code&gt; function from the &lt;code&gt;margins&lt;/code&gt; package.&lt;/p&gt;
+&lt;p&gt;Some packages in &lt;strong&gt;R&lt;/strong&gt; aimed at rendering &lt;strong&gt;marginal effects&lt;/strong&gt; do render the &lt;strong&gt;predictive margins&lt;/strong&gt; instead. For the purposes of the class, when asked to render marginal or partial effects you are expected to render them as introduced in the lecture (i.e., &lt;span class=&#34;math inline&#34;&gt;\(\frac{\partial Y_i}{\partial {D}_i}\)&lt;/span&gt;). When asked for this, you will utilize &lt;code&gt;margins::margins()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;You can check the documentation &lt;a href=&#34;http://cran.uni-muenster.de/web/packages/margins/vignettes/Introduction.html&#34;&gt;here&lt;/a&gt;. The syntax for the &lt;code&gt;margins()&lt;/code&gt; function for extracting partial effects of the treatment at different levels of the moderator is the following:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;margins::margins(name_of_your_model, variables = &amp;quot;treatment_var&amp;quot;, at = list(moderator_variable = c(&amp;quot;value1&amp;quot;, &amp;quot;value2&amp;quot;, &amp;quot;value3&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let’s say we are interested in the &lt;strong&gt;marginal/partial effect&lt;/strong&gt; of our video treatment for victims and non-victims. We would do:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(margins::margins(interaction_model, variables = &amp;quot;treatment&amp;quot;, at = list(victim = c(0,1))))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##     factor victim     AME     SE       z      p   lower   upper
+##  treatment 0.0000  8.0125 0.7757 10.3288 0.0000  6.4921  9.5330
+##  treatment 1.0000 29.7831 0.7758 38.3895 0.0000 28.2626 31.3037&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;lets-plot-the-marginalpartial-effect-of-the-treatment-for-victims-and-non-victims&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Let’s plot the marginal/partial effect of the treatment for victims and non-victims&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pe_margins &amp;lt;- margins::margins(interaction_model, variables = &amp;quot;treatment&amp;quot;, at = list(victim = c(0,1)))
+
+pe_plotting &amp;lt;- summary(pe_margins) %&amp;gt;% #NOTE we use the summary output, instead of the margins object
+  dplyr::select(victim, AME, lower, upper) %&amp;gt;% # you will need to adapt this based your moderator
+  dplyr::mutate(victim_labels = ifelse(victim == 1, &amp;quot;Victim&amp;quot;, &amp;quot;No Victim&amp;quot;)) # you may not need this to create labels for the assignment
+
+ggplot(pe_plotting, aes(x = victim_labels,
+                        y = AME)) +
+  geom_point(size = 1.5) +
+  geom_segment(aes(x = victim_labels, xend = victim_labels, y = lower, yend = upper), size = 0.5) + # render whiskers from confidence intervals
+  theme_minimal() +
+  scale_y_continuous(limits = c(0,45)) + # you may need to change the limits for your plots based on the specific effects of your application
+  labs(x = &amp;quot;Respondent status\n&amp;quot;,
+       y = &amp;quot;\nPartial effect of educational video&amp;quot;, 
+       caption = &amp;quot;Note: You can utilize it to describe what the plot illustrates during your assignment.&amp;quot;) + 
+  coord_flip() # to flip the plot
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/115588511-1fc70a00-a2cf-11eb-8fc5-bf545210cb2c.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;extracting-predictive-margins-from-our-interaction-models&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Extracting predictive margins from our interaction models&lt;/h2&gt;
+&lt;p&gt;For this portion, we are interested in &lt;strong&gt;predictive margins&lt;/strong&gt;. In here, our interest is to return the expectation for each level of a predictor. We will extract this through the &lt;code&gt;ggeffects()&lt;/code&gt; function from the &lt;code&gt;ggeffects&lt;/code&gt; package. You can check the documentation &lt;a href=&#34;https://strengejacke.github.io/ggeffects/index.html&#34;&gt;here&lt;/a&gt;. The syntax is the following:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggeffects::ggeffect(name_of_your_model, terms = c(&amp;quot;termA&amp;quot;, &amp;quot;termB&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let’s say we are interested in the &lt;strong&gt;predictive margins&lt;/strong&gt; for all out victim and treatment permutations. We would do:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggeffects::ggeffect(interaction_model, terms = c(&amp;quot;victim&amp;quot;,&amp;quot;treatment&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # Predicted values of support_thermometer
+## # x = victim
+## 
+## # treatment = 0
+## 
+## x | Predicted |         95% CI
+## ------------------------------
+## 0 |     27.93 | [26.85, 29.00]
+## 1 |     42.18 | [41.11, 43.26]
+## 
+## # treatment = 1
+## 
+## x | Predicted |         95% CI
+## ------------------------------
+## 0 |     35.94 | [34.86, 37.02]
+## 1 |     71.97 | [70.89, 73.04]&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;lets-plot-these-predictive-margins&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Let’s plot these predictive margins&lt;/h4&gt;
+&lt;p&gt;In this exercise we will meet a very important function from &lt;code&gt;dplyr&lt;/code&gt;, &lt;code&gt;dplyr::case_when()&lt;/code&gt;. &lt;strong&gt;This function allows us to vectorize multiple ifelse() statements&lt;/strong&gt;. The syntax is the following:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dplyr::case_when(condition ~ what to do if met)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let’s see it at play.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;extracted_me &amp;lt;-  ggeffects::ggeffect(interaction_model, terms = c(&amp;quot;victim&amp;quot;,&amp;quot;treatment&amp;quot;)) %&amp;gt;%
+  dplyr::mutate(group_labels = dplyr::case_when(x == 1 &amp;amp; group == 1 ~ &amp;quot;Victim (1) - Treatment (1)&amp;quot;,
+                                                x == 1 &amp;amp; group == 0 ~ &amp;quot;Victim (1) - Treatment (0)&amp;quot;,
+                                                x == 0 &amp;amp; group == 1 ~ &amp;quot;Victim (0) - Treatment (1)&amp;quot;,
+                                                x == 0 &amp;amp; group == 0 ~ &amp;quot;Victim (0) - Treatment (0)&amp;quot;
+  )) # adding labels to (x,group) combinations for the plot
+
+extracted_me
+
+ggplot(extracted_me, aes(x = group_labels, 
+                         y= predicted, 
+                         fill = x,
+                         alpha = group
+                         )) +
+  geom_bar(stat = &amp;quot;identity&amp;quot;) + 
+  geom_point(size = 1.5) +
+  geom_segment(aes(x = group_labels, 
+                   xend = group_labels, 
+                   y = conf.high, 
+                   yend = conf.low), size = 0.5) + # render whiskers from confidence intervals
+  theme_minimal() +
+  labs(x = &amp;quot;\nRespondent status&amp;quot;,
+       y = &amp;quot;Predictive margins&amp;quot;,
+       fill = &amp;quot;Treatment&amp;quot;,
+       caption = &amp;quot;Note: You can utilize it to describe what the plot illustrates during your assignment.&amp;quot;) +
+  theme(legend.position = &amp;quot;note&amp;quot;) +
+  scale_alpha_manual(values=c(0.6, 1))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/115588514-205fa080-a2cf-11eb-8164-2be8272196d3.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;drafting-some-brief-recommedations&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Drafting some brief recommedations&lt;/h2&gt;
+&lt;p&gt;After conducting your experiment, you report back to the taskforce. Based on your results, you suggest that the educational videos may be a useful tool to encourage the wider public to hold a warmer opinion about the peace agreement. You also tell the taskforce that, although the videos have an average positive effect, they affect with a higher intensity victims of the conflict. You suggest to develop alternative strategies to tackle the non-victims, so that they do not fall through the cracks.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://media.giphy.com/media/rrLt0FcGrDeBq/giphy.gif&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

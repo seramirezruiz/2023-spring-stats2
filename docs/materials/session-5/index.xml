@@ -1,0 +1,1170 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>📊 05 - Matching | | Tutorials - Spring 2022 |</title>
+    <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-5/</link>
+      <atom:link href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-5/index.xml" rel="self" type="application/rss+xml" />
+    <description>📊 05 - Matching</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 08 Mar 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
+      <title>📊 05 - Matching</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-5/</link>
+    </image>
+    
+    <item>
+      <title>05 - Slides</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-5/slides/</link>
+      <pubDate>Mon, 08 Mar 2021 00:00:00 +0000</pubDate>
+      <guid>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-5/slides/</guid>
+      <description>&lt;h2 id=&#34;slides&#34;&gt;Slides&lt;/h2&gt;
+&lt;iframe src=&#34;../w5_matching.pdf#view=fit&#34; width=&#34;100%&#34; height=&#34;500px&#34;&gt;
+    &lt;/iframe&gt;
+&lt;!--
+## Courses in this program
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure &gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;featured.jpg&#34; &gt;
+
+
+  &lt;img src=&#34;featured.jpg&#34; alt=&#34;&#34;  &gt;
+&lt;/a&gt;
+
+
+
+&lt;/figure&gt;
+
+
+&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    The parameter $\mu$ is the mean or expectation of the distribution.
+$\sigma$ is its standard deviation.
+The variance of the distribution is $\sigma^{2}$.
+  &lt;/div&gt;
+&lt;/div&gt;
+
+--&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Matching in R</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-5/05-online-tutorial/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-5/05-online-tutorial/</guid>
+      <description>
+&lt;script src=&#34;https://seramirezruiz.github.io/2022-spring-stats2/2022-spring-stats2rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://seramirezruiz.github.io/2022-spring-stats2/2022-spring-stats2rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://seramirezruiz.github.io/2022-spring-stats2/2022-spring-stats2rmarkdown-libs/lightable/lightable.css&#34; rel=&#34;stylesheet&#34; /&gt;
+
+
+&lt;div id=&#34;welcome&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Welcome&lt;/h2&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Introduction!&lt;/h3&gt;
+&lt;p&gt;Welcome to our fifth tutorial for the Statistics II: Statistical Modeling &amp;amp; Causal Inference (with R) course.&lt;/p&gt;
+&lt;p&gt;During this week’s lecture you reviewed randomization in experimental setups. You also learned how &lt;strong&gt;matching&lt;/strong&gt; can be leveraged to gather causal estimates.&lt;/p&gt;
+&lt;p&gt;In this lab session we will:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Take a step back to review how to compare the means of two groups in &lt;strong&gt;R&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Learn how to perform matching with the &lt;code&gt;MatchIt&lt;/code&gt; package&lt;/li&gt;
+&lt;li&gt;Illustrate the mechanics of propensity score matching with &lt;code&gt;gml()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;packages&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Packages&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# These are the libraries we will use today. Make sure to install them in your console in case you have not done so previously.
+
+library(tidyverse) # To use dplyr functions and the pipe operator when needed
+library(ggplot2) # To create plots (this package is also loaded by library(tidyverse))
+library(purrr) # To repeat code across our list in the balance table purrr::map() (this package is also loaded by library(tidyverse))
+library(broom) # To format regression output
+library(stargazer) # To format model output
+library(knitr) # To create HTML tables with kable()
+library(kableExtra) # To format the HTML tables
+library(MatchIt) # To match&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;our-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Our data&lt;/h2&gt;
+&lt;p&gt;Today we will work with data from the Early Childhood Longitudinal Study (ECLS).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ecls_df &amp;lt;- 
+  readr::read_csv(&amp;quot;https://raw.githubusercontent.com/seramirezruiz/stats-ii-lab/master/Session%204/data/ecls.csv&amp;quot;) %&amp;gt;% 
+  dplyr::select(-childid, -race, -w3daded,
+                -w3momed, -w3inccat) #drop these columns (-)
+
+names(ecls_df) #checking the names of the variables in the data frame&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;catholic&amp;quot;      &amp;quot;race_white&amp;quot;    &amp;quot;race_black&amp;quot;    &amp;quot;race_hispanic&amp;quot;
+##  [5] &amp;quot;race_asian&amp;quot;    &amp;quot;p5numpla&amp;quot;      &amp;quot;p5hmage&amp;quot;       &amp;quot;p5hdage&amp;quot;      
+##  [9] &amp;quot;w3daded_hsb&amp;quot;   &amp;quot;w3momed_hsb&amp;quot;   &amp;quot;w3momscr&amp;quot;      &amp;quot;w3dadscr&amp;quot;     
+## [13] &amp;quot;w3income&amp;quot;      &amp;quot;w3povrty&amp;quot;      &amp;quot;p5fstamp&amp;quot;      &amp;quot;c5r2mtsc&amp;quot;     
+## [17] &amp;quot;c5r2mtsc_std&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;(Example inspired by Simon Ejdemyr: &lt;a href=&#34;https://sejdemyr.github.io/r-tutorials/statistics/tutorial8.html&#34; class=&#34;uri&#34;&gt;https://sejdemyr.github.io/r-tutorials/statistics/tutorial8.html&lt;/a&gt;)&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;reference-links&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Reference links:&lt;/h4&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;code&gt;MatchIt&lt;/code&gt;: &lt;a href=&#34;https://cran.r-project.org/web/packages/MatchIt/vignettes/matchit.pdf&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/MatchIt/vignettes/matchit.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Cobalt&lt;/code&gt;: (optional library for matching plots and extra features): &lt;a href=&#34;https://cran.r-project.org/web/packages/cobalt/vignettes/cobalt_A0_basic_use.html&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/cobalt/vignettes/cobalt_A0_basic_use.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kableExtra&lt;/code&gt;: (for formatting tables): &lt;a href=&#34;https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Stargazer&lt;/code&gt;: (for formatting model output): &lt;a href=&#34;https://www.jakeruss.com/cheatsheets/stargazer/&#34; class=&#34;uri&#34;&gt;https://www.jakeruss.com/cheatsheets/stargazer/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Video overview of matching concepts: &lt;a href=&#34;https://fr.coursera.org/lecture/crash-course-in-causality/overview-of-matching-JQfPC&#34; class=&#34;uri&#34;&gt;https://fr.coursera.org/lecture/crash-course-in-causality/overview-of-matching-JQfPC&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;comparing-differences-in-means-and-balance-tables&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Comparing Differences in Means and Balance Tables&lt;/h2&gt;
+&lt;p&gt;As you may have seen in this week’s application paper, balance tables feature prominently in work that utilizes matching.&lt;/p&gt;
+&lt;p&gt;In binary treatment setups, &lt;strong&gt;balance tables&lt;/strong&gt; present an overview of the difference in means for the groups accross covariates.&lt;/p&gt;
+&lt;p&gt;Let’s take the dataset as an example to review how to compare differences in means and build balance tables in &lt;strong&gt;R&lt;/strong&gt;. There are multiple ways to explore these kinds of questions. In this lab we will leverage t-tests to check the statistical significance of the difference in means.&lt;/p&gt;
+&lt;p&gt;In other words, we want to know whether the observed differences in average value of a variable between the two groups or samples can be due to random chance (our null hypothesis).&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;t-tests-in-r&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;T-tests in R&lt;/h3&gt;
+&lt;p&gt;In this case, let’s imagine we want to check the statistical significance of the differences in the composition of the catholic and public school samples in the &lt;code&gt;w3povrty&lt;/code&gt; (under the poverty line) variable.&lt;/p&gt;
+&lt;p&gt;The general syntax for a t-test is simply as follows. The vectors refer to the variables whose mean you want to compare.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;t.test(y ~ x, data = your_data)&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h4 style=&#34;color:#CC0055;&#34;&gt;
+Exercise
+&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;t.test(w3povrty ~ catholic, data = ecls_df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  Welch Two Sample t-test
+## 
+## data:  w3povrty by catholic
+## t = 26.495, df = 4034.6, p-value &amp;lt; 2.2e-16
+## alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+## 95 percent confidence interval:
+##  0.1678107 0.1946307
+## sample estimates:
+## mean in group 0 mean in group 1 
+##      0.21918633      0.03796562&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;What does the &lt;em&gt;group 0&lt;/em&gt; mean tell us?&lt;/li&gt;
+&lt;li&gt;What does the &lt;em&gt;group 1&lt;/em&gt; mean tell us?&lt;/li&gt;
+&lt;li&gt;Is the difference between catholic school and public school students statistically significant?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;balance-tables-in-r&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Balance tables in R&lt;/h3&gt;
+&lt;p&gt;Now let’s take a look at how can we create a simple and good looking balance table. The idea here is to compare the mean values of different variables across populations or groups. In our case, let’s see whether the catholic and public school groups differ across the covariates in the dataset:&lt;/p&gt;
+&lt;p&gt;Here is one way to create the table &lt;span style=&#34;color:#CC0055;&#34;&gt;&lt;strong&gt;(you can adapt this code for the assignment)&lt;/strong&gt;&lt;/span&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# create a list with the covariates
+list_cov &amp;lt;- c(&amp;quot;race_white&amp;quot;, &amp;quot;race_black&amp;quot;, &amp;quot;race_hispanic&amp;quot;, &amp;quot;race_asian&amp;quot;, &amp;quot;p5numpla&amp;quot;,
+              &amp;quot;p5hmage&amp;quot;, &amp;quot;p5hdage&amp;quot;, &amp;quot;w3daded_hsb&amp;quot;, &amp;quot;w3momed_hsb&amp;quot;, &amp;quot;w3momscr&amp;quot;, &amp;quot;w3dadscr&amp;quot;,
+              &amp;quot;w3income&amp;quot;, &amp;quot;w3povrty&amp;quot;, &amp;quot;p5fstamp&amp;quot;, &amp;quot;c5r2mtsc&amp;quot;, &amp;quot;c5r2mtsc_std&amp;quot;) 
+
+
+ecls_df %&amp;gt;% # our data frame
+  dplyr::summarize_at(list_cov, funs(list(broom::tidy(t.test(. ~ catholic))))) %&amp;gt;% # sequentially run t-tests across all the covariates in the list_cov (note that you have to change the &amp;quot;treatment&amp;quot;)
+  purrr::map(1) %&amp;gt;% # maps into a list
+  dplyr::bind_rows(.id=&amp;#39;variables&amp;#39;) %&amp;gt;% # binds list into a single data frame and names the id column &amp;quot;variables&amp;quot; 
+  dplyr::select(variables, estimate1, estimate2, p.value) %&amp;gt;% # select only the names, group means, and p-values
+  dplyr::mutate_if(is.numeric, round, 3) %&amp;gt;% # round numeric variables to three places
+  knitr::kable(col.names = c(&amp;quot;Variable&amp;quot;, &amp;quot;(Catholic = 0)&amp;quot;, &amp;quot;(Catholic = 1)&amp;quot;, &amp;quot;P value&amp;quot;)) %&amp;gt;% # create kable table and remane headings
+  kableExtra::kable_styling() # style kable table for our knitted document&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Variable
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+(Catholic = 0)
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+(Catholic = 1)
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+P value
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+race_white
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.556
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.725
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+race_black
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.136
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.054
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+race_hispanic
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.181
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.131
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+race_asian
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.066
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.052
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.025
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+p5numpla
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.133
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.093
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+p5hmage
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37.561
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39.575
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+p5hdage
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40.392
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41.988
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+w3daded_hsb
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.488
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.259
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+w3momed_hsb
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.464
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.227
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+w3momscr
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+43.114
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+47.492
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+w3dadscr
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+42.713
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+46.356
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+w3income
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+54889.159
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+82074.301
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+w3povrty
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.219
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.038
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+p5fstamp
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.129
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.015
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+c5r2mtsc
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+50.209
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+52.389
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+c5r2mtsc_std
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-0.031
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.194
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr /&gt;
+&lt;h4 style=&#34;color:#CC0055;&#34;&gt;
+Exercise
+&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Are the differences in means significant at conventional levels?&lt;/li&gt;
+&lt;li&gt;What differences strike you from the composition of the two samples?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-effect-of-catholic-school-on-student-achievement&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The Effect of Catholic School on Student Achievement&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;In this tutorial we’ll analyze the effect of going to Catholic school, as opposed to public school, on student achievement. Because students who attend Catholic school on average are different from students who attend public school, we will use matching to get more credible causal estimates of Catholic schooling.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;exploration-of-the-data&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Exploration of the data&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ecls_df %&amp;gt;%
+  dplyr::group_by(catholic) %&amp;gt;%
+  dplyr::summarize(n_students = n(),
+            avg_math = mean(c5r2mtsc_std),
+            std_error = sd(c5r2mtsc_std) / sqrt(n_students)) %&amp;gt;% 
+  round(3) %&amp;gt;% # round the results
+  knitr::kable() %&amp;gt;% # create kable table
+  kableExtra::kable_styling() # view kable table&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+catholic
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+n_students
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+avg_math
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+std_error
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9568
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-0.031
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.010
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1510
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.194
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.022
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;We can see that we have many more students that did not attend Catholic school than those who did. Also, the Catholic school students have a higher average math score.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;naive-average-treatment-effect-nate&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Naive Average Treatment Effect (NATE)&lt;/h3&gt;
+&lt;p&gt;We can naively compare the students on their standardized math scores (c5r2mtsc_std). As you remember, the Naive Average Treatment Effect (NATE) is the difference in the means of the observed outcomes of the two groups:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[NATE = E(y^1 | D = 1) -  E(y^0 | D = 0)\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;In this case, the NATE would be difference between the average math scores.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;nate-manually&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;NATE manually&lt;/h4&gt;
+&lt;p&gt;Do you remember what we did in the last section?&lt;/p&gt;
+&lt;p&gt;We could substract the &lt;code&gt;avg_math&lt;/code&gt; for the &lt;em&gt;catholic = 1&lt;/em&gt; and the &lt;code&gt;avg_math&lt;/code&gt; for the &lt;em&gt;catholic = 0&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[NATE = 0.194 - (-0.031)\]&lt;/span&gt;
+&lt;span class=&#34;math display&#34;&gt;\[NATE = 0.194 + 0.031 = 0.225\]&lt;/span&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;nate-with-t.test&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;NATE with &lt;code&gt;t.test()&lt;/code&gt;&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;t.test(c5r2mtsc_std ~ catholic, data = ecls_df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  Welch Two Sample t-test
+## 
+## data:  c5r2mtsc_std by catholic
+## t = -9.1069, df = 2214.5, p-value &amp;lt; 2.2e-16
+## alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+## 95 percent confidence interval:
+##  -0.2727988 -0.1761292
+## sample estimates:
+## mean in group 0 mean in group 1 
+##     -0.03059583      0.19386817&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;nate-with-lm&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;NATE with &lt;code&gt;lm()&lt;/code&gt;&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;lm(c5r2mtsc_std ~ catholic, data = ecls_df) %&amp;gt;% 
+  stargazer::stargazer(.,type = &amp;quot;html&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;table style=&#34;text-align:center&#34;&gt;
+&lt;tr&gt;
+&lt;td colspan=&#34;2&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;em&gt;Dependent variable:&lt;/em&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+&lt;/td&gt;
+&lt;td colspan=&#34;1&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+c5r2mtsc_std
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan=&#34;2&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+catholic
+&lt;/td&gt;
+&lt;td&gt;
+0.224&lt;sup&gt;***&lt;/sup&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+(0.028)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+Constant
+&lt;/td&gt;
+&lt;td&gt;
+-0.031&lt;sup&gt;***&lt;/sup&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+(0.010)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan=&#34;2&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+Observations
+&lt;/td&gt;
+&lt;td&gt;
+11,078
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+R&lt;sup&gt;2&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;
+0.006
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+Adjusted R&lt;sup&gt;2&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;
+0.006
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+Residual Std. Error
+&lt;/td&gt;
+&lt;td&gt;
+0.997 (df = 11076)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+F Statistic
+&lt;/td&gt;
+&lt;td&gt;
+66.096&lt;sup&gt;***&lt;/sup&gt; (df = 1; 11076)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan=&#34;2&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;em&gt;Note:&lt;/em&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;
+&lt;sup&gt;&lt;em&gt;&lt;/sup&gt;p&amp;lt;0.1; &lt;sup&gt;&lt;strong&gt;&lt;/sup&gt;p&amp;lt;0.05; &lt;sup&gt;&lt;/strong&gt;&lt;/em&gt;&lt;/sup&gt;p&amp;lt;0.01
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;hr /&gt;
+&lt;h4 style=&#34;color:#CC0055;&#34;&gt;
+Exercise
+&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;What parallels do you find between substracting the manually extracted means, the t-test, and the linear regression?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;matching-with-matchit&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Matching with &lt;code&gt;MatchIt&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;MatchIt&lt;/code&gt; is designed for causal inference with a dichotomous treatment variable and a set of pretreatment control variables. Any number or type of dependent variables can be used.&lt;/p&gt;
+&lt;p&gt;We have three steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Perform the match with &lt;code&gt;MatchIt::matchit()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Create a new data frame with the matched data with &lt;code&gt;MatchIt::match.data()&lt;/code&gt; or &lt;code&gt;MatchIt::get_matches()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Model&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The basic syntax is as follows:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;match_process &amp;lt;- MatchIt::matchit(treatment ~ x1 + x2, data = mydata) # NOTE. We include treatment ~ covariates
+matched_df &amp;lt;- MatchIt::get_matches(match_process) #when matching with replacement
+matched_df &amp;lt;- MatchIt::match.data(match_process) #for other cases
+matched_model &amp;lt;- lm(outcome ~ trearment, data = matched_df)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;where treat is the dichotomous treatment variable, and x1 and x2 are pre-treatment co-variates, all of which are contained in the data frame &lt;em&gt;mydata&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    &lt;strong&gt;As you can see, the outcome variable is not included in the matching procedure.&lt;/strong&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;code&gt;MatchIt&lt;/code&gt; is capable of using several matching &lt;em&gt;methods&lt;/em&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Exact (&lt;em&gt;method = “exact”&lt;/em&gt;): The simplest version of matching is exact. This technique matches each treated unit to all possible control units with exactly the same values on all the covariates, forming subclasses such that within each subclass all units (treatment and control) have the same covariate values.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Subclassification (&lt;em&gt;method = “subclass”&lt;/em&gt;): When there are many covariates (or some covariates can take a large number of values),
+finding sufficient exact matches will often be impossible. The goal of subclassification is to form subclasses, such that in each of them the distribution (rather than the exact values) of covariates for the treated and control groups are as similar as possible.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Nearest Neighbor (&lt;em&gt;method = “nearest”&lt;/em&gt;): Nearest neighbor matching selects the best control matches for each individual
+in the treatment group. Matching is done using a distance measure (propensity score) specified by the distance option (default = logit).&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;As well as optimal matching, full matching, genetic matching, and coarsened exact matching, all of which are detailed in the documentation.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A few additional arguments are important to know about:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;em&gt;distance&lt;/em&gt;: this refers to propensity scores. There are many options for how to calculate these within MatchIt.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;em&gt;discard&lt;/em&gt;: specifies whether to discard units that fall outside some measure of support of the distance measure (default is “none”, discard no units). For example, if some treated units have extremely high propensity scores that are higher than any control units, we could drop those.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;em&gt;replace&lt;/em&gt;: a logical value indicating whether each control unit can be matched to more than one treated unit (default is &lt;em&gt;replace = FALSE&lt;/em&gt;, each control unit is used at most once).&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;em&gt;ratio&lt;/em&gt;: the number of control units to match to each treated unit (default is &lt;em&gt;ratio = 1&lt;/em&gt;).&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;There are also some optional arguments for most of the matching methods, which you can read about in the documentation if you are interested.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;exact-matching&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Exact Matching&lt;/h3&gt;
+&lt;p&gt;We can use a combination of the results from our balance table and theory to identify which variables to use for matching. Let’s perform an exact match with:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;race_white: Is the student white (1) or not (0)?&lt;/li&gt;
+&lt;li&gt;p5hmage: Mother’s age&lt;/li&gt;
+&lt;li&gt;w3income: Family income&lt;/li&gt;
+&lt;li&gt;p5numpla: Number of places the student has lived for at least 4 months&lt;/li&gt;
+&lt;li&gt;w3momed_hsb: Is the mother’s education level high-school or below (1) or some college or more (0)?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# first we must omit missing values (MatchIt does not allow missings)
+match_data &amp;lt;- ecls_df %&amp;gt;% 
+  dplyr::select(catholic, c5r2mtsc_std, race_white, p5hmage, 
+                w3income, p5numpla, w3momed_hsb) %&amp;gt;% 
+  na.omit() 
+
+
+# perform exact match
+exact_match &amp;lt;- MatchIt::matchit(catholic ~ race_white + p5hmage + w3income +
+                                p5numpla + w3momed_hsb, 
+                                method = &amp;quot;exact&amp;quot;, 
+                                data = match_data)
+
+# Try seeing the output in the console with summary(exact_match)
+
+# grab the matched data into a new data frame
+data_exact_match &amp;lt;- MatchIt::match.data(exact_match)
+
+# estimate effect again with new data frame
+exact_match_model &amp;lt;- lm(c5r2mtsc_std ~ catholic, data = data_exact_match)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;stargazer::stargazer(exact_match_model, type = &amp;quot;html&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;table style=&#34;text-align:center&#34;&gt;
+&lt;tr&gt;
+&lt;td colspan=&#34;2&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;em&gt;Dependent variable:&lt;/em&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+&lt;/td&gt;
+&lt;td colspan=&#34;1&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+c5r2mtsc_std
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan=&#34;2&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+catholic
+&lt;/td&gt;
+&lt;td&gt;
+-0.101&lt;sup&gt;***&lt;/sup&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+(0.030)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+Constant
+&lt;/td&gt;
+&lt;td&gt;
+0.319&lt;sup&gt;***&lt;/sup&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+(0.015)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan=&#34;2&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+Observations
+&lt;/td&gt;
+&lt;td&gt;
+5,405
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+R&lt;sup&gt;2&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;
+0.002
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+Adjusted R&lt;sup&gt;2&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;
+0.002
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+Residual Std. Error
+&lt;/td&gt;
+&lt;td&gt;
+0.934 (df = 5403)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+F Statistic
+&lt;/td&gt;
+&lt;td&gt;
+11.340&lt;sup&gt;***&lt;/sup&gt; (df = 1; 5403)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan=&#34;2&#34; style=&#34;border-bottom: 1px solid black&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;
+&lt;em&gt;Note:&lt;/em&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;
+&lt;sup&gt;&lt;em&gt;&lt;/sup&gt;p&amp;lt;0.1; &lt;sup&gt;&lt;strong&gt;&lt;/sup&gt;p&amp;lt;0.05; &lt;sup&gt;&lt;/strong&gt;&lt;/em&gt;&lt;/sup&gt;p&amp;lt;0.01
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;Now we can see that the mean in the group that did not attend Catholic school is actually about 0.10 higher than the mean for those who did. The results are statistically significant given that the confidence interval does not contain zero, and we have a fairly small p-value.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;propensity-scores&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Propensity Scores&lt;/h3&gt;
+&lt;p&gt;If we want to perform non-exact matching, we can use &lt;strong&gt;propensity scores&lt;/strong&gt;. We can generate these manually using a logit model on the unmatched data set.&lt;/p&gt;
+&lt;p&gt;When we extract &lt;strong&gt;propensity scores&lt;/strong&gt;, we model the propensity of each unit of falling under the treatment group based on their values on a set of covariates. This is how we would do this manually:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# create a new column with income by the thousands for more interpretable output
+ecls_df &amp;lt;- ecls_df %&amp;gt;% 
+  dplyr::mutate(w3income_1k = w3income / 1000) 
+
+# estimate logit model
+m_ps &amp;lt;- glm(catholic ~ race_white + w3income_1k + 
+            p5hmage + p5numpla + w3momed_hsb,
+            family = binomial(link = &amp;quot;logit&amp;quot;), # you can also use a probit link here
+            data = ecls_df)
+
+# extract predicted probabilities
+# type = &amp;quot;response&amp;quot; option tells R to output probabilities of the form P(Y = 1|X)
+prs_df &amp;lt;- dplyr::tibble(pr_score = predict(m_ps, type = &amp;quot;response&amp;quot;),
+                     catholic = m_ps$model$catholic) # the actual values&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let’s plot the propensity scores by treatment group to explore common support:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Histogram
+ggplot(prs_df, aes(x = pr_score, fill = factor(catholic))) +
+  geom_histogram(alpha = 0.5) +
+  theme_minimal() +
+  theme(legend.position = &amp;quot;bottom&amp;quot;) +
+  labs(title = &amp;quot;Propensity Score Distribution: Treatment and Control Groups&amp;quot;,
+       x = &amp;quot;Propensity Score&amp;quot;,
+       y = &amp;quot;Count&amp;quot;,
+       fill = &amp;quot;Catholic School Attendance&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/110490691-de004c80-80f0-11eb-9c52-6b036f0c4efb.png&#34; width=&#34;85%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Density plot
+ggplot(prs_df, aes(x = pr_score, fill = factor(catholic))) +
+  geom_density(alpha = 0.5) +
+  theme_minimal() +
+  theme(legend.position = &amp;quot;bottom&amp;quot;) +
+  labs(title = &amp;quot;Propensity Score Distribution: Treatment and Control Groups&amp;quot;,
+       x = &amp;quot;Propensity Score&amp;quot;,
+       y = &amp;quot;Density&amp;quot;,
+       fill = &amp;quot;Catholic School Attendance&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/110490704-df317980-80f0-11eb-85d6-e5a1e7d4dc55.png&#34; width=&#34;85%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Jittered point plot
+ggplot(prs_df, aes(x = pr_score, y = factor(catholic), color = factor(catholic))) +
+  geom_jitter() +
+  theme_minimal() +
+  theme(legend.position = &amp;quot;bottom&amp;quot;) +
+  labs(title = &amp;quot;Propensity Score Distribution: Treatment and Control Groups&amp;quot;,
+       x = &amp;quot;Propensity Score&amp;quot;,
+       y = &amp;quot;Group&amp;quot;,
+       color = &amp;quot;Catholic School Attendance&amp;quot;) 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/110490710-e062a680-80f0-11eb-94bb-c080d19296ea.png&#34; width=&#34;85%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h4 style=&#34;color:#CC0055;&#34;&gt;
+Exercise
+&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;What do these plots tell us?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;non-exact-matching&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Non-Exact Matching&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;MatchIt&lt;/code&gt; can generate propensity scores itself, so we don’t need to manually go through the process above. Let’s try putting together a non-exact matching formula yourself! Try:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;nearest neighbor matching&lt;/li&gt;
+&lt;li&gt;with replacement&lt;/li&gt;
+&lt;li&gt;with a one-to-one ratio&lt;/li&gt;
+&lt;li&gt;on the &lt;em&gt;match_data&lt;/em&gt; dataset&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;one_match &amp;lt;- MatchIt::matchit(catholic ~ race_white + w3income + p5hmage +
+                              p5numpla + w3momed_hsb,
+                              method = &amp;quot;nearest&amp;quot;, 
+                              ratio = 1, 
+                              replace = TRUE,
+                              data = match_data)
+
+summary(one_match)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## MatchIt::matchit(formula = catholic ~ race_white + w3income + 
+##     p5hmage + p5numpla + w3momed_hsb, data = match_data, method = &amp;quot;nearest&amp;quot;, 
+##     replace = TRUE, ratio = 1)
+## 
+## Summary of Balance for All Data:
+##             Means Treated Means Control Std. Mean Diff. Var. Ratio eCDF Mean
+## distance           0.1927        0.1379          0.6486     1.0007    0.2086
+## race_white         0.7411        0.5914          0.3418          .    0.1497
+## w3income       82568.9357    55485.0210          0.5777     1.1373    0.1565
+## p5hmage           39.5932       37.5658          0.3874     0.6383    0.0408
+## p5numpla           1.0917        1.1298         -0.1242     0.6132    0.0076
+## w3momed_hsb        0.2234        0.4609         -0.5703          .    0.2375
+##             eCDF Max
+## distance      0.3109
+## race_white    0.1497
+## w3income      0.3062
+## p5hmage       0.1893
+## p5numpla      0.0277
+## w3momed_hsb   0.2375
+## 
+## 
+## Summary of Balance for Matched Data:
+##             Means Treated Means Control Std. Mean Diff. Var. Ratio eCDF Mean
+## distance           0.1927        0.1927          0.0000     0.9954    0.0000
+## race_white         0.7411        0.7493         -0.0186          .    0.0081
+## w3income       82568.9357    81775.6653          0.0169     1.0052    0.0036
+## p5hmage           39.5932       39.6169         -0.0045     1.0179    0.0015
+## p5numpla           1.0917        1.0777          0.0459     1.1580    0.0031
+## w3momed_hsb        0.2234        0.2226          0.0018          .    0.0007
+##             eCDF Max Std. Pair Dist.
+## distance      0.0030          0.0001
+## race_white    0.0081          0.0625
+## w3income      0.0081          0.0396
+## p5hmage       0.0074          0.1131
+## p5numpla      0.0126          0.0846
+## w3momed_hsb   0.0007          0.0586
+## 
+## Percent Balance Improvement:
+##             Std. Mean Diff. Var. Ratio eCDF Mean eCDF Max
+## distance              100.0     -552.2     100.0     99.0
+## race_white             94.6          .      94.6     94.6
+## w3income               97.1       95.9      97.7     97.3
+## p5hmage                98.8       96.0      96.2     96.1
+## p5numpla               63.1       70.0      59.2     54.6
+## w3momed_hsb            99.7          .      99.7     99.7
+## 
+## Sample Sizes:
+##               Control Treated
+## All           7915.      1352
+## Matched (ESS)  187.29    1352
+## Matched        510.      1352
+## Unmatched     7405.         0
+## Discarded        0.         0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can interpret the resulting output as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Summary of balance for all data: Comparison of the means for all the data without matching&lt;/li&gt;
+&lt;li&gt;Summary of balance for matched data: Comparison of means for matched data. Looking for them to become similar.&lt;/li&gt;
+&lt;li&gt;Percent balance improvement: Higher is better, close to 100 is ideal.&lt;/li&gt;
+&lt;li&gt;Sample sizes: How many units were matched in the control/treatment groups.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now, let’s plot the propensity scores for the treated and untreated units.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# simple plot - check out the cobalt package for nicer options, or use ggplot2 to create your own!
+plot(one_match, type = &amp;quot;hist&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/110490714-e193d380-80f0-11eb-88ca-b5f8fee948af.png&#34; width=&#34;85%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Let’s extract the data from &lt;em&gt;one_match&lt;/em&gt; and creating a balance table like the one we did before, just this time using the new data. Scroll down for the answer when you’re ready.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# grab data set
+data_prop_match &amp;lt;- MatchIt::get_matches(one_match)
+
+# create list of covariates for the table
+list_cov &amp;lt;- c(&amp;quot;race_white&amp;quot;, &amp;quot;p5hmage&amp;quot;, &amp;quot;w3income&amp;quot;, &amp;quot;p5numpla&amp;quot;, &amp;quot;w3momed_hsb&amp;quot;)
+
+data_prop_match %&amp;gt;% # our data frame
+  dplyr::summarize_at(list_cov, funs(list(broom::tidy(t.test(. ~ catholic))))) %&amp;gt;% # sequentially run t-tests across all the covariates in the list_cov (note that you have to change the &amp;quot;treatment&amp;quot;)
+  purrr::map(1) %&amp;gt;% # maps into a list
+  dplyr::bind_rows(.id=&amp;#39;variables&amp;#39;) %&amp;gt;% # binds list into a single data frame and names the id column &amp;quot;variables&amp;quot; 
+  dplyr::select(variables, estimate1, estimate2, p.value) %&amp;gt;% # select only the names, group means, and p-values
+  dplyr::mutate_if(is.numeric, round, 3) %&amp;gt;% # round numeric variables to three places
+  knitr::kable(col.names = c(&amp;quot;Variable&amp;quot;, &amp;quot;Control (Catholic = 0)&amp;quot;, &amp;quot;Treat (Catholic = 1)&amp;quot;, &amp;quot;P value&amp;quot;)) %&amp;gt;% # create kable table and rename headings
+  kableExtra::kable_styling() # style kable table for our knitted document&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Variable
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Control (Catholic = 0)
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Treat (Catholic = 1)
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+P value
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+race_white
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.749
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.741
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.628
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+p5hmage
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39.617
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39.593
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.906
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+w3income
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+81775.665
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+82568.936
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.659
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+p5numpla
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.078
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.092
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.216
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+w3momed_hsb
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.223
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.223
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.963
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Those means look very close. Hooray.&lt;/p&gt;
+&lt;p&gt;Finally, let’s estimate on the matched data set:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;prop_match_model &amp;lt;- lm(c5r2mtsc_std ~ catholic, data = data_prop_match)
+stargazer::stargazer(prop_match_model, type = &amp;quot;text&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## ===============================================
+##                         Dependent variable:    
+##                     ---------------------------
+##                            c5r2mtsc_std        
+## -----------------------------------------------
+## catholic                      -0.038           
+##                               (0.037)          
+##                                                
+## Constant                     0.248***          
+##                               (0.026)          
+##                                                
+## -----------------------------------------------
+## Observations                   2,704           
+## R2                            0.0004           
+## Adjusted R2                   0.00003          
+## Residual Std. Error      0.955 (df = 2702)     
+## F Statistic            1.068 (df = 1; 2702)    
+## ===============================================
+## Note:               *p&amp;lt;0.1; **p&amp;lt;0.05; ***p&amp;lt;0.01&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;As with the exact matching, we can see that those that did not attend Catholic school performed better on the test than those who did. Still, we see that our results in this instance are not statistically significant.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

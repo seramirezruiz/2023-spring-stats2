@@ -1,0 +1,1858 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.0.0-beta.2 for Hugo" />
+  
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Sebastian Ramirez Ruiz" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Welcome Introduction! Welcome to our eighth tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.
+During this week’s lecture you were introduced to Difference in Differences (DiD)." />
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-8/08-online-tutorial/" />
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    <meta name="theme-color" content="#1565c0" />
+  
+
+  
+  
+    
+    <script src="/2022-spring-stats2/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous" media="print" onload="this.media='all'">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/2022-spring-stats2/css/wowchemy.dd90b8698d7ba5e114b9de5647a585e5.css" />
+
+  
+
+
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+    <link rel="manifest" href="/2022-spring-stats2/index.webmanifest" />
+  
+
+  <link rel="icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_32x32_fill_lanczos_center_2.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_180x180_fill_lanczos_center_2.png" />
+
+  <link rel="canonical" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-8/08-online-tutorial/" />
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary" />
+  
+  <meta property="og:site_name" content="| Tutorials - Spring 2022 |" />
+  <meta property="og:url" content="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-8/08-online-tutorial/" />
+  <meta property="og:title" content="Difference in Differences | | Tutorials - Spring 2022 |" />
+  <meta property="og:description" content="Welcome Introduction! Welcome to our eighth tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.
+During this week’s lecture you were introduced to Difference in Differences (DiD)." /><meta property="og:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" />
+    <meta property="twitter:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" /><meta property="og:locale" content="en-us" />
+  
+    
+    
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+
+
+
+
+  <title>Difference in Differences | | Tutorials - Spring 2022 |</title>
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/2022-spring-stats2/js/wowchemy-init.min.d876f1a6b98701f9238f2313b512a26f.js"></script>
+
+  
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-end" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/2022-spring-stats2/materials/"><span>Materials</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+        
+      
+        
+      
+
+      
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    
+
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+          DiDs in R
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/2022-spring-stats2/materials/"><i class="fas fa-arrow-left pr-1"></i>Materials</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/2022-spring-stats2/materials/session-8/">DiDs in R</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  <li class=""><a href="/2022-spring-stats2/materials/session-8/slides/">Slides</a></li>
+
+
+
+  <li class="active"><a href="/2022-spring-stats2/materials/session-8/08-online-tutorial/">Difference in Differences</a></li>
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      
+
+      
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <article class="article">
+
+        <div class="docs-article-container">
+          
+            
+  <nav class="d-none d-md-flex" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      
+  
+  
+  
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/">
+      
+        Home
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/">
+      
+        Materials
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/session-8/">
+      
+        DiDs in R
+      
+    </a>
+  </li>
+
+
+      <li class="breadcrumb-item active" aria-current="page">
+        Difference in Differences
+      </li>
+    </ol>
+  </nav>
+
+
+          
+
+          <h1>Difference in Differences</h1>
+
+          <div class="article-style">
+            
+<script src="/2022-spring-stats2rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<script src="/2022-spring-stats2rmarkdown-libs/kePrint/kePrint.js"></script>
+<link href="/2022-spring-stats2rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
+
+
+<div id="welcome" class="section level2">
+<h2>Welcome</h2>
+<div id="introduction" class="section level3">
+<h3>Introduction!</h3>
+<p>Welcome to our eighth tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.</p>
+<p>During this week’s lecture you were introduced to Difference in Differences (DiD).</p>
+<p>In this lab session we will:</p>
+<ul>
+<li>Learn how to transform our dataframes from wide to long format with <code>tidyr:pivot_longer()</code></li>
+<li>Leverage visualizations with <code>ggplot2</code> to explore changes between groups and across time</li>
+<li>Learn how to extract our DiD estimates through manual calculation, first differences, and the regression formulation of the DiD model</li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="wide-and-long-data-formats" class="section level2">
+<h2>1. Wide and long data formats</h2>
+<p>As we have seen throughout the semester, there are multiple ways to store our data. This week, we will look at the difference between <strong>wide</strong> and <strong>long</strong> format data.</p>
+<p>We will illustrate this with a brief example. The two datasets we will load —<code>city_wide_df</code> and <code>city_long_df</code>— <strong>contain the same information</strong>.</p>
+<div id="wide" class="section level3">
+<h3>Wide</h3>
+<pre class="r"><code># wide data frame
+city_wide_df %&gt;% knitr::kable() %&gt;% kableExtra::kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+city
+</th>
+<th style="text-align:right;">
+pop_2000
+</th>
+<th style="text-align:right;">
+pop_2010
+</th>
+<th style="text-align:right;">
+pop_2020
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Berlin
+</td>
+<td style="text-align:right;">
+3.38
+</td>
+<td style="text-align:right;">
+3.45
+</td>
+<td style="text-align:right;">
+3.56
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rome
+</td>
+<td style="text-align:right;">
+3.70
+</td>
+<td style="text-align:right;">
+3.96
+</td>
+<td style="text-align:right;">
+4.26
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Paris
+</td>
+<td style="text-align:right;">
+9.74
+</td>
+<td style="text-align:right;">
+10.46
+</td>
+<td style="text-align:right;">
+11.01
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+London
+</td>
+<td style="text-align:right;">
+7.27
+</td>
+<td style="text-align:right;">
+8.04
+</td>
+<td style="text-align:right;">
+9.30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="long" class="section level3">
+<h3>Long</h3>
+<pre class="r"><code># long data frame
+city_long_df %&gt;% knitr::kable() %&gt;% kableExtra::kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+city
+</th>
+<th style="text-align:right;">
+year
+</th>
+<th style="text-align:right;">
+pop
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Berlin
+</td>
+<td style="text-align:right;">
+2000
+</td>
+<td style="text-align:right;">
+3.38
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Berlin
+</td>
+<td style="text-align:right;">
+2010
+</td>
+<td style="text-align:right;">
+3.45
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Berlin
+</td>
+<td style="text-align:right;">
+2020
+</td>
+<td style="text-align:right;">
+3.56
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rome
+</td>
+<td style="text-align:right;">
+2000
+</td>
+<td style="text-align:right;">
+3.70
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rome
+</td>
+<td style="text-align:right;">
+2010
+</td>
+<td style="text-align:right;">
+3.96
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rome
+</td>
+<td style="text-align:right;">
+2020
+</td>
+<td style="text-align:right;">
+4.26
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Paris
+</td>
+<td style="text-align:right;">
+2000
+</td>
+<td style="text-align:right;">
+9.74
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Paris
+</td>
+<td style="text-align:right;">
+2010
+</td>
+<td style="text-align:right;">
+10.46
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Paris
+</td>
+<td style="text-align:right;">
+2020
+</td>
+<td style="text-align:right;">
+11.01
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+London
+</td>
+<td style="text-align:right;">
+2000
+</td>
+<td style="text-align:right;">
+7.27
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+London
+</td>
+<td style="text-align:right;">
+2010
+</td>
+<td style="text-align:right;">
+8.04
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+London
+</td>
+<td style="text-align:right;">
+2020
+</td>
+<td style="text-align:right;">
+9.30
+</td>
+</tr>
+</tbody>
+</table>
+<p>As we can see, the long dataset separates the unit of analysis (city-year) into two separate columns. On the other hand, the wide dataset combines one of the keys (year) with the value variable (population).</p>
+<hr />
+<h5 style="color:#cc0055;">
+Why do we care about the data format
+</h5>
+<p>In some instances, long format datasets are required for advanced statistical analysis and graphing. For example, if we wanted to run the regression formulation of the difference in differences model, we would need to input our data in long format. Furthermore, having our data in long format is very useful when plotting. Packages such as <code>ggplot2</code>, expect that your data will be in long form for the most part.</p>
+<hr />
+</div>
+<div id="converting-from-wide-to-long-format" class="section level3">
+<h3>Converting from wide to long format</h3>
+<p>We will learn how to pivot our wide format data to long format with the <code>tidyr</code> package.</p>
+<p>We will use the <code>tidyr::pivot_longer()</code> function, which “lengthens” data, increasing the number of rows and decreasing the number of columns. The inverse transformation is <code>tidyr::pivot_wider()</code></p>
+<p>You can read the vignette <a href="https://tidyr.tidyverse.org/articles/pivot.html">here</a>.</p>
+<h5 style="color:#cc0055;">
+How to use <code>tidyr::pivot_longer()</code>
+</h5>
+<pre class="r"><code>your_new_long_df &lt;- 
+  tidyr::pivot_longer(
+    your_wide_df,
+    cols,
+    names_to = &quot;name&quot;,
+    values_to = &quot;value&quot;  
+    ...
+  )</code></pre>
+<p>Let’s turn the <code>city_wide_df</code> into a long format dataset:</p>
+<pre class="r"><code>city_wide_df %&gt;%
+  tidyr::pivot_longer(
+    cols = c(pop_2000, pop_2010, pop_2020), # -city, !city, dplyr::starts_with(&quot;pop_&quot;), etc... would also work
+    names_to = &quot;year&quot;, # where do we want the names of the columns to go? (year)
+    names_prefix = &quot;pop_&quot;, # names_prefix removes matching text from the start of each variable name (not always necessary)
+    values_to = &quot;pop&quot; # where do we want the values in the columns to go? (pop)
+  )</code></pre>
+<pre><code>## # A tibble: 12 × 3
+##    city   year    pop
+##    &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt;
+##  1 Berlin 2000   3.38
+##  2 Berlin 2010   3.45
+##  3 Berlin 2020   3.56
+##  4 Rome   2000   3.7 
+##  5 Rome   2010   3.96
+##  6 Rome   2020   4.26
+##  7 Paris  2000   9.74
+##  8 Paris  2010  10.5 
+##  9 Paris  2020  11.0 
+## 10 London 2000   7.27
+## 11 London 2010   8.04
+## 12 London 2020   9.3</code></pre>
+<p>Try to delete the <code>names_prefix = "pop_"</code> argument to see what happens.</p>
+<p>Let’s move to our practical example to see how we can use <strong>R</strong> for DiD estimation.</p>
+<hr />
+</div>
+</div>
+<div id="measuring-the-effect-of-a-soda-tax-on-sugar-added-drink-consumption" class="section level2">
+<h2>2. Measuring the effect of a soda tax on sugar-added drink consumption</h2>
+<p>After the very successful impact evaluations you have performed in the past weeks, you are contacted by the local government of Pawnee, Indiana. The city is interested in your advice to assess a policy intervention passed with the support of councilwoman Leslie Knope.</p>
+<p>The city of Pawnee has been at the spotlight recently, as it has come to be known as the child obesity and diabetes capital of the state of Indiana. Some of the constituents of the city point at the fast food culture and soda sizes across the restaurants in town as a source of the problem. The largest food chain in Pawnee, Paunch Burger, offers its smallest soda size at a whopping 64oz (about 1.9 liters).</p>
+<p>The “soda tax”, as it came to be known, came to effect initially at a couple of districts. Fortunately for you, based on an archaic law, residents of Indiana have to demonstrate their residence in the district they intend to dine before being served at any of the restaurants. The latter fact means that Pawnee inhabitants can only buy sugar-added drinks in their respective home district.</p>
+<p><img src="https://media.giphy.com/media/CAXFvut1tBBf2/giphy.gif" style="display: block; margin: auto;" /></p>
+<hr />
+<div id="packages" class="section level4">
+<h4>Packages</h4>
+<pre class="r"><code># These are the libraries we will use today. Make sure to install them in your console in case you have not done so previously.
+
+set.seed(42) #for consistent results
+
+library(dplyr) # to wrangle our data
+library(tidyr) # to wrangle our data - pivot_longer()
+library(ggplot2) # to render our graphs
+library(readr) # for loading the .csv data
+library(kableExtra) # to render better formatted tables
+library(stargazer) # for formatting your model output
+
+library(estimatr) # to employ lm_robust()
+
+soda_tax_df &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/seramirezruiz/hertiestats2/master/data/soda_tax_df.csv&quot;) # simulated data</code></pre>
+<p>Our dataset <em>soda_tax_df</em>, contains the following information:</p>
+<ul>
+<li><code>ìd</code>: A unique number identifier for each of the 7,500 inhabitants of Pawnee</li>
+<li><code>district</code>: The name of the district in which the corresponding unit lives</li>
+<li><code>treatment</code>: A binary variable that signals whether the subject lived in a district where the tax was implemented</li>
+<li><code>pre_tax</code>: The weekly sugar-added drink consumption in ounces before the tax was imposed</li>
+<li><code>post_tax</code>: The weekly sugar-added drink consumption in ounces after the tax was imposed</li>
+</ul>
+<h5 style="color:#cc0055;">
+Are these wide or long format data?
+</h5>
+<pre class="r"><code>soda_tax_df %&gt;% head(10)</code></pre>
+<pre><code>## # A tibble: 10 × 5
+##       id district     treatment pre_tax post_tax
+##    &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
+##  1     1 Snake Lounge         0   1688.    1706.
+##  2     2 Snake Lounge         0    427.     438.
+##  3     3 Snake Lounge         0    566.     560.
+##  4     4 Snake Lounge         0    607.     624.
+##  5     5 Snake Lounge         0    573.     607.
+##  6     6 Snake Lounge         0    496.     502.
+##  7     7 Snake Lounge         0    659.     670.
+##  8     8 Snake Lounge         0    498.     522.
+##  9     9 Snake Lounge         0    815.     846.
+## 10    10 Snake Lounge         0    503.     510.</code></pre>
+<p>Our <code>soda_tax_df</code> is in wide format. We can convert our data to a long format to render the time and treatment dummy variables and save is to the <code>soda_tax_df_long</code>.</p>
+<p>We will utilize the <em>pivot_longer()</em> function from <code>tidyr</code> to format our data frame.</p>
+<pre class="r"><code>soda_tax_df_long &lt;- 
+  soda_tax_df %&gt;% # the wide format df
+  tidyr::pivot_longer(cols = c(pre_tax, post_tax), # both contain information about soda drank at two points in time
+                      names_to = &quot;period&quot;, # grab the names of pre and post and save them to period
+                      values_to = &quot;soda_drank&quot;) %&gt;% # grab values from pre and post and put them in soda_drank
+  dplyr::mutate(after_tax = ifelse(period == &quot;post_tax&quot;, 1, 0)) # create dummy for period
+
+head(soda_tax_df_long, 10)</code></pre>
+<pre><code>## # A tibble: 10 × 6
+##       id district     treatment period   soda_drank after_tax
+##    &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt;
+##  1     1 Snake Lounge         0 pre_tax       1688.         0
+##  2     1 Snake Lounge         0 post_tax      1706.         1
+##  3     2 Snake Lounge         0 pre_tax        427.         0
+##  4     2 Snake Lounge         0 post_tax       438.         1
+##  5     3 Snake Lounge         0 pre_tax        566.         0
+##  6     3 Snake Lounge         0 post_tax       560.         1
+##  7     4 Snake Lounge         0 pre_tax        607.         0
+##  8     4 Snake Lounge         0 post_tax       624.         1
+##  9     5 Snake Lounge         0 pre_tax        573.         0
+## 10     5 Snake Lounge         0 post_tax       607.         1</code></pre>
+<hr />
+</div>
+</div>
+<div id="exploring-our-data" class="section level2">
+<h2>Exploring our data</h2>
+<p>We can use our <code>soda_tax_df</code> to explore the distribution of soda consumption at different points in time.</p>
+<p>Let’s try first to look at the differences in the distribution only at the <strong>pre-tax time period:</strong></p>
+<pre class="r"><code>ggplot(soda_tax_df, aes(x = pre_tax, fill = factor(treatment))) + 
+  geom_density(alpha = 0.5) + # density plot with transparency (alpha = 0.5)
+  scale_fill_manual(name = &quot; &quot;, # changes to fill dimension
+                     values = c(&quot;#a7a8aa&quot;, &quot;#cc0055&quot;),
+                     labels = c(&quot;Control&quot;, &quot;Treatment&quot;)) +
+  theme_minimal() +
+  theme(legend.position = &quot;bottom&quot;) +
+  labs(title = &quot;Distribution of soda consumption before the tax was imposed&quot;,
+       x = &quot;Soda consumtion (oz)&quot;,
+       y = &quot;Density&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/113713122-3ffba400-96e7-11eb-9c81-a9dafb160e0b.png" style="display: block; margin: auto;" /></p>
+<p>Let’s look at the <strong>post-tax period:</strong></p>
+<pre class="r"><code>ggplot(soda_tax_df, aes(x = post_tax, fill = factor(treatment))) + 
+  geom_density(alpha = 0.5) + # density plot with transparency (alpha = 0.5)
+  scale_fill_manual(name = &quot; &quot;, # changes to fill dimension
+                     values = c(&quot;#a7a8aa&quot;, &quot;#cc0055&quot;),
+                     labels = c(&quot;Control&quot;, &quot;Treatment&quot;)) +
+  theme_minimal() +
+  theme(legend.position = &quot;bottom&quot;) +
+  labs(title = &quot;Distribution of soda consumption after the tax was imposed&quot;,
+       x = &quot;Soda consumtion (oz)&quot;,
+       y = &quot;Density&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/113713140-4427c180-96e7-11eb-938e-88fc7b1eda5f.png" style="display: block; margin: auto;" /></p>
+<hr />
+<p>Since in our <code>soda_tax_df_long</code> we represent the time and soda consumption dimensions under the same columns, we can create even more complex graphs.</p>
+<p>Let’s leverage a new layer of our grammar of graphs: <strong>Facets</strong></p>
+<p>We will use <code>facet_grid()</code> which forms a matrix of panels defined by row and column faceting variables. It is most useful when you have two discrete variables, and all combinations of the variables exist in the data.</p>
+<pre class="r"><code>soda_tax_df_long %&gt;% 
+  dplyr::mutate(period = ifelse(period == &quot;post_tax&quot;, &quot;T1 - Post-tax&quot;, &quot;T0 - Pre-tax&quot;), # create more meaningful labels
+                treatment = ifelse(treatment == 1, &quot;Treated (D=1)&quot;, &quot;Untreated (D=0)&quot;)) %&gt;%
+  dplyr::group_by(period, treatment) %&gt;% # group to extract means of each group at each time
+  dplyr::mutate(group_mean = mean(soda_drank)) %&gt;% # extract means of each group at each time
+ggplot(., aes(x = soda_drank, fill = factor(treatment))) +
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(name = &quot; &quot;, # changes to fill dimension
+                     values = c(&quot;#cc0055&quot;, &quot;#a7a8aa&quot;),
+                     labels = c(&quot;Treatment&quot;, &quot;Control&quot;)) +
+  facet_grid(treatment~period) + # we specify the matrix (treatment and period)
+  geom_vline(aes(xintercept = group_mean), linetype = &quot;longdash&quot;) + # add vertical line with the mean
+  theme_bw() +
+  theme(legend.position = &quot;none&quot;) +
+  labs(x = &quot;Soda consumed (oz)&quot;,
+       y = &quot;Density&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/113713145-45f18500-96e7-11eb-962e-4e4af95c834f.png" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+<div id="modeling-and-estimating" class="section level2">
+<h2>Modeling and estimating</h2>
+<p>So far we have ignored time in our estimations. Up until this point, most of the tools we have learned produce estimates of the counterfactual through explicit assignment rules that work randomly or as-if-randomly (e.g. randomized experimental, regression discontinuity, and instrumental variable set-ups).</p>
+<p>Difference-in-differences compares the changes in outcomes over time between units under different treatment states. This allows us to correct for any differences between the treatment and comparison groups that are constant over time assuming that the trends in time are parallel.</p>
+<hr />
+<div id="a.-calculating-without-time" class="section level3">
+<h3>a. Calculating without time</h3>
+<p>If we did not have the <code>pre_tax</code> baseline measure, we would likely utilize the <code>post_tax</code> to explore the average effect on the treated. In this case, we would model this as:</p>
+<pre class="r"><code>after_model &lt;- lm(post_tax ~ treatment, data = soda_tax_df)
+modelsummary::modelsummary(after_model, 
+                           statistic = &quot;conf.int&quot;,
+                           gof_omit=&quot;AIC|BIC|Log.Lik.&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Model 1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+523.273
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[518.008, 528.537]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treatment
+</td>
+<td style="text-align:center;">
+-146.918
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+[-154.363, -139.472]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+7500
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.166
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.166
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:center;">
+1496.245
+</td>
+</tr>
+</tbody>
+</table>
+<p>We could read this result substantively as: those who lived in districts were the tax was implemented consumed on average 146.9 ounces less of sugar-added drinks per week compared to those who lived in districts were the tax was not put in place. <strong>This calculation would give us a comparison of the treatment and control groups after treatment.</strong></p>
+<p>To believe the results of our <code>after_model</code>, we would need to believe that the mean ignorability of treatment assignment assumption is fulfilled. We would have to think carefully about possible factors that could differentiate our treatment and control groups. We use a treatment indicator based on the districts where the measure was able to be implemented. Treatment was not fully randomly assigned, so there may be lots of potential confounders that create baseline differences in the scores for those living in Old Eagleton compared to those in Snake Lounge, which also affect the after-treatment comparisons.</p>
+<p>If we think about the mechanics behind this naive calculation, we are just comparing the average observed outcomes for those treated and not treated after the tax was imposed:</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Treatment
+</th>
+<th style="text-align:right;">
+Average after tax
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+523.27
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+376.35
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>ggplot(soda_tax_df, aes(x = post_tax, fill = factor(treatment))) +
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(name = &quot; &quot;, # changes to fill dimension
+                     values = c(&quot;#a7a8aa&quot;, &quot;#cc0055&quot;),
+                     labels = c(&quot;Control&quot;, &quot;Treatment&quot;)) +
+  geom_vline(xintercept = 523.27, linetype = &quot;longdash&quot;, color = &quot;#a7a8aa&quot;) + #avg for the untreated
+  geom_vline(xintercept = 376.35, linetype = &quot;longdash&quot;, color = &quot;#cc0055&quot;) + #avg for the treated
+  theme_minimal() +
+  theme(legend.position = &quot;bottom&quot;) +
+  labs(title = &quot;Distribution of soda consumption after the tax was imposed&quot;,
+       x = &quot;Soda consumtion (oz)&quot;,
+       y = &quot;Density&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/113713161-4853df00-96e7-11eb-9ece-d8bc24d1db0f.png" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+<div id="b.-including-the-time-dimension-manual-extraction-of-the-did-estimate" class="section level3">
+<h3>b. Including the time dimension (Manual extraction of the DiD estimate)</h3>
+<p>During the lecture component of the class, we learned that the <span class="math inline">\(\beta_{DD}\)</span> is the difference in the differences. You can see it illustrated in the table. We can extract the observed values at each iteration of the treatment and time matrix and then manually subtract the differences.</p>
+<p><img src="https://user-images.githubusercontent.com/54796579/113552797-f469cd00-95f6-11eb-9366-9163342f00fc.png" style="display: block; margin: auto;" /></p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Period
+</div>
+</th>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+</tr>
+<tr>
+<th style="text-align:right;">
+Treatment
+</th>
+<th style="text-align:right;">
+Pre-tax
+</th>
+<th style="text-align:right;">
+Post-tax
+</th>
+<th style="text-align:right;">
+Difference
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+511.13
+</td>
+<td style="text-align:right;">
+376.35
+</td>
+<td style="text-align:right;">
+-134.78
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+508.31
+</td>
+<td style="text-align:right;">
+523.27
+</td>
+<td style="text-align:right;">
+14.97
+</td>
+</tr>
+</tbody>
+</table>
+<pre><code>## [1] -149.74</code></pre>
+<pre><code>## [1] -149.75</code></pre>
+<p>We can just manually subtract.</p>
+<p><span class="math display">\[\beta_{DD} = -134.79 - 14.97 = -149.76\]</span></p>
+<hr />
+</div>
+<div id="c.-including-the-time-dimension-first-differences-on-treatment-indicator" class="section level3">
+<h3>c. Including the time dimension (First differences on treatment indicator)</h3>
+<p>We can introduce the time component to our calculation by incorporating the pre-treatment levels of sugar-added drink consumption, which gives us the diff-in-diff estimate. We could calculate this in a fairly straightforward manner by creating a variable assessing the change in our wide format data frame:</p>
+<ul>
+<li><code>change</code>: The difference in sugar-added drink consumption between post- and pre-tax</li>
+</ul>
+<pre class="r"><code>soda_tax_df &lt;- soda_tax_df %&gt;%
+  dplyr::mutate(change = post_tax - pre_tax) #simple subtraction
+
+did_model &lt;- lm(change ~ treatment, data = soda_tax_df)
+modelsummary::modelsummary(did_model,
+                           statistic = &quot;conf.int&quot;,
+                           gof_omit=&quot;AIC|BIC|Log.Lik.&quot;) </code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Model 1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+14.967
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[14.625, 15.308]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treatment
+</td>
+<td style="text-align:center;">
+-149.744
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+[-150.228, -149.261]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+7500
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.980
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.980
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:center;">
+369242.378
+</td>
+</tr>
+</tbody>
+</table>
+<p>We could read this result substantively as: those who lived in districts were the tax was implemented consumed on average 149.7 ounces less of sugar-added drinks per week compared to those who lived in districts were the tax was not put in place. <strong>This calculation would give us the change, or difference, in sugar-added drink consumption for treatment and control groups.</strong></p>
+<p>To believe the results of our <code>did_model</code>, we would need to believe that there are parallel trends between the two groups.</p>
+<p><em>Note: when simulating the data the <code>post_tax</code> was defined as:</em> <span class="math inline">\(post\_tax = 15 + pre\_tax - 150(treatment) + error\)</span></p>
+<hr />
+</div>
+<div id="d.-including-the-time-dimension-regression-formulation-of-the-did-model" class="section level3">
+<h3>d. Including the time dimension (Regression formulation of the DiD model)</h3>
+<p>Remember the formula from the lecture where we estimate the diff-in-diff effect with time and treatment dummies? We can re-format our data to gather our diff-in-diff estimate.</p>
+<p><span class="math display">\[Y_{it} = β_0 + β_1D^*_i + β_2P_t + β_{DD}D^∗_i × P_t + q_{it} \]</span></p>
+<p>where <span class="math inline">\(D^*_i\)</span> tell us if subject <span class="math inline">\(i\)</span> is in the treatment group and <span class="math inline">\(P_t\)</span>
+indicates the point in time (1 for post)</p>
+<p>For this calculation we need our data in long format to use the time and treatment dummy variables.</p>
+<p>We can see that under our long format, we have two entries for every individual. We have our variable <code>after_tax</code>, which represents <span class="math inline">\(P_t\)</span>, where 0 and 1 are pre- and post-tax periods respectively. We can now render our regression based on the formula:</p>
+<p><span class="math display">\[Y_{it} = β_0 + β_1D^*_i + β_2P_t + β_{DD}D^∗_i × P_t + q_{it}\]</span></p>
+<pre class="r"><code>did_long_clustered_se &lt;- estimatr::lm_robust(soda_drank ~ treatment + after_tax + treatment*after_tax, 
+                                                       clusters = district,
+                                                       se_type = &quot;stata&quot;,
+                                                       data = soda_tax_df_long)
+
+modelsummary::modelsummary(list(did_long_clustered_se), 
+                           statistic = &quot;conf.int&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Model 1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+508.306
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[508.077, 508.535]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treatment
+</td>
+<td style="text-align:center;">
+2.827
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[-1.827, 7.480]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+after_tax
+</td>
+<td style="text-align:center;">
+14.967
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[14.890, 15.043]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treatment × after_tax
+</td>
+<td style="text-align:center;">
+-149.744
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+[-150.049, -149.440]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+15000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.117
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.117
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+se_type
+</td>
+<td style="text-align:center;">
+stata
+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h5 style="color:#cc0055;">
+If we apply the switch logic to the results, we would get the same values from the table and plots
+</h5>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Period
+</div>
+</th>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+</tr>
+<tr>
+<th style="text-align:right;">
+Treatment
+</th>
+<th style="text-align:right;">
+Pre-tax
+</th>
+<th style="text-align:right;">
+Post-tax
+</th>
+<th style="text-align:right;">
+Difference
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+511.13
+</td>
+<td style="text-align:right;">
+376.35
+</td>
+<td style="text-align:right;">
+-134.78
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+508.31
+</td>
+<td style="text-align:right;">
+523.27
+</td>
+<td style="text-align:right;">
+14.97
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>soda_tax_df_long %&gt;% 
+  dplyr::mutate(period = ifelse(period == &quot;post_tax&quot;, &quot;T1 - Post-tax&quot;, &quot;T0 - Pre-tax&quot;), # create more meaningful labels
+                treatment = ifelse(treatment == 1, &quot;Treated (D=1)&quot;, &quot;Untreated (D=0)&quot;)) %&gt;%
+  dplyr::group_by(period, treatment) %&gt;% # group to extract means of each group at each time
+  dplyr::mutate(group_mean = mean(soda_drank)) %&gt;% # extract means of each group at each time
+ggplot(., aes(x = soda_drank, fill = factor(treatment))) +
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(name = &quot; &quot;, # changes to fill dimension
+                     values = c(&quot;#cc0055&quot;, &quot;#a7a8aa&quot;),
+                     labels = c(&quot;Treatment&quot;, &quot;Control&quot;)) +
+  facet_grid(treatment~period) + # we specify the matrix (treatment and period)
+  geom_vline(aes(xintercept = group_mean), linetype = &quot;longdash&quot;) + # add vertical line with the mean
+  theme_bw() +
+  theme(legend.position = &quot;none&quot;) +
+  labs(x = &quot;Soda consumed (oz)&quot;,
+       y = &quot;Density&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/113713172-4b4ecf80-96e7-11eb-91ae-7db9d9958665.png" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>soda_tax_df_long %&gt;%
+  dplyr::group_by(period, treatment) %&gt;% # group to extract means of each group at each time
+  dplyr::mutate(group_mean = mean(soda_drank)) %&gt;%
+  ggplot(aes(x = after_tax, y = group_mean, color = factor(treatment))) +
+  geom_point() +
+  geom_line(aes(x = after_tax, y = group_mean)) +
+  scale_x_continuous(breaks = c(0,1)) +
+  scale_color_manual(name = &quot; &quot;, # changes to color dimension
+                     values = c(&quot;#a7a8aa&quot;, &quot;#cc0055&quot;),
+                     labels = c(&quot;Control&quot;, &quot;Treatment&quot;)) +
+  labs(x = &quot;Time periods&quot;, y = &quot;Ounces of soda drank per week&quot;, color = &quot;Treatment group&quot;)+
+  theme_minimal() </code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/113713182-4db12980-96e7-11eb-90e7-5b7846940246.png" style="display: block; margin: auto;" /></p>
+<hr />
+<div id="the-mechanics-behind-did" class="section level4">
+<h4>The mechanics behind DiD</h4>
+<p><img src="https://nickchk.com/anim/Animation%20of%20DID.gif" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+</div>
+</div>
+<div id="drafting-some-brief-recommedations" class="section level2">
+<h2>Drafting some brief recommedations</h2>
+<p>Based on your analysis of the data at hand, you decide to recommend that the tax measure should move forward in the rest of Pawnee. You state that it is a very good example of a pigouvian tax, which captures the negative externalizes not included in the market price of sugar-added drinks. The findings suggest that the tax reduced the weekly sugar-added drink consumption by about 150 liquid ounces (almost 4.5 liters).</p>
+<p>Your evaluation report is so convincing that the Director of the Parks Department, Ron Swanson, is even doubting libertarianism.</p>
+<p><img src="https://i.imgur.com/vV7enqX.gif" style="display: block; margin: auto;" /></p>
+</div>
+
+          </div>
+
+          
+
+
+
+          
+          
+          <div class="article-widget">
+            
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/2022-spring-stats2/materials/session-8/slides/" rel="next">08 - Slides</a>
+  </div>
+  
+  
+</div>
+
+          </div>
+          
+        </div>
+
+        <div class="body-footer">
+          <p>Last updated on Jan 1, 0001</p>
+
+          
+
+
+
+
+
+          
+
+
+
+
+          
+
+
+  
+  
+
+
+
+        </div>
+
+      </article>
+
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/latex.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+    <script>
+      anchors.add();
+    </script>
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+        <div class="search-hit-content">
+          <div class="search-hit-name">
+            <a href="{{relpermalink}}">{{title}}</a>
+            <div class="article-metadata search-hit-type">{{type}}</div>
+            <p class="search-hit-description">{{snippet}}</p>
+          </div>
+        </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+      
+      
+      
+      
+      
+      
+      
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+      
+    
+    
+    <script src="/2022-spring-stats2/en/js/wowchemy.min.e5856c0a0618a04dd7b1e07451b5f341.js"></script>
+
+    
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+
+
+</body>
+</html>

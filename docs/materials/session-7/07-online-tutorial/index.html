@@ -1,0 +1,1532 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.0.0-beta.2 for Hugo" />
+  
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Sebastian Ramirez Ruiz" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Welcome Introduction! Welcome to our seventh tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.
+During this week’s lecture you were introduced to Regression Discontinuity Designs (RDDs)." />
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-7/07-online-tutorial/" />
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    <meta name="theme-color" content="#1565c0" />
+  
+
+  
+  
+    
+    <script src="/2022-spring-stats2/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous" media="print" onload="this.media='all'">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/2022-spring-stats2/css/wowchemy.dd90b8698d7ba5e114b9de5647a585e5.css" />
+
+  
+
+
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+    <link rel="manifest" href="/2022-spring-stats2/index.webmanifest" />
+  
+
+  <link rel="icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_32x32_fill_lanczos_center_2.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_180x180_fill_lanczos_center_2.png" />
+
+  <link rel="canonical" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-7/07-online-tutorial/" />
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary" />
+  
+  <meta property="og:site_name" content="| Tutorials - Spring 2022 |" />
+  <meta property="og:url" content="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-7/07-online-tutorial/" />
+  <meta property="og:title" content="Regression Discontinuity Designs | | Tutorials - Spring 2022 |" />
+  <meta property="og:description" content="Welcome Introduction! Welcome to our seventh tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.
+During this week’s lecture you were introduced to Regression Discontinuity Designs (RDDs)." /><meta property="og:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" />
+    <meta property="twitter:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" /><meta property="og:locale" content="en-us" />
+  
+    
+    
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+
+
+
+
+  <title>Regression Discontinuity Designs | | Tutorials - Spring 2022 |</title>
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/2022-spring-stats2/js/wowchemy-init.min.d876f1a6b98701f9238f2313b512a26f.js"></script>
+
+  
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-end" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/2022-spring-stats2/materials/"><span>Materials</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+        
+      
+        
+      
+
+      
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    
+
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+          RDDs in R
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/2022-spring-stats2/materials/"><i class="fas fa-arrow-left pr-1"></i>Materials</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/2022-spring-stats2/materials/session-7/">RDDs in R</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  <li class=""><a href="/2022-spring-stats2/materials/session-7/slides/">Slides</a></li>
+
+
+
+  <li class="active"><a href="/2022-spring-stats2/materials/session-7/07-online-tutorial/">Regression Discontinuity Designs</a></li>
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      
+
+      
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <article class="article">
+
+        <div class="docs-article-container">
+          
+            
+  <nav class="d-none d-md-flex" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      
+  
+  
+  
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/">
+      
+        Home
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/">
+      
+        Materials
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/session-7/">
+      
+        RDDs in R
+      
+    </a>
+  </li>
+
+
+      <li class="breadcrumb-item active" aria-current="page">
+        Regression Discontinuity Designs
+      </li>
+    </ol>
+  </nav>
+
+
+          
+
+          <h1>Regression Discontinuity Designs</h1>
+
+          <div class="article-style">
+            
+<script src="/2022-spring-stats2rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<script src="/2022-spring-stats2rmarkdown-libs/kePrint/kePrint.js"></script>
+<link href="/2022-spring-stats2rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
+
+
+<div id="welcome" class="section level2">
+<h2>Welcome</h2>
+<div id="introduction" class="section level3">
+<h3>Introduction!</h3>
+<p>Welcome to our seventh tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.</p>
+<p>During this week’s lecture you were introduced to Regression Discontinuity Designs (RDDs).</p>
+<p>In this lab session we will:</p>
+<ul>
+<li>Leverage visualizations with <code>ggplot2</code> to explore our discontinuity setups</li>
+<li>Learn how to model our discontinuity setups under different functional forms with <code>lm()</code></li>
+<li>Learn how to model our discontinuity setups under different functional forms with <code>rdrobust::rdrobust()</code></li>
+</ul>
+<hr />
+<div id="packages" class="section level4">
+<h4>Packages</h4>
+<pre class="r"><code># These are the libraries we will use today. Make sure to install them in your console in case you have not done so previously.
+
+library(dplyr) # for data wrangling
+library(ggplot2) # for creating plots
+library(rdrobust) # for rdrobust()
+library(readr) # for loading the .csv data
+
+set.seed(42) # for consistent results
+
+mlda_df &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/seramirezruiz/stats-ii-lab/master/Session%206/data/mlda.csv&quot;) # loading data from Mastering Metrics</code></pre>
+<hr />
+</div>
+</div>
+</div>
+<div id="example-1.-measuring-the-effect-of-the-minimum-legal-drinking-age-mlda-on-mortality" class="section level2">
+<h2>Example 1. Measuring the effect of the minimum legal drinking age (MLDA) on mortality</h2>
+<blockquote>
+<p>In an effort to address the social and public health problems associated with underage drinking, a group of American college presidents have lobbied states to return the minimum legal drinking age (MLDA) to the Vietnam era threshold of 18. The theory behind this effort (known as the Amethyst Initiative) is that legal drinking at age 18 discourages binge drinking and promotes a culture of mature alcohol consumption. This contrasts with the traditional view that the age-21 MLDA, while a blunt and imperfect tool, reduces youth access to alcohol, thereby preventing some harm.
+<strong>Angrist and Pischke (2014)</strong></p>
+</blockquote>
+<p>You have been hired as an outside consultant by Mothers Against Drunk Driving (MADD) to study whether the over-21 drinking minimum in the US helps reduce alcohol consumption by young adults and its harms, or is it just not working.
+<em>This example is based on data from Carpenter and Dobkin (2011).</em></p>
+<hr />
+<div id="checking-visually-whether-a-sharp-rdd-makes-sense-for-the-analysis" class="section level3">
+<h3>Checking visually whether a sharp-RDD makes sense for the analysis</h3>
+<p>We want to know <strong>whether our threshold is in fact the cut-off for treatment</strong>. In this case, the law is pretty clear: young adults in the US can legally drink at age 21.</p>
+<pre class="r"><code>ggplot(mlda_df, aes(x = agecell, # actual age
+                 y = treatment, # are they over 21 or not
+                 color = factor(treatment))) +
+  geom_point() + 
+  labs(x = &quot;Age&quot;, 
+       y = &quot;Treatment Probability&quot;) +
+  scale_color_discrete(name = &quot; &quot;, 
+                       labels = c(&quot;Under legal drinking age&quot;, &quot;Over legal drinking age&quot;)) +
+  geom_vline(xintercept = 21, linetype = &quot;dotted&quot;) + # NEW GEOM A VERTICAL LINE!
+  theme_minimal()</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/113173018-4bfbe780-9249-11eb-9755-5c6695b9049e.png" style="display: block; margin: auto;" /></p>
+<p>We can see from the graph that at the 21-years-of-age threshold, young adults can legally consume and buy alcohol in the US, which would make age a viable forcing variable for a sharp-RDD set-up.</p>
+<hr />
+</div>
+<div id="running-our-regression-models" class="section level3">
+<h3>Running our regression models</h3>
+<p>As was pointed out in the lecture, we must decide on a model that we believe reflects the relationship of our <span class="math inline">\(E(Y_i|\tilde{X}_i)\)</span>:</p>
+<ul>
+<li>linear, common slope</li>
+<li>linear, different slopes</li>
+<li>non-linear</li>
+</ul>
+<p><strong>Remember that each model corresponds to a particular set of assumptions</strong></p>
+<p>We will show you how to visualize this with <code>ggplot</code>.</p>
+<p><strong>LET’S LOOK AT A SCATTERPLOT TO GET AN IDEA OF WHAT WE ARE DEALING WITH</strong></p>
+<pre class="r"><code>ggplot(mlda_df, 
+       aes(x = agecell, # age 
+           y = outcome)) + # mortality rate per 100k accidents
+  geom_point() +
+  geom_vline(xintercept = 21, linetype = &quot;dotted&quot;) +
+  labs(title = &quot;Exploratory plot&quot;,
+       x = &quot;Forcing variable (Age)&quot;,
+       y = &quot;Mortality rate from motor vehicle \naccidents (per 100,000)&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/113173046-51593200-9249-11eb-99d2-ae1cca7d1d4e.png" style="display: block; margin: auto;" /></p>
+<p><strong>NOTE that we have the variable <code>forcing</code> in this dataset, which is centered at the cutoff. It is nothing but the variable <code>age-21</code></strong></p>
+<hr />
+<div id="linear-model-with-common-slopes" class="section level4">
+<h4>Linear model with common slopes</h4>
+<p>Let’s run a linear model with common slopes and plot our results.</p>
+<p><strong>NOTE that the forcing variable in this case (age) is CENTERED at 0 (age 21) and is the distance from age 21 in years, while treatment is just binary over/under 21.</strong></p>
+<pre class="r"><code># running linear model with common slope
+linear_common_slope &lt;- lm(outcome ~ treatment + forcing, data = mlda_df)
+stargazer::stargazer(linear_common_slope, type = &quot;text&quot;)</code></pre>
+<pre><code>## 
+## ===============================================
+##                         Dependent variable:    
+##                     ---------------------------
+##                               outcome          
+## -----------------------------------------------
+## treatment                    4.534***          
+##                               (0.768)          
+##                                                
+## forcing                      -3.149***         
+##                               (0.337)          
+##                                                
+## Constant                     29.356***         
+##                               (0.429)          
+##                                                
+## -----------------------------------------------
+## Observations                    48             
+## R2                             0.703           
+## Adjusted R2                    0.689           
+## Residual Std. Error       1.329 (df = 45)      
+## F Statistic           53.142*** (df = 2; 45)   
+## ===============================================
+## Note:               *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<hr />
+<p><strong>WHAT DO THESE RESULTS TELL US?</strong></p>
+<p>In line with our assumptions for linear models with common slope, we consider that treatment effect <span class="math inline">\(D_i\)</span> does not depend on the forcing <span class="math inline">\(X_i\)</span>. We can formalize this model as:
+<span class="math display">\[E(Y_i|X_i,D_i) = \tilde{\beta_0} + \beta_1 D_i + \beta_2\tilde{X}_i\]</span>
+Hence we can say, that given our <span class="math inline">\(\beta_1\)</span> we can expect 4.53 more deaths from motor vehicle accidents per 100,000 for those who can legally drink. We also see that for every year of age increase, the number of expected deaths per 100,000 decreases by 3.15. (Our <span class="math inline">\(\beta_2 = -3.1488\)</span>).</p>
+<p>We can graph our results with <code>ggplot()</code> by extracting the predicted values of the model to recreate the linear fit:</p>
+<pre class="r"><code>mlda_df$yhat_linear &lt;- predict(linear_common_slope) # we create a new variable containing the predicted mortality rate
+
+linear_plot &lt;- mlda_df %&gt;% # for this plot make sure to put the df outside the ggplot() and pipe it
+  ggplot(aes(x = forcing,  
+             y = yhat_linear, # notice here the predicted y
+             col = factor(treatment))) +
+  geom_point(aes(x = forcing, 
+                 y = outcome, # notice here the actual outcome
+                 col = factor(treatment))) +
+  geom_vline(xintercept = 0, linetype = &quot;dotted&quot;) +
+  labs(title = &quot;Linear model with common slope&quot;,
+       x = &quot;Forcing variable (Age)&quot;,
+       y = &quot;Mortality rate from motor vehicle \naccidents (per 100,000)&quot;) +
+  geom_line(data = mlda_df[mlda_df$forcing &gt;= 0,], 
+            color = &quot;#cc0055&quot;, # color lines
+            size = 1) +
+  geom_line(data = mlda_df[mlda_df$forcing &lt; 0,], 
+            color = &quot;#696969&quot;, # color lines
+            size = 1) +
+  scale_color_manual(name = &quot;&quot;,
+                     values = c(&quot;#696969&quot;, &quot;#cc0055&quot;),
+                     labels = c(&quot;Control&quot;, &quot;Treatment&quot;)) + #change colors manually of color argument in aes()
+  theme_minimal()
+
+linear_plot</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/113173059-53bb8c00-9249-11eb-8873-37f2ad0643fb.png" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+<div id="linear-model-with-different-slopes" class="section level4">
+<h4>Linear model with different slopes</h4>
+<p>Let’s run the linear model to gather the slopes for both groups and plot our results. This is achieved by interacting our treatment and forcing variables.</p>
+<pre class="r"><code>linear_different_slope &lt;- lm(outcome ~ treatment*forcing, data = mlda_df)
+stargazer::stargazer(linear_different_slope, type = &quot;text&quot;)</code></pre>
+<pre><code>## 
+## ===============================================
+##                         Dependent variable:    
+##                     ---------------------------
+##                               outcome          
+## -----------------------------------------------
+## treatment                    4.534***          
+##                               (0.751)          
+##                                                
+## forcing                      -2.568***         
+##                               (0.466)          
+##                                                
+## treatment:forcing             -1.162*          
+##                               (0.659)          
+##                                                
+## Constant                     29.929***         
+##                               (0.531)          
+##                                                
+## -----------------------------------------------
+## Observations                    48             
+## R2                             0.722           
+## Adjusted R2                    0.703           
+## Residual Std. Error       1.299 (df = 44)      
+## F Statistic           38.125*** (df = 3; 44)   
+## ===============================================
+## Note:               *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p><strong>WHAT DO THESE RESULTS TELL US?</strong></p>
+<p>In line with our assumptions for linear models with different slope, we allow our treatment effect <span class="math inline">\(D_i\)</span> to vary along the forcing <span class="math inline">\(X_i\)</span>. We can formalize this model as:</p>
+<p><span class="math display">\[E(Y_i|X_i,D_i) = \tilde{\beta_0} + \beta_1D_i+ \beta_2X_i + \tilde{\beta_3}D_i\tilde{X}_i\]</span></p>
+<p>Hence we can say, that at given our <span class="math inline">\(\beta_1\)</span>, we can expect 4.53 more deaths from motor vehicle accidents per 100,000 for those who can legally drink at the threshold. Now we have two different slopes for year-of-age changes. For under-21 individuals, an increase of one year of age would on average result in 2.57 less deaths from motor vehicle accidents (our <span class="math inline">\(\beta_2 = -2.5676\)</span>). For those of legal drinking age, we would expect 3.73 less deaths per 100,000 for every one year of age increase (our <span class="math inline">\(\beta_2X_i + \tilde{\beta_3}D_i\tilde{X}_i = -2.5676 + (-1.1624) = - 3.73\)</span>).</p>
+<p>We can graph our results with <code>ggplot</code> by just adding a smooth geom. Since we have added treatment to our color aesthetic, <code>ggplot()</code> will automatically create the regression line for each group</p>
+<pre class="r"><code>diff_slopes_plot &lt;- mlda_df %&gt;% 
+  ggplot(aes(x = forcing,  
+             y = outcome, 
+             col = factor(treatment))) +
+  geom_point() +
+  geom_vline(xintercept = 0, linetype = &quot;dotted&quot;) +
+  geom_smooth(method = &quot;lm&quot;, se = F) + # NORMAL SMOOTH 
+  labs(title = &quot;Linear model with different slopes&quot;,
+       x = &quot;Forcing variable (Age)&quot;,
+       y = &quot;Mortality rate from motor vehicle \naccidents (per 100,000)&quot;) +
+  scale_color_manual(name = &quot;&quot;,
+                     values = c(&quot;#696969&quot;, &quot;#cc0055&quot;),
+                     labels = c(&quot;Control&quot;, &quot;Treatment&quot;)) + #change colors manually of color argument in aes()
+  theme_minimal()
+
+diff_slopes_plot</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/113173084-58804000-9249-11eb-9f9a-4bd110c5fc78.png" style="display: block; margin: auto;" /></p>
+<p><strong>Question</strong></p>
+<p>Where can you see our <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, and <span class="math inline">\(\beta_2\)</span> in the previous plot?</p>
+<hr />
+</div>
+<div id="non-linear-model" class="section level4">
+<h4>Non-linear model</h4>
+<p>Let’s run a quadratic model and plot our results.</p>
+<p><strong>THIS IS HOW WE WOULD FORMALIZE A QUADRATIC MODEL</strong></p>
+<p><span class="math display">\[E(Y_i∣X_i, D_i) = \gamma_0 + + \tau_1D_i + \gamma_2\tilde{X_i} + \gamma_3\tilde{X^2_i} + \alpha_1\tilde{X_i}D_i + \alpha_2\tilde{X^2_i}D_i\]</span></p>
+<p>We can input this in our regression model as follows:</p>
+<pre class="r"><code>quadratic &lt;- lm(outcome ~ forcing + 
+                  I(forcing^2) + # I tells R to interpret &quot;as is&quot;
+                  treatment + 
+                  I(forcing * treatment) + 
+                  I((forcing^2) * treatment),
+                data = mlda_df)
+
+stargazer::stargazer(quadratic, type = &quot;text&quot;)</code></pre>
+<pre><code>## 
+## =====================================================
+##                               Dependent variable:    
+##                           ---------------------------
+##                                     outcome          
+## -----------------------------------------------------
+## forcing                             -2.933           
+##                                     (1.914)          
+##                                                      
+## I(forcing2)                         -0.185           
+##                                     (0.940)          
+##                                                      
+## treatment                          4.663***          
+##                                     (1.155)          
+##                                                      
+## I(forcing * treatment)              -0.823           
+##                                     (2.706)          
+##                                                      
+## I((forcing2) * treatment)            0.198           
+##                                     (1.329)          
+##                                                      
+## Constant                           29.809***         
+##                                     (0.817)          
+##                                                      
+## -----------------------------------------------------
+## Observations                          48             
+## R2                                   0.722           
+## Adjusted R2                          0.689           
+## Residual Std. Error             1.329 (df = 42)      
+## F Statistic                 21.864*** (df = 5; 42)   
+## =====================================================
+## Note:                     *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p><strong>WHAT DO THESE RESULTS TELL US?</strong></p>
+<p>In line with our assumptions for non-linear models, we allow our treatment effect <span class="math inline">\(D_i\)</span> to vary along the forcing <span class="math inline">\(X_i\)</span>. In this case with quadratic interactions. We can formalize this model as:</p>
+<p><span class="math display">\[E(Y_i∣X_i, D_i) = \gamma_0 + + \tau_1D_i + \gamma_2\tilde{X_i} + \gamma_3\tilde{X^2_i} + \alpha_1\tilde{X_i}D_i + \alpha_2\tilde{X^2_i}D_i\]</span></p>
+<p>Hence we can say, that at given our <span class="math inline">\(\tau\)</span>, we can expect 4.66 more deaths from motor vehicle accidents per 100,000 for those who can legally drink at the threshold. We could also calculate the expected value of <span class="math inline">\(Y\)</span> at different levels of <span class="math inline">\(X\)</span>.</p>
+<p>Say we want to know what the expected value is for 23-year-olds. Since our forcing variable is 0 at 21 years of age, we can think of 23 as 2. Additionally, 23-year-olds are above the legal drinking age minimum, therefore for them the value of <span class="math inline">\(D\)</span> is 1.</p>
+<p><span class="math display">\[E(Y | X=2, D =1) = 29.8090 + 4.6629(1) - 2.9330(2) -0.1852(2)^2  - 0.8231 (2*1) + 0.1985(2*1)^2 = 27.01\]</span>
+Based on this, we would expect a mortality rate from motor vehicle accidents of 27.01 per 100,000 for 23-year-olds.</p>
+<p>We can graph our results with <code>ggplot</code> by extracting the predicted values of our quadratic model to recreate the fit:</p>
+<pre class="r"><code>mlda_df$yhat_quadratic &lt;- predict(quadratic) 
+
+quadratic_plot &lt;- mlda_df %&gt;% 
+  ggplot(aes(x = forcing, 
+             y = yhat_quadratic, #note predicted y
+             col = factor(treatment))) +
+  geom_point(aes(x = forcing, 
+                 y = outcome, 
+                 col = factor(treatment))) +
+  geom_vline(xintercept = 0, linetype = &quot;dotted&quot;) +
+  labs(title = &quot;Quadratic plot&quot;,
+       x = &quot;Forcing variable (Age)&quot;,
+       y = &quot;Mortality rate from motor vehicle \naccidents (per 100,000)&quot;) +
+  geom_line(data = mlda_df[mlda_df$forcing &gt;= 0,], 
+            color = &quot;#cc0055&quot;, # color lines
+            size = 1) +
+  geom_line(data = mlda_df[mlda_df$forcing &lt; 0,], 
+            color = &quot;#696969&quot;, # color lines
+            size = 1) +
+  scale_color_manual(name = &quot;&quot;,
+                     values = c(&quot;#696969&quot;, &quot;#cc0055&quot;),
+                     labels = c(&quot;Control&quot;, &quot;Treatment&quot;)) + #change colors manually of color argument in aes()
+  theme_minimal()
+
+quadratic_plot</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/113173100-5c13c700-9249-11eb-8ed3-dd90942ea297.png" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+</div>
+<div id="calculating-the-late-with-rdrobust" class="section level3">
+<h3>Calculating the LATE with rdrobust()</h3>
+<p><code>rdrobust()</code> is part of the <code>rdrobust</code> package. It performs local linear regressions to either side of the cutpoint using optimal bandwidth calculation. The syntax is the following:</p>
+<pre class="r"><code>model &lt;- rdrobust::rdrobust(x, 
+                            y,
+                            c = cutoffvalue,
+                            kernel = &quot;tri&quot;, #default
+                            bwselect = &quot;mserd&quot;) #default
+                            </code></pre>
+<p>We have the option to set the cutpoint, kernel type, order of the local polynomial, etc.: <a href="https://cran.r-project.org/web/packages/rdrobust/rdrobust.pdf" class="uri">https://cran.r-project.org/web/packages/rdrobust/rdrobust.pdf</a></p>
+<pre class="r"><code>llr &lt;- rdrobust::rdrobust(mlda_df$outcome, 
+                          mlda_df$forcing,  
+                          c = 0,
+                          kernel = &quot;tri&quot;,
+                          bwselect = &quot;mserd&quot;)
+summary(llr)</code></pre>
+<pre><code>## Call: rdrobust
+## 
+## Number of Obs.                   48
+## BW type                       mserd
+## Kernel                   Triangular
+## VCE method                       NN
+## 
+## Number of Obs.                  24          24
+## Eff. Number of Obs.              6           6
+## Order est. (p)                   1           1
+## Order bias  (q)                  2           2
+## BW est. (h)                  0.487       0.487
+## BW bias (b)                  0.738       0.738
+## rho (h/b)                    0.660       0.660
+## Unique Obs.                     24          24
+## 
+## =============================================================================
+##         Method     Coef. Std. Err.         z     P&gt;|z|      [ 95% C.I. ]       
+## =============================================================================
+##   Conventional     4.901     2.059     2.380     0.017     [0.864 , 8.937]     
+##         Robust         -         -     1.881     0.060    [-0.198 , 9.674]     
+## =============================================================================</code></pre>
+<p><strong>WHAT DO THESE RESULTS TELL US?</strong></p>
+<p>The model is telling us that based on the calculation, the estimated effect would be 4.90 more deaths per 100,000 for those over-21.</p>
+<p>The most straight-forward way to graph the output of this model is through the <code>rdrobust::rdplot()</code> function:</p>
+<pre class="r"><code>rdrobust::rdplot(mlda_df$outcome, 
+                 mlda_df$forcing,  
+                 c = 0,
+                 kernel = &quot;tri&quot;,
+                 title = &quot;Motor Vehicle Accidents Death&quot;,
+                 x.label = &quot;Age from 21&quot;,
+                 y.label =  &quot;Mortality rate from motor vehicle \naccidents (per 100,000)&quot;
+)
+</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/113173122-603fe480-9249-11eb-834a-88e02aec7b3d.png" style="display: block; margin: auto;" /></p>
+<hr />
+<div id="quadratic-model-with-rdrobust" class="section level4">
+<h4>Quadratic model with rdrobust()</h4>
+<pre class="r"><code>quadratic_rdrobust &lt;- rdrobust::rdrobust(mlda_df$outcome, 
+                                         mlda_df$forcing,  
+                                         c = 0,
+                                         kernel = &quot;tri&quot;,
+                                         bwselect = &quot;mserd&quot;,
+                                         p = 2) #polynomial 2
+summary(quadratic_rdrobust)</code></pre>
+<pre><code>## Call: rdrobust
+## 
+## Number of Obs.                   48
+## BW type                       mserd
+## Kernel                   Triangular
+## VCE method                       NN
+## 
+## Number of Obs.                  24          24
+## Eff. Number of Obs.             10          10
+## Order est. (p)                   2           2
+## Order bias  (q)                  3           3
+## BW est. (h)                  0.821       0.821
+## BW bias (b)                  1.074       1.074
+## rho (h/b)                    0.764       0.764
+## Unique Obs.                     24          24
+## 
+## =============================================================================
+##         Method     Coef. Std. Err.         z     P&gt;|z|      [ 95% C.I. ]       
+## =============================================================================
+##   Conventional     4.778     2.337     2.044     0.041     [0.197 , 9.360]     
+##         Robust         -         -     1.627     0.104    [-0.911 , 9.811]     
+## =============================================================================</code></pre>
+<pre class="r"><code>rdrobust::rdplot(mlda_df$outcome, 
+                 mlda_df$forcing,  
+                 c = 0,
+                 kernel = &quot;tri&quot;,
+                 p = 2,
+                 title = &quot;Motor Vehicle Accidents Death&quot;,
+                 x.label = &quot;Age from 21&quot;,
+                 y.label =  &quot;Mortality rate from motor vehicle \naccidents (per 100,000)&quot;
+)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/113173141-65049880-9249-11eb-88c2-425685d137ea.png" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+</div>
+</div>
+<div id="example-2.-measuring-the-long-term-effects-of-a-conditional-cash-transfer-program-on-educational-achievement" class="section level2">
+<h2>Example 2. Measuring the long term effects of a conditional cash transfer program on educational achievement</h2>
+<p>Imagine that you work as a technical adviser for the Ministry of Education in your country. You are tasked to assess whether a Conditional Cash Transfer (CCT) program established decades before yields positive results on the beneficiaries’ educational attainment. There is a large amount of evidence which suggests that CCTs encourage households to increase the use of educational services.</p>
+<p>You read the guidelines for the program. Families receive a stipend per child provided they keep their them in school and take them for health checks. Additionally, you note that under the rules of the program, beneficiaries are selected based on a household income threshold of €20000. You decide to dive into the data with the idea that a discontinuity is created based on the income threshold. (This example utilizes simulated data)</p>
+<pre class="r"><code>cct_df &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/seramirezruiz/stats-ii-lab/master/Session%206/data/cct_data.csv&quot;) # loading simulated data frame of the program</code></pre>
+<p>The dataset consists of:</p>
+<ul>
+<li><code>hh_income</code>: household income in euros</li>
+<li><code>years_of_schooling</code>: years of schooling for respondent</li>
+<li><code>treatment</code>: binary variable indicating whether respondent was a beneficiary of the program</li>
+</ul>
+<hr />
+<div id="checking-visually-whether-a-sharp-rdd-makes-sense-for-the-analysis-1" class="section level3">
+<h3>Checking visually whether a sharp-RDD makes sense for the analysis</h3>
+<p>What we are looking for in this case is whether our €20000 threshold is in fact the cut-off for treatment. That is to say, that only those who had a household income of equal or less than €20000 received the cash transfer.</p>
+<pre class="r"><code>ggplot(cct_df, 
+       aes(x = hh_income, 
+           y = years_of_schooling, 
+           color = factor(treatment))) + 
+  geom_point() + 
+  labs(x = &quot;Household Income&quot;, 
+       y = &quot;Years of Schooling&quot;) +
+  scale_color_discrete(name = &quot; &quot;, 
+                       labels = c(&quot;No treatment&quot;, &quot;Treatment&quot;)) +
+  geom_vline(xintercept = 20000, linetype = &quot;dotted&quot;) +
+  theme_minimal()
+
+ggplot(cct_df, 
+       aes(x = hh_income, 
+           y = treatment, 
+           color = factor(treatment))) + 
+  geom_point() + 
+  labs(x = &quot;Household Income&quot;, 
+       y = &quot;Treatment&quot;) +
+  scale_color_discrete(name = &quot; &quot;, 
+                       labels = c(&quot;No treatment&quot;, &quot;Treatment&quot;)) +
+  geom_vline(xintercept = 20000, linetype = &quot;dotted&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/113173157-6930b600-9249-11eb-8b74-9aaf732171c8.png" style="display: block; margin: auto;" /><img src="https://user-images.githubusercontent.com/54796579/113173172-6c2ba680-9249-11eb-85ef-8e4d5c5f0513.png" style="display: block; margin: auto;" /></p>
+<p>We can see from the graph that our €20000 threshold is in fact cutting off the distribution of the treatment. This would make household income a viable forcing variable for a sharp-RDD set-up.</p>
+<hr />
+</div>
+<div id="estimating-our-model" class="section level3">
+<h3>Estimating our model</h3>
+<p>We can see that the relationship is fairly linear, so we decide to run a linear model with common slope.</p>
+<pre class="r"><code># running linear model with common slope
+ed_achievement &lt;- lm(years_of_schooling ~ treatment + hh_income, data = cct_df)
+stargazer::stargazer(ed_achievement, type = &quot;text&quot;)</code></pre>
+<pre><code>## 
+## ================================================
+##                         Dependent variable:     
+##                     ----------------------------
+##                          years_of_schooling     
+## ------------------------------------------------
+## treatment                     2.460***          
+##                               (0.038)           
+##                                                 
+## hh_income                     0.001***          
+##                              (0.00000)          
+##                                                 
+## Constant                     -2.648***          
+##                               (0.111)           
+##                                                 
+## ------------------------------------------------
+## Observations                   5,000            
+## R2                             0.815            
+## Adjusted R2                    0.815            
+## Residual Std. Error      0.817 (df = 4997)      
+## F Statistic         11,008.950*** (df = 2; 4997)
+## ================================================
+## Note:                *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<hr />
+<p><strong>WHAT DO THESE RESULTS TELL US?</strong></p>
+<p>In line with our assumptions for linear models with common slope, we consider that treatment effect, <span class="math inline">\(D_i\)</span>, does not depend on the forcing <span class="math inline">\(X_i\)</span>. Hence, we can expect that students who received the treatment get on average 2.4 more years of schooling. We also see that for every €1,000 increase in the household income, students are expected to attain 0.6274 more years of education. (Our <span class="math inline">\(\beta = -6.274e-04*1000\)</span>).</p>
+<hr />
+<p><strong>Getting familiar with LOESS</strong></p>
+<p>Locally weighted smoothing is a popular tool used in regression analysis that creates a smooth line through a scatter plot to help you to see relationship between variables and foresee trends. We can introduce it to our <code>ggplot()</code> as a part of geom_smooth by calling method “loess”.</p>
+<pre class="r"><code>ggplot(cct_df, 
+       aes(x = hh_income, 
+           y = years_of_schooling, 
+           color = factor(treatment))) + 
+  geom_point(alpha = 0.1) + 
+  labs(x = &quot;Household Income&quot;, 
+       y = &quot;Years of Schooling&quot;) +
+  geom_smooth(method = &quot;loess&quot;) + # instead of lm, we use loess. See the difference? try with lm
+  scale_color_discrete(name = &quot; &quot;, 
+                       labels = c(&quot;No treatment&quot;, &quot;Treatment&quot;)) +
+  geom_vline(xintercept = 20000, linetype = &quot;dotted&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/113173183-6e8e0080-9249-11eb-85d1-7028b83ddde8.png" style="display: block; margin: auto;" /></p>
+<p>The LOESS smoothing is not very visible in this relationship because of the way we defined the simulated data. Let’s look at how it would look in our drinking age example:</p>
+<pre class="r"><code>ggplot(mlda_df,
+       aes(x = agecell,  
+           y = outcome, 
+           col = factor(treatment))) +
+  geom_point() +
+  geom_smooth(method = &quot;loess&quot;) +
+  labs(title = &quot;LOESS smoothing&quot;,
+       x = &quot;Forcing variable (Age)&quot;,
+       y = &quot;Mortality rate from motor vehicle \naccidents (per 100,000)&quot;) +
+  scale_color_manual(name = &quot;&quot;,
+                     values = c(&quot;#F8766D&quot;, &quot;#00BFC4&quot;),
+                     labels = c(&quot;Control&quot;, &quot;Treatment&quot;)) +
+  theme_minimal()</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/113173230-777ed200-9249-11eb-8fa7-07ba3d15148c.png" style="display: block; margin: auto;" /></p>
+<hr />
+<div id="violations-to-the-assumptions" class="section level4">
+<h4>Violations to the assumptions</h4>
+<p>You are made aware by a tax expert from your unit that €20000 is the upper-boundary for a very well known tax concession. You are afraid that people may be sorting themselves before the household income cut-off to become beneficiaries of multiple programs. You decide to check your data.</p>
+<pre><code>ggplot(cct_df, 
+       aes(x = hh_income)) +
+  geom_histogram(bins = 50, fill = &quot;#cc0055&quot;) +
+  labs(title = &quot;Income distribution&quot;,
+       x = &quot;Household Income&quot;,
+       y = &quot;Number of respondents&quot;) +
+  geom_vline(xintercept = 20000, linetype = &quot;dotted&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/160796955-4104431c-0b88-4625-aa85-01038a503cda.png" style="display: block; margin: auto;" /></p>
+<hr />
+<p>This case looks a bit ambiguous. Do you think people are sorting out just before the cut-off? If sorting were to exist which assumptions would be challenged? Would the existence of other programs that have the same threshold affect a causal reading of our results?</p>
+<p>There are a couple of tests researchers can employ. We will learn two ways. First, a method by which the research chooses a window of sorting to check if the distribution could have occurred by chance and second the McCrary test you met in Cunningham (2021).</p>
+<h4 style="color:#cc0065">
+Binomial test
+</h4>
+<p>When we apply an exact binomial test. Our interest is to see whether the distribution around the threshold could exist by chance. In this case, let’s check ±500 and ±250 around the threshold.</p>
+<p>To gather only the units that reported household incomes from €19500 to €20500, we will use a new function <code>dplyr::between()</code>.</p>
+<p><code>dplyr::between()</code> is a shortcut for <code>x &gt;= left &amp; x &lt;= right</code>. Let’s look at it at work.</p>
+<pre class="r"><code>cct_df %&gt;% 
+  dplyr::filter(dplyr::between(hh_income, 19500, 20500)) %&gt;% #filter values between 19500 and 20500
+  dplyr::group_by(treatment) %&gt;%
+  dplyr::summarize(n = n()) %&gt;%
+  knitr::kable() %&gt;%
+  kableExtra::kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+treatment
+</th>
+<th style="text-align:right;">
+n
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+255
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+300
+</td>
+</tr>
+</tbody>
+</table>
+<p>We have 300 units just below the threshold and 255 units just above. We can use this information to run our exact binomial test. We seek to understand if the observed distributions deviate from expected distribution of observations into the two categories.</p>
+<p>We can do the same for €19750 to €20250</p>
+<pre class="r"><code>cct_df %&gt;% 
+  dplyr::filter(dplyr::between(hh_income, 19750, 20250)) %&gt;% #filter values between 19750 and 20250
+  dplyr::group_by(treatment) %&gt;%
+  dplyr::summarize(n = n()) %&gt;%
+  knitr::kable() %&gt;%
+  kableExtra::kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+treatment
+</th>
+<th style="text-align:right;">
+n
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+115
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+175
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>binom.test(one_of_the_n, total_n, p = probability_of_success)</code></pre>
+<hr />
+<p>Let’s see what this would say for ±500:</p>
+<pre class="r"><code>binom.test(300, 555, p = 0.5) </code></pre>
+<pre><code>## 
+##  Exact binomial test
+## 
+## data:  300 and 555
+## number of successes = 300, number of trials = 555, p-value = 0.06171
+## alternative hypothesis: true probability of success is not equal to 0.5
+## 95 percent confidence interval:
+##  0.4980565 0.5825909
+## sample estimates:
+## probability of success 
+##              0.5405405</code></pre>
+<p><strong>WHAT DO THESE RESULTS TELL US?</strong></p>
+<p>According to the test, we see that the observed distributions <strong>do not deviate</strong> from expected distribution of observations into the two categories when we expect that units just around the threshold end up on either group by chance (coin flip logic, i.e., p = 0.5). In other words, this results do not present some evidence of sorting in this window.</p>
+<p>How about ±250?:</p>
+<pre class="r"><code>binom.test(115, 290, p = 0.5) </code></pre>
+<pre><code>## 
+##  Exact binomial test
+## 
+## data:  115 and 290
+## number of successes = 115, number of trials = 290, p-value = 0.0005095
+## alternative hypothesis: true probability of success is not equal to 0.5
+## 95 percent confidence interval:
+##  0.3398404 0.4553997
+## sample estimates:
+## probability of success 
+##              0.3965517</code></pre>
+<p><strong>WHAT DO THESE RESULTS TELL US?</strong></p>
+<p>According to the test, we see that the observed distributions <strong>deviate</strong> from expected distribution of observations into the two categories when we expect that units just around the threshold end up on either group by chance (coin flip logic, i.e., p = 0.5). In other words, this results present some evidence of sorting in this window.</p>
+<hr />
+<h4 style="color:#cc0065">
+McCrary Sorting test
+</h4>
+<p>An alternative way to check for self-sorting is the McCrary Sorting test. In this test, the discretion on window selection is taken away from the researcher (at least in the defaults). The McCrary Sorting test is included in the <code>rdd</code> package. This is the syntax of the test:</p>
+<pre><code>rdd::Dcdensity(runvar=running_variable, cutpoint=cutpoint)</code></pre>
+<hr />
+<p>Let’s see it in practice:</p>
+<pre class="r"><code>rdd::DCdensity(cct_df$hh_income, cutpoint = 20000)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/160797472-ef844573-f944-4809-8562-361cc149f305.png" style="display: block; margin: auto;" /></p>
+<pre><code>## [1] 0.04168422</code></pre>
+<p><strong>WHAT DO THESE RESULTS TELL US?</strong></p>
+<p>The default output is a p-value of the test. A p-value below the significance threshold indicates that the user can reject the null hypothesis of no sorting. In other words, this test would suggest that our observed distributions <strong>deviate</strong> from the expected distribution of observations. This results present some evidence of sorting.</p>
+</div>
+</div>
+</div>
+
+          </div>
+
+          
+
+
+
+          
+          
+          <div class="article-widget">
+            
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/2022-spring-stats2/materials/session-7/slides/" rel="next">07 - Slides</a>
+  </div>
+  
+  
+</div>
+
+          </div>
+          
+        </div>
+
+        <div class="body-footer">
+          <p>Last updated on Jan 1, 0001</p>
+
+          
+
+
+
+
+
+          
+
+
+
+
+          
+
+
+  
+  
+
+
+
+        </div>
+
+      </article>
+
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/latex.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+    <script>
+      anchors.add();
+    </script>
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+        <div class="search-hit-content">
+          <div class="search-hit-name">
+            <a href="{{relpermalink}}">{{title}}</a>
+            <div class="article-metadata search-hit-type">{{type}}</div>
+            <p class="search-hit-description">{{snippet}}</p>
+          </div>
+        </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+      
+      
+      
+      
+      
+      
+      
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+      
+    
+    
+    <script src="/2022-spring-stats2/en/js/wowchemy.min.e5856c0a0618a04dd7b1e07451b5f341.js"></script>
+
+    
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+
+
+</body>
+</html>

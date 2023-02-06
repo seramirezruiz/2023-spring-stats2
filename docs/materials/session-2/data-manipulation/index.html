@@ -1,0 +1,1452 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.0.0-beta.2 for Hugo" />
+  
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Sebastian Ramirez Ruiz" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="1. Introduction Welcome! Welcome to our second tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.
+The labs are designed to reinforce the material covered during the lectures by introducing you to hands-on applications." />
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-2/data-manipulation/" />
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    <meta name="theme-color" content="#1565c0" />
+  
+
+  
+  
+    
+    <script src="/2022-spring-stats2/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous" media="print" onload="this.media='all'">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/2022-spring-stats2/css/wowchemy.dd90b8698d7ba5e114b9de5647a585e5.css" />
+
+  
+
+
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+    <link rel="manifest" href="/2022-spring-stats2/index.webmanifest" />
+  
+
+  <link rel="icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_32x32_fill_lanczos_center_2.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_180x180_fill_lanczos_center_2.png" />
+
+  <link rel="canonical" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-2/data-manipulation/" />
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary" />
+  
+  <meta property="og:site_name" content="| Tutorials - Spring 2022 |" />
+  <meta property="og:url" content="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-2/data-manipulation/" />
+  <meta property="og:title" content="Introduction to Data Manipulation | | Tutorials - Spring 2022 |" />
+  <meta property="og:description" content="1. Introduction Welcome! Welcome to our second tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.
+The labs are designed to reinforce the material covered during the lectures by introducing you to hands-on applications." /><meta property="og:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" />
+    <meta property="twitter:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" /><meta property="og:locale" content="en-us" />
+  
+    
+    
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+
+
+
+
+  <title>Introduction to Data Manipulation | | Tutorials - Spring 2022 |</title>
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/2022-spring-stats2/js/wowchemy-init.min.d876f1a6b98701f9238f2313b512a26f.js"></script>
+
+  
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-end" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/2022-spring-stats2/materials/"><span>Materials</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+        
+      
+        
+      
+
+      
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    
+
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+          Foundations
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/2022-spring-stats2/materials/"><i class="fas fa-arrow-left pr-1"></i>Materials</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/2022-spring-stats2/materials/session-2/">Foundations</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  <li class=""><a href="/2022-spring-stats2/materials/session-2/slides/">Slides</a></li>
+
+
+
+  <li class="active"><a href="/2022-spring-stats2/materials/session-2/data-manipulation/">Introduction to Data Manipulation</a></li>
+
+
+
+  <li class=""><a href="/2022-spring-stats2/materials/session-2/pof/">The Potential Outcomes Framework</a></li>
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#welcome">Welcome!</a></li>
+    <li><a href="#what-we-will-need-today">What we will need today</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#tidy-data">Tidy data</a></li>
+    <li><a href="#the-penguins-data-set">The <code>penguins</code> data set</a></li>
+    <li><a href="#lets-explore-the-data-set">Let’s explore the data set.</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#what-we-will-learn-today">What we will learn today</a></li>
+    <li><a href="#31-select">3.1. <code>select()</code></a></li>
+    <li><a href="#32-filter">3.2. <code>filter()</code></a></li>
+    <li><a href="#33-the-pipe-operator-">3.3. The Pipe Operator: <code>%&gt;%</code></a></li>
+    <li><a href="#34-mutate">3.4. <code>mutate()</code></a></li>
+    <li><a href="#35-group_by-and-summarize">3.5. <code>group_by()</code> and <code>summarize()</code></a></li>
+    <li><a href="#36-arrange">3.6. <code>arrange()</code></a></li>
+  </ul>
+</nav>
+
+      
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <article class="article">
+
+        <div class="docs-article-container">
+          
+            
+  <nav class="d-none d-md-flex" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      
+  
+  
+  
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/">
+      
+        Home
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/">
+      
+        Materials
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/session-2/">
+      
+        Foundations
+      
+    </a>
+  </li>
+
+
+      <li class="breadcrumb-item active" aria-current="page">
+        Introduction to Data Manipulation
+      </li>
+    </ol>
+  </nav>
+
+
+          
+
+          <h1>Introduction to Data Manipulation</h1>
+
+          <div class="article-style">
+            <script src="/2022-spring-stats2rmarkdown-libs/kePrint/kePrint.js"></script>
+<link href="/2022-spring-stats2rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
+<script src="/2022-spring-stats2rmarkdown-libs/kePrint/kePrint.js"></script>
+<link href="/2022-spring-stats2rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
+<script src="/2022-spring-stats2rmarkdown-libs/kePrint/kePrint.js"></script>
+<link href="/2022-spring-stats2rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
+<script src="/2022-spring-stats2rmarkdown-libs/kePrint/kePrint.js"></script>
+<link href="/2022-spring-stats2rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
+<h1 id="1-introduction">1. Introduction</h1>
+<h2 id="welcome">Welcome!</h2>
+<p>Welcome to our second tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.</p>
+<p>The labs are designed to reinforce the material covered during the lectures by introducing you to hands-on applications.</p>
+<p>The practical nature of our class means that our labs will be data-centered. Throughout our class, we will get acquinted with multiple packages of the <code>tidyverse</code>.</p>
+<p>Though we expect that some of you may already know them, the <code>tidyverse</code> is a collection of R packages that share an underlying design, syntax, and structure. They will definitely make your life easier!!</p>
+<p>Today, we will start with a brief introduction to data manipulation through the <code>dplyr</code> package.</p>
+<p>In this tutorial, you will learn to:</p>
+<ul>
+<li>identify the purpose of a set of <code>dplyr</code> verbs</li>
+<li>write statements in <strong>tidy</strong> syntax</li>
+<li>apply <code>dplyr</code> verbs to solve your data manipulation challenges</li>
+</ul>
+<p>This tutorial is partly based on <a href="http://r4ds.had.co.nz/" target="_blank" rel="noopener"><em>R for Data Science</em></a>, section 5.2, and <a href="http://qpolr.com/data.html/" target="_blank" rel="noopener"><em>Quantitative Politics with R</em></a>, chapter 3.</p>
+<hr>
+<h2 id="what-we-will-need-today">What we will need today</h2>
+<p>We’ll practice some wrangling in <code>dplyr</code> using data for penguin sizes recorded by Dr. Kristen Gorman and others at several islands in the Palmer Archipelago, Antarctica. Data are originally published in: Gorman KB, Williams TD, Fraser WR (2014) PLoS ONE 9(3): e90081. doi:10.1371/journal.pone.0090081</p>
+<p>You do <strong>not</strong> need to import the data to work through this tutorial - the data are already here waiting behind the scenes.</p>
+<p>But if you <em>do</em> ever want to use the penguins data outside of this tutorial, they now exist in the <a href="https://github.com/allisonhorst/palmerpenguins" target="_blank" rel="noopener"><strong>palmerpenguins</strong></a> package in <em>R</em>.</p>
+<p>Let’s begin!</p>
+<hr>
+<h1 id="2-data-structure">2. Data Structure</h1>
+<h2 id="tidy-data">Tidy data</h2>
+<p>Generally, we will encounter data in a tidy format. Tidy data refers to a way of mapping the structure of a data set. In a tidy data set:</p>
+<ol>
+<li>Each variable forms a column.</li>
+<li>Each observation forms a row.</li>
+<li>Each type of observational unit forms a table</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/seramirezruiz/hertiestats2/master/inst/tutorials/basics/images/tidy_data.png" width="70%" style="display: block; margin: auto;" /></p>
+<h2 id="the-penguins-data-set">The <code>penguins</code> data set</h2>
+<p>The 3 species of penguins in this data set are Adelie, Chinstrap and Gentoo. The data set contains 8 variables:</p>
+<ul>
+<li><strong>species:</strong> a factor denoting the penguin species (Adelie, Chinstrap, or Gentoo)</li>
+<li><strong>island:</strong> a factor denoting the island (in Palmer Archipelago, Antarctica) where observed</li>
+<li><strong>culmen_length_mm:</strong> a number denoting length of the dorsal ridge of penguin bill (millimeters)</li>
+<li><strong>culmen_depth_mm:</strong> a number denoting the depth of the penguin bill (millimeters)</li>
+<li><strong>flipper_length_mm:</strong> an integer denoting penguin flipper length (millimeters)</li>
+<li><strong>body_mass_g:</strong> an integer denoting penguin body mass (grams)</li>
+<li><strong>sex:</strong> a factor denoting penguin sex (MALE, FEMALE)</li>
+<li><strong>year</strong> an integer denoting the year of the record</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/seramirezruiz/hertiestats2/master/inst/tutorials/basics/images/penguins.png" width="70%" style="display: block; margin: auto;" /></p>
+<p style="text-align:right;">
+*Illustration by @allisonhorst*
+</p>
+<h2 id="lets-explore-the-data-set">Let’s explore the data set.</h2>
+<p><code>head()</code> is a function that returns the first couple rows from a data frame. Write the R code required to explore the first observations of the <code>penguins</code> data set:</p>
+<p>Notice that when you press ‘Run,’ the <strong>output</strong> of the code is returned below it! So by pressing ‘Run,’ you’ve run your first <em>R</em> code of the class!</p>
+<pre><code class="language-r">head(penguins)
+</code></pre>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+species
+</th>
+<th style="text-align:left;">
+island
+</th>
+<th style="text-align:right;">
+bill\_length\_mm
+</th>
+<th style="text-align:right;">
+bill\_depth\_mm
+</th>
+<th style="text-align:right;">
+flipper\_length\_mm
+</th>
+<th style="text-align:right;">
+body\_mass\_g
+</th>
+<th style="text-align:left;">
+sex
+</th>
+<th style="text-align:right;">
+year
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Adelie
+</td>
+<td style="text-align:left;">
+Torgersen
+</td>
+<td style="text-align:right;">
+39.1
+</td>
+<td style="text-align:right;">
+18.7
+</td>
+<td style="text-align:right;">
+181
+</td>
+<td style="text-align:right;">
+3750
+</td>
+<td style="text-align:left;">
+male
+</td>
+<td style="text-align:right;">
+2007
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Adelie
+</td>
+<td style="text-align:left;">
+Torgersen
+</td>
+<td style="text-align:right;">
+39.5
+</td>
+<td style="text-align:right;">
+17.4
+</td>
+<td style="text-align:right;">
+186
+</td>
+<td style="text-align:right;">
+3800
+</td>
+<td style="text-align:left;">
+female
+</td>
+<td style="text-align:right;">
+2007
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Adelie
+</td>
+<td style="text-align:left;">
+Torgersen
+</td>
+<td style="text-align:right;">
+40.3
+</td>
+<td style="text-align:right;">
+18.0
+</td>
+<td style="text-align:right;">
+195
+</td>
+<td style="text-align:right;">
+3250
+</td>
+<td style="text-align:left;">
+female
+</td>
+<td style="text-align:right;">
+2007
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Adelie
+</td>
+<td style="text-align:left;">
+Torgersen
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+2007
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Adelie
+</td>
+<td style="text-align:left;">
+Torgersen
+</td>
+<td style="text-align:right;">
+36.7
+</td>
+<td style="text-align:right;">
+19.3
+</td>
+<td style="text-align:right;">
+193
+</td>
+<td style="text-align:right;">
+3450
+</td>
+<td style="text-align:left;">
+female
+</td>
+<td style="text-align:right;">
+2007
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Adelie
+</td>
+<td style="text-align:left;">
+Torgersen
+</td>
+<td style="text-align:right;">
+39.3
+</td>
+<td style="text-align:right;">
+20.6
+</td>
+<td style="text-align:right;">
+190
+</td>
+<td style="text-align:right;">
+3650
+</td>
+<td style="text-align:left;">
+male
+</td>
+<td style="text-align:right;">
+2007
+</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="3-manipulating-data-with-dplyr">3. Manipulating data with <code>dplyr</code></h1>
+<h2 id="what-we-will-learn-today">What we will learn today</h2>
+<p>In this tutorial, you’ll learn and practice examples using some functions in <code>dplyr</code> to work with data. Those are:</p>
+<ul>
+<li><code>select()</code>: keep or exclude some columns</li>
+<li><code>filter()</code>: keep rows that satisfy your conditions</li>
+<li><code>mutate()</code>: add columns from existing data or edit existing columns</li>
+<li><code>group_by()</code>: lets you define groups within your data set</li>
+<li><code>summarize()</code>: get summary statistics</li>
+<li><code>arrange()</code>: reorders the rows according to single or multiple variables</li>
+</ul>
+<p>Let’s get to work.</p>
+<hr>
+<h2 id="31-select">3.1. <code>select()</code></h2>
+<p>The first verb (function) we will utilize is <code>select()</code>. We can employ it to manipulate our data based on columns. If you recall from our initial exploration of the data set there were eight variables attached to every observation. Do you recall them? If you do not, there is no problem. You can utilize <code>names()</code> to retrieve the names of the variables in a data frame.</p>
+<pre><code class="language-r">names(penguins)
+</code></pre>
+<pre><code>## [1] &quot;species&quot;           &quot;island&quot;            &quot;bill_length_mm&quot;   
+## [4] &quot;bill_depth_mm&quot;     &quot;flipper_length_mm&quot; &quot;body_mass_g&quot;      
+## [7] &quot;sex&quot;               &quot;year&quot;
+</code></pre>
+<p>Say we are only interested in the species, island, and year variables of these data, we can utilize the following syntax:</p>
+<center>
+select(data, columns)
+</center>
+<hr>
+<p><strong>Activity</strong>
+<em>The following code chunk would select the species, island, and year variables. What should we do to keep the body_mass_g and sex variables as well?</em></p>
+<pre><code class="language-r">dplyr::select(penguins, species, island, year)
+</code></pre>
+<iframe src="../wid1.html" width="100%" height="500">
+</iframe>
+<details class="spoiler "  id="spoiler-0">
+  <summary>Answer</summary>
+  <p><pre><code class="language-r"># you just need to type the names of the columns
+dplyr::select(penguins, species, island, year, body_mass_g, sex)
+</code></pre>
+<iframe src="../wid2.html" width="100%" height="500">
+</iframe>
+</p>
+</details>
+<div class="alert alert-note">
+  <div>
+    <p>To drop variables, use - before the variable name.</p>
+<p>For example, <code>select(penguins, -year)</code> will drop the year column.</p>
+  </div>
+</div>
+<hr>
+<h2 id="32-filter">3.2. <code>filter()</code></h2>
+<p>The second verb (function) we will employ is <code>filter()</code>. <code>filter()</code> lets you use a logical test to extract specific rows from a data frame. To use <code>filter()</code>, pass it the data frame followed by one or more logical tests. <code>filter()</code> will return every row that passes each logical test.</p>
+<p>The more commonly used logical operators are:</p>
+<ul>
+<li><code>==</code>: Equal to</li>
+<li><code>!=</code>: Not equal to</li>
+<li><code>&gt;</code>, <code>&gt;=</code>: Greater than, greater than or equal to</li>
+<li><code>&lt;</code>, <code>&lt;=</code>: Less than, less than or equal to</li>
+<li><code>&amp;</code>, <code>|</code>: And, or</li>
+</ul>
+<p>Say we are interested in retrieving the observations from the year 2007. We would do:</p>
+<pre><code class="language-r">dplyr::filter(penguins, year == 2007)
+</code></pre>
+<iframe src="../wid3.html" width="100%" height="500">
+</iframe>
+<p><strong>Activity</strong>
+<em>Can you adapt the code to retrieve all the observations of Chinstrap penguins from 2007 (remember that species contains character units)</em></p>
+<details class="spoiler "  id="spoiler-2">
+  <summary>Answer</summary>
+  <p><pre><code class="language-r"># you just need to utilize &amp; and type the logical operator for the species
+dplyr::filter(penguins, year == 2007 &amp; species == &quot;Chinstrap&quot;)
+</code></pre>
+<iframe src="../wid4.html" width="100%" height="500">
+</iframe>
+</p>
+</details>
+<hr>
+<h2 id="33-the-pipe-operator-">3.3. The Pipe Operator: <code>%&gt;%</code></h2>
+<p>The pipe, <code>%&gt;%</code>, comes from the <code>magrittr</code> package by Stefan Milton Bache. Packages in the <code>tidyverse</code> load <code>%&gt;%</code> for you automatically, so you don’t usually load <code>magrittr</code> explicitly. This will be one of your best friends in <em>R</em>.
+&gt;<strong>Pipes are a powerful tool for clearly expressing a sequence of multiple operations. Let’s think about baking for a second.</strong></p>
+<p><img src="https://user-images.githubusercontent.com/54796579/92409417-d3b0c600-f140-11ea-8596-561a05586988.png" style="display: block; margin: auto;" /></p>
+<hr>
+<p><strong>Activity</strong>
+<em>We can leverage the pipe operator to sequence our code in a logical manner. Can you adapt the following code chunk with the pipe and conditional logical operators we discussed?</em></p>
+<pre><code class="language-r">only_2009 &lt;- dplyr::filter(penguins, year == 2009)
+only_2009_chinstraps &lt;- dplyr::filter(only_2009, species == &quot;Chinstrap&quot;)
+only_2009_chinstraps_species_sex_year &lt;- dplyr::select(only_2009_chinstraps, species, sex, year)
+final_df &lt;- only_2009_chinstraps_species_sex_year
+final_df #to print it in our console
+</code></pre>
+<details class="spoiler "  id="spoiler-3">
+  <summary>Answer</summary>
+  <p><pre><code class="language-r">penguins %&gt;% #we start off with out df
+  dplyr::filter(year == 2009 &amp; species == &quot;Chinstrap&quot;) %&gt;% #filter
+  dplyr::select(species, sex, year) #select
+</code></pre>
+<iframe src="../wid5.html" width="100%" height="500">
+</iframe>
+</p>
+</details>
+<hr>
+<h2 id="34-mutate">3.4. <code>mutate()</code></h2>
+<p><code>mutate()</code> lets us create, modify, and delete columns. The most common use for now will be to create new variables based on existing ones. Say we are working with a U.S. American client and they feel more confortable with assessing the weight of the penguins in pounds. We would utilize <code>mutate()</code> as such:</p>
+<p>
+<center>
+mutate(new\_var\_name = conditions)
+</center>
+<br>
+<p><strong>Activity</strong>
+<em>Can you edit the following code chunk to render a new variable body_mass_kg?</em></p>
+<pre><code class="language-r">penguins %&gt;%
+  dplyr::mutate(body_mass_lbs = body_mass_g/453.6)
+</code></pre>
+<iframe src="../wid6.html" width="100%" height="500">
+</iframe>
+<details class="spoiler "  id="spoiler-4">
+  <summary>Answer</summary>
+  <p><pre><code class="language-r">penguins %&gt;%
+  dplyr::mutate(body_mass_kg = body_mass_g/1000) #grams divided by 1000 
+</code></pre>
+<iframe src="../wid7.html" width="100%" height="500">
+</iframe>
+</p>
+</details>
+<hr>
+<h2 id="35-group_by-and-summarize">3.5. <code>group_by()</code> and <code>summarize()</code></h2>
+<p>These two verbs <code>group_by()</code> and <code>summarize()</code> tend to go together. When combined , ’summarize()` will create a new data frame. It will have one (or more) rows for each combination of grouping variables; if there are no grouping variables, the output will have a single row summarising all observations in the input. For example:</p>
+<ul>
+<li><code>summarize()</code>:</li>
+</ul>
+<pre><code class="language-r">penguins %&gt;%
+  dplyr::summarize(heaviest_penguin = max(body_mass_g, na.rm = T)) #max() does not know how to deal with NAs very well
+</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+heaviest\_penguin
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+6300
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>group_by()</code> + <code>summarize()</code>:</li>
+</ul>
+<pre><code class="language-r">penguins %&gt;%
+  dplyr::group_by(species) %&gt;%
+  dplyr::summarize(heaviest_penguin = max(body_mass_g, na.rm = T))
+</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+species
+</th>
+<th style="text-align:right;">
+heaviest\_penguin
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Adelie
+</td>
+<td style="text-align:right;">
+4775
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Chinstrap
+</td>
+<td style="text-align:right;">
+4800
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Gentoo
+</td>
+<td style="text-align:right;">
+6300
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Activity</strong>
+<em>Can you get the weight of the lightest penguin of each species? You can use <code>min()</code>. What happens when in addition to species you also group by year <code>group_by(species, year)</code>?</em></p>
+<details class="spoiler "  id="spoiler-5">
+  <summary>Answers</summary>
+  <p><pre><code class="language-r">penguins %&gt;%
+  dplyr::group_by(species) %&gt;%
+  dplyr::summarize(lightest_penguin = min(body_mass_g, na.rm = T))
+</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+species
+</th>
+<th style="text-align:right;">
+lightest\_penguin
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Adelie
+</td>
+<td style="text-align:right;">
+2850
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Chinstrap
+</td>
+<td style="text-align:right;">
+2700
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Gentoo
+</td>
+<td style="text-align:right;">
+3950
+</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-r">penguins %&gt;%
+  dplyr::group_by(species, year) %&gt;%
+  dplyr::summarize(lightest_penguin = max(body_mass_g, na.rm = T)) 
+</code></pre>
+<pre><code>## `summarise()` has grouped output by 'species'. You can override using the `.groups` argument.
+</code></pre>
+</p>
+</details>
+<hr>
+<h2 id="36-arrange">3.6. <code>arrange()</code></h2>
+<p>The <code>arrange()</code> verb is pretty self-explanatory. <code>arrange()</code> orders the rows of a data frame by the values of selected columns in ascending order. You can use the <code>desc()</code> argument inside to arrange in descending order. The following chunk arranges the data frame based on the length of the penguins’ bill. You hint tab contains the code for the descending order alternative.</p>
+<center>
+arrange(variable\_of\_interest)
+</center>
+<br>
+<pre><code class="language-r">penguins %&gt;%
+  dplyr::arrange(bill_length_mm)
+</code></pre>
+<iframe src="../wid12.html" width="100%" height="500">
+</iframe>
+<pre><code class="language-r">penguins %&gt;%
+  dplyr::arrange(desc(bill_length_mm))
+</code></pre>
+<iframe src="../wid13.html" width="100%" height="500">
+</iframe>
+<p><strong>Activity</strong>
+<em>Can you create a data frame arranged by body_mass_g of the penguins observed in the “Dream” island?</em></p>
+<details class="spoiler "  id="spoiler-6">
+  <summary>Answer</summary>
+  <p><pre><code class="language-r">penguins %&gt;%
+  dplyr::filter(island == &quot;Dream&quot;) %&gt;%
+  dplyr::arrange(desc(body_mass_g)) 
+</code></pre>
+<iframe src="../wid14.html" width="100%" height="500">
+</iframe>
+</p>
+</details>
+
+          </div>
+
+          
+
+
+
+          
+          
+          <div class="article-widget">
+            
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/2022-spring-stats2/materials/session-2/slides/" rel="next">02 - Slides</a>
+  </div>
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Next</div>
+    <a href="/2022-spring-stats2/materials/session-2/pof/" rel="prev">The Potential Outcomes Framework</a>
+  </div>
+  
+</div>
+
+          </div>
+          
+        </div>
+
+        <div class="body-footer">
+          <p>Last updated on Jan 1, 0001</p>
+
+          
+
+
+
+
+
+          
+
+
+
+
+          
+
+
+  
+  
+
+
+
+        </div>
+
+      </article>
+
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/latex.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+    <script>
+      anchors.add();
+    </script>
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+        <div class="search-hit-content">
+          <div class="search-hit-name">
+            <a href="{{relpermalink}}">{{title}}</a>
+            <div class="article-metadata search-hit-type">{{type}}</div>
+            <p class="search-hit-description">{{snippet}}</p>
+          </div>
+        </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+      
+      
+      
+      
+      
+      
+      
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+      
+    
+    
+    <script src="/2022-spring-stats2/en/js/wowchemy.min.e5856c0a0618a04dd7b1e07451b5f341.js"></script>
+
+    
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+
+
+</body>
+</html>

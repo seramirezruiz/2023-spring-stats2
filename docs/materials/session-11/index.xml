@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>📊 11 - Statistical Power and Power Analysis | | Tutorials - Spring 2022 |</title>
+    <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-11/</link>
+      <atom:link href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-11/index.xml" rel="self" type="application/rss+xml" />
+    <description>📊 11 - Statistical Power and Power Analysis</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 26 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
+      <title>📊 11 - Statistical Power and Power Analysis</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-11/</link>
+    </image>
+    
+    <item>
+      <title>10 - Slides</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-11/slides/</link>
+      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
+      <guid>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-11/slides/</guid>
+      <description>&lt;h2 id=&#34;slides&#34;&gt;Slides&lt;/h2&gt;
+&lt;iframe src=&#34;../w11_power.pdf#view=fit&#34; width=&#34;100%&#34; height=&#34;500px&#34;&gt;
+    &lt;/iframe&gt;
+&lt;!--
+## Courses in this program
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure &gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;featured.jpg&#34; &gt;
+
+
+  &lt;img src=&#34;featured.jpg&#34; alt=&#34;&#34;  &gt;
+&lt;/a&gt;
+
+
+
+&lt;/figure&gt;
+
+
+&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    The parameter $\mu$ is the mean or expectation of the distribution.
+$\sigma$ is its standard deviation.
+The variance of the distribution is $\sigma^{2}$.
+  &lt;/div&gt;
+&lt;/div&gt;
+
+--&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Power Analysis</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-11/11-online-tutorial/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-11/11-online-tutorial/</guid>
+      <description>
+&lt;script src=&#34;https://seramirezruiz.github.io/2022-spring-stats2/2022-spring-stats2rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://seramirezruiz.github.io/2022-spring-stats2/2022-spring-stats2rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://seramirezruiz.github.io/2022-spring-stats2/2022-spring-stats2rmarkdown-libs/lightable/lightable.css&#34; rel=&#34;stylesheet&#34; /&gt;
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction!&lt;/h2&gt;
+&lt;p&gt;Welcome to our eleventh tutorial for the Statistics II: Statistical Modeling &amp;amp; Causal Inference (with R) course.&lt;/p&gt;
+&lt;p&gt;In this lab session we will develop our own simulation to understand the concept of power analysis a bit better.&lt;/p&gt;
+&lt;p&gt;We will also learn to apply for-loops and functions!&lt;/p&gt;
+&lt;p&gt;This session is heavily based on material provided by Nick Huntington-Klein. Check out his fantastic materials under &lt;a href=&#34;https://nickch-k.github.io/EconometricsSlides/&#34; class=&#34;uri&#34;&gt;https://nickch-k.github.io/EconometricsSlides/&lt;/a&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;packages&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Packages&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# These are the libraries we will use today. Make sure to install them in your console in case you have not done so previously.
+
+library(tidyverse)
+library(broom)
+
+set.seed(42) # for consistent results&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;statistical-power&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Statistical Power&lt;/h2&gt;
+&lt;p&gt;Statistics is an area where the lessons of violent video games are more or less true: if you want to solve a really tough problem, you need to bring a whole lot of firepower.&lt;/p&gt;
+&lt;p&gt;Once we have our study design down, there are a number of things that can turn statistical analysis into a fairly weak tool and make us less likely to find the truth:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Really tiny effects are really hard to find&lt;/li&gt;
+&lt;li&gt;Most statistical analyses are about looking at variation. If there’s little variation in the data, we won’t have much to go on&lt;/li&gt;
+&lt;li&gt;If there’s a lot of stuff going on other than the effect we’re looking for, it will be hard to pull the signal from the noise&lt;/li&gt;
+&lt;li&gt;If we have really high standards for what counts as evidence, then a lot of good evidence is going to be ignored so we need more evidence to make up for it&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Conveniently, all of these problems can be solved by increasing our firepower, by which we mean sample size. Power analysis is our way of figuring out exactly how much firepower we need to bring. If it’s more than we’re willing to provide, we might want to turn around and go back home.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;what-power-analysis-does&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;What Power Analysis Does&lt;/h3&gt;
+&lt;p&gt;Using X as shorthand for the treatment and Y as shorthand for the outcome, assuming we’re doing a power analysis for the a study of the relationship between X and Y, power analysis balances five things:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;The size of the effect (e.g. coefficient in a regression)&lt;/li&gt;
+&lt;li&gt;The amount of variation in the treatment (the variance of X, say)&lt;/li&gt;
+&lt;li&gt;The amount of other variation in Y (the R2, or the variation from the residual after explaining Y with X)&lt;/li&gt;
+&lt;li&gt;Statistical precision (the standard error of the estimate, statistical power, i.e. the true-positive rate)&lt;/li&gt;
+&lt;li&gt;The sample size&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;A power analysis holds four of these constant and tells you what the fifth can be. So, for example, it might say “&lt;em&gt;if we think the effect is probably A, and there’s B variation in X, and there’s C variation in Y unrelated to X, and you want to have at least a D% chance of finding an effect if it’s really there, then you’ll need a sample size of at least E.&lt;/em&gt;” This tells us the &lt;strong&gt;minimum sample size&lt;/strong&gt; necessary to get sufficient statistical power.&lt;/p&gt;
+&lt;p&gt;Or we can go in other directions. “&lt;em&gt;If you’re going to have a sample size of A, and there’s B variation in X, and there’s C variation in Y unrelated to X, and you want to have at least a D% chance of finding an effect if it’s really there, then the effect must be at least as large as E.&lt;/em&gt;” This tells us the &lt;strong&gt;minimum detectable effect&lt;/strong&gt;, i.e. the smallest effect you can hope to have a chance of reasonably measuring given your sample size.&lt;/p&gt;
+&lt;p&gt;How about that “statistical precision” option? Usually, you have a target level of statistical power (thus the name “power analysis”). Statistical power is the true-positive rate. That is, if there’s truly an effect there, and sampling variation means that you have an 80% chance of rejecting the null of no-effect in a given sample, then you have 80% statistical power. Statistical power is dependent on the kind of test you’re running, too - if you are doing a hypothesis test at the 95% confidence level, you’re more likely to reject the null (and thus will have higher statistical power) than if you’re doing a hypothesis test at the 99% confidence level. The more careful you are about false positives, the more likely you are to get a false negative. So there’s a tradeoff there.&lt;/p&gt;
+&lt;p&gt;In order to do power analysis, &lt;strong&gt;you need to be able to fill in the values for four of those five pieces, so that power analysis can tell you the fifth one&lt;/strong&gt;. How do we know those things? In practical terms, power analysis isn’t a homework assignment, it’s guidance. It doesn’t need to be exact. A little guesswork (although ideally as little as possible) is necessary. After all, even getting the minimum sample size necessary doesn’t guarantee your analysis is good, it just gives you a pretty good chance of finding a result if it’s there. Often, people take the results of their power analysis as a baseline and then make sure to overshoot the mark, under the assumption they’ve been too conservative. So don’t worry about being accurate, just try to make the numbers in the analysis close enough to be useful.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;simulation-example&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Simulation Example&lt;/h2&gt;
+&lt;p&gt;If the analysis you’re planning to do is a standard one, you can use one of many, many available “power analysis calculators” to do the work for you (for example, see &lt;a href=&#34;http://powerandsamplesize.com/&#34; class=&#34;uri&#34;&gt;http://powerandsamplesize.com/&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;However, running simulations in this context is a great way to i) understand power analysis and ii) apply your R skills!&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;step-1-make-up-data-with-the-properties-we-want&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Step 1: Make Up Data With The Properties We Want&lt;/h3&gt;
+&lt;p&gt;Lets have a look at two useful functions to implement simulations:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;rnorm()&lt;/code&gt; takes three arguments: the sample size, the mean, and the standard deviation. &lt;code&gt;rnorm(100, 0, 3)&lt;/code&gt; produces 100 random normal draws from a normal distribution with a mean of 0 and a standard deviation of 3.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sample()&lt;/code&gt; takes a bunch of arguments, but the important ones are the set to sample from, the sample size, replace, and prob. &lt;code&gt;sample(c(&#39;Treated&#39;,&#39;Untreated&#39;), 500, replace = TRUE, prob = c(.2,.8))&lt;/code&gt; produces 500 random observations that are either ‘Treated’ or ‘Untreated’. Since prob = c(.2,.8), there’s a 20% chance of each draw being the first one (‘Treated’) and an 80% chance it’s the second (‘Untreated’). You pretty much always want replace = TRUE since that says that you can get the same thing more than once (i.e. more than one ‘Treated’ observation).&lt;/p&gt;
+&lt;p&gt;You can then design whatever sort of data you like - the data generating process is in your hands! You can use variables generated using random data to create other variables as well - now you have a causal link!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Our setting:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;In this case, imagine you have been tasked with analyzing an experiment run by a big multinational firm. A random subset of managers (treatment group) is supposed to receive a workshop on the climate change related consequences of flying and potential ways of replacing in-person meetings with international clients with online alternatives. The outcome of interest is the amount of kilometers flown to and from business meetings.&lt;/p&gt;
+&lt;p&gt;Let’s construct a simulated dataset reflecting the true relationship:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Make a tibble (or data.frame) to contain our data
+tib &amp;lt;- tibble::tibble(
+  # Start by creating the variables that don&amp;#39;t depend on anything else
+  # Around 20% of managers are supposed to take the workshop (1), and the remaining 80% will be the control group (0)
+  #You will receive data on 1000 managers
+  workshop = sample(c(1,0), 1000, replace = TRUE, prob = c(.2,.8))
+) %&amp;gt;%
+  # Then mutate in any variables that depend on earlier variables
+  # Don&amp;#39;t forget to add additional noise!
+  # The *true effect* of workshop on kms_flown is -90km
+  dplyr::mutate(kms_flown = -90*workshop + rnorm(1000, mean = 4000, sd = 1000))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Just from this construction we have set:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: lower-alpha&#34;&gt;
+&lt;li&gt;the true effect of X on Y (i.e, a reduction of 90km flown),&lt;/li&gt;
+&lt;li&gt;the amount of variation in X (by the characteristics of the binomial distribution),&lt;/li&gt;
+&lt;li&gt;the amount of variation in Y not coming from X (it’s a normal distribution with a mean of 4000km and standard deviation of 1000km),&lt;/li&gt;
+&lt;li&gt;the sample size (1000 managers).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr /&gt;
+&lt;h4 style=&#34;color:#cc0065&#34;&gt;
+Let’s see what we simulated
+&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(tib, aes(x=kms_flown, fill=factor(workshop))) +
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(name = &amp;quot;Workshop&amp;quot;,
+                    values = c(&amp;quot;#a7a8aa&amp;quot;, &amp;quot;#cc0055&amp;quot;),
+                    labels = c(&amp;quot;Control&amp;quot;, &amp;quot;Treatment&amp;quot;)) +
+  labs(x = &amp;quot;Distance flown by manager (kms)&amp;quot;,
+       y = &amp;quot;Density&amp;quot;) +
+  theme_minimal() +
+  theme(legend.position = &amp;quot;bottom&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;knitr::include_graphics(&amp;quot;https://user-images.githubusercontent.com/54796579/165579120-f28b782e-334f-4375-b536-60d84219cc12.png&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/165579120-f28b782e-334f-4375-b536-60d84219cc12.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-2-perform-the-analysis&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Step 2: Perform the Analysis&lt;/h3&gt;
+&lt;p&gt;Given that we are planning an experiment, we will regress Y on X to get the causal effect of the workshop on kms flown.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;model&amp;lt;-lm(kms_flown ~ workshop, data = tib)
+modelsummary::modelsummary(model,
+             fmt = 2,
+             gof_omit = &amp;quot;AIC|BIC|Log.Lik.&amp;quot;,
+             statistic = &amp;quot;conf.int&amp;quot;,
+             stars = T)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Model 1
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+(Intercept)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+3949.91***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[3880.71, 4019.10]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+workshop
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+4.70
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;box-shadow: 0px 1px&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;box-shadow: 0px 1px&#34;&gt;
+[-151.59, 160.98]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Num.Obs.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+1000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+R2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+R2 Adj.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+-0.001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+F
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.003
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;tfoot&gt;
+&lt;tr&gt;
+&lt;td style=&#34;padding: 0; border:0;&#34; colspan=&#34;100%&#34;&gt;
+&lt;sup&gt;&lt;/sup&gt; + p &amp;lt; 0.1, * p &amp;lt; 0.05, ** p &amp;lt; 0.01, *** p &amp;lt; 0.001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tfoot&gt;
+&lt;/table&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tidy(model)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 2 × 5
+##   term        estimate std.error statistic p.value
+##   &amp;lt;chr&amp;gt;          &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;   &amp;lt;dbl&amp;gt;
+## 1 (Intercept)  3950.        35.3  112.       0    
+## 2 workshop        4.70      79.6    0.0590   0.953&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Let&amp;#39;s extract the p-value on the coefficient of interest
+tidy(model)$p.value[2]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.9529955&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# And if we&amp;#39;re just interested in significance, say at the 95% level...
+sig &amp;lt;- tidy(model)$p.value[2] &amp;lt;= .05
+sig&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] FALSE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With this particular sample of simulated data, our experimental design does not detect any significant effect of the treatment on the outcome. But…&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-3-repeat&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Step 3: Repeat!&lt;/h3&gt;
+&lt;p&gt;…of course, this is only one generated data set. That doesn’t tell us much of anything about the sampling variation! So we need to do this all a bunch of times, maybe a few thousand, and see what we get.&lt;/p&gt;
+&lt;p&gt;While an R purist would probably opt for doing this with one of the &lt;code&gt;apply()&lt;/code&gt; functions, for simplicity we’re just going to use the good ol’ for() loop.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;for (iterator in range) { code }&lt;/code&gt; will run the code code a bunch of times, each time setting the iterator variable to a different value in range, until it’s tried all of them, like this:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;for (i in 1:5) {
+  print(i)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1
+## [1] 2
+## [1] 3
+## [1] 4
+## [1] 5&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We’re going to take all of the steps we’ve done so far and put them inside those curly braces {}. Then we’re going to repeat the whole process a bunch of times!&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;for (i in 1:2000) {
+  # Have to re-create the data EVERY TIME or it will just be the same data over and over
+  tib &amp;lt;- tibble::tibble(
+    workshop = sample(c(1,0), 1000, replace = TRUE, prob = c(.2,.8))
+  ) %&amp;gt;%
+    dplyr::mutate(kms_flown = -90*workshop + rnorm(1000, mean = 4000, sd = 1000))
+  
+  # Run the analysis
+  model &amp;lt;- lm(kms_flown ~ workshop, data = tib)
+  
+  # Get the results
+  coef_on_X &amp;lt;- tidy(model)$estimate[2]
+  print(coef_on_X)
+  sig &amp;lt;- tidy(model)$p.value[2] &amp;lt;= .05
+  print(sig)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If we run this code, it will generate our data 2000 times (i in 1:2000) and run the analysis on each of those data sets. Then it will get the coefficient on X and whether it’s significant at the 95% level and print those to screen.&lt;/p&gt;
+&lt;p&gt;Of course, this will just leave us with 2000 results printed to screen. Not that useful!&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-4-store-the-results&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Step 4: Store the Results&lt;/h3&gt;
+&lt;p&gt;So instead of printing to screen, we’re going to save all of the results so we can look at them afterwards.&lt;/p&gt;
+&lt;p&gt;We’ll start by creating some blank vectors to store our data in, like &lt;code&gt;results &amp;lt;- c()&lt;/code&gt;. Then, as we do the analysis over and over, instead of printing the results to screen, we can store them in &lt;code&gt;results[i]&lt;/code&gt;, which will put it in the &lt;span class=&#34;math inline&#34;&gt;\(i^{th}\)&lt;/span&gt; position of the vector, adding on new elements as i grows higher and higher with our for() loop.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;coef_results &amp;lt;- c()
+sig_results &amp;lt;- c()
+
+for (i in 1:2000) {
+# Have to re-create the data EVERY TIME or it will just be the same data over and over
+  tib &amp;lt;- tibble::tibble(
+    workshop = sample(c(1,0), 1000, replace = TRUE, prob = c(.2,.8))
+  ) %&amp;gt;%
+    dplyr::mutate(kms_flown = -90*workshop + rnorm(1000, mean = 4000, sd = 1000))
+  
+  # Run the analysis
+  model &amp;lt;- lm(kms_flown ~ workshop, data = tib)
+  
+  # Get the results
+  coef_results[i] &amp;lt;- tidy(model)$estimate[2]
+  sig_results[i] &amp;lt;- tidy(model)$p.value[2] &amp;lt;= .05
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-5-examine-the-results&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Step 5: Examine the Results&lt;/h3&gt;
+&lt;p&gt;Our true effect is -90km. Our estimate of statistical power is the proportion of the results that are significantly different from zero:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mean(sig_results)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.1885&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So we have statistical power of around 21%. Even though we know the true parameter is -90km, only in 21% of the cases is the coefficient estimate significant!&lt;/p&gt;
+&lt;p&gt;We might also want to check the distribution of the coefficient estimate directly with geom_density() in &lt;code&gt;ggplot2&lt;/code&gt; to make sure it looks appropriate and there aren’t weird outliers implying a super sensitive analysis.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;results_tibble &amp;lt;- tibble::tibble(coef = coef_results,
+                                 sig = sig_results)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(results_tibble, aes(x = coef)) + 
+  geom_density() + 
+  geom_vline(xintercept = -90, linetype=&amp;quot;dotted&amp;quot;,  color = &amp;quot;#cc0065&amp;quot;) +
+  # Prettify!
+  theme_minimal() + 
+  labs(x = &amp;#39;Coefficient&amp;#39;, y = &amp;#39;Density&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;knitr::include_graphics(&amp;quot;https://user-images.githubusercontent.com/54796579/165579130-dd855e74-9019-4206-8ba3-809fa3884a23.png&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/165579130-dd855e74-9019-4206-8ba3-809fa3884a23.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(results_tibble, aes(x = sig, fill = sig)) + 
+  geom_bar() + 
+  # Prettify!
+  theme_minimal() + 
+  labs(x = &amp;#39;Coefficient&amp;#39;, y = &amp;#39;Count&amp;#39;) + 
+  scale_x_discrete(labels = c(&amp;#39;Insignificant&amp;#39;,&amp;#39;Significant&amp;#39;)) +
+  scale_fill_manual(values = c(&amp;quot;#a7a8aa&amp;quot;, &amp;quot;#cc0055&amp;quot;)) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;knitr::include_graphics(&amp;quot;https://user-images.githubusercontent.com/54796579/165579137-71f87545-ac16-4bd1-935c-de24ccbef59c.png&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/165579137-71f87545-ac16-4bd1-935c-de24ccbef59c.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;change-and-compare&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Change and Compare!&lt;/h2&gt;
+&lt;p&gt;The goal of power analysis isn’t usually to just take one set of data-generating characteristics and generate a single power estimate, it’s to do things like calculate the minimum detectable effect or smallest sample size for a given power level.&lt;/p&gt;
+&lt;p&gt;How can we do that here? By trying different values of effect size and sample size and seeing what we get.&lt;/p&gt;
+&lt;p&gt;To do this, we’re first going to take everything we’ve done so far and put it inside a function. This function will be called &lt;code&gt;my_power_function&lt;/code&gt; and take two arguments: “effect” (the effect of X on Y) and “sample_size”. We will be able to later change this inputs when applying the function and compare the results! The function &lt;strong&gt;will return the share power of your estimates based on the two given inputs&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;my_power_function &amp;lt;- function(effect, sample_size) {
+  sig_results &amp;lt;- c()
+  
+  for (i in 1:500) { #Noticed that we only repeat 500 times in order to speed calculations
+    # Have to re-create the data EVERY TIME or it will just be the same data over and over
+    tib &amp;lt;- tibble::tibble(
+    workshop = sample(c(1,0), sample_size, replace = TRUE, prob = c(.2,.8))
+  ) %&amp;gt;%
+    dplyr::mutate(kms_flown = effect*workshop + rnorm(sample_size, mean = 4000, sd = 1000))
+  
+  # Run the analysis
+  model &amp;lt;- lm(kms_flown ~ workshop, data = tib)
+    
+    # Get the results
+    sig_results[i] &amp;lt;- tidy(model)$p.value[2] &amp;lt;= .05
+  }
+  
+  sig_results %&amp;gt;%
+    mean() %&amp;gt;%
+    return()
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now we can just call the function, setting effect and sample_size to whatever we want, and get the power back! Let’s check it with the values we had before and make sure we’re in the same range:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;my_power_function(-90, 1000)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.204&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Seems good!&lt;/p&gt;
+&lt;p&gt;Now let’s say we really are stuck with a sample size of 1000 and we want to know the minimum detectable effect size we can get a power of .8 with. To do this, we can just run our function with sample_size = 1000 and a bunch of different effect values until we get back a power above .8!&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;power_levels &amp;lt;- c()
+
+effects_to_try &amp;lt;- c(-10, -90, -200, -250 ,-300, -400, -500)
+
+for (i in 1:length(effects_to_try)) {
+  power_levels[i] &amp;lt;- my_power_function(effects_to_try[i], 1000)
+}
+
+# Where do we cross 80%?
+power_results &amp;lt;- tibble(effect = effects_to_try,
+                        power = power_levels)
+power_results&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 7 × 2
+##   effect power
+##    &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+## 1    -10 0.042
+## 2    -90 0.186
+## 3   -200 0.74 
+## 4   -250 0.856
+## 5   -300 0.97 
+## 6   -400 1    
+## 7   -500 1&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(power_results, 
+       aes(x = effect, y = power)) +
+  geom_line(color = &amp;#39;#cc0065&amp;#39;, size = 1.5) + 
+  # add a horizontal line at 90%
+  geom_hline(aes(yintercept = .8), linetype = &amp;#39;dashed&amp;#39;) + 
+  # Prettify!
+  theme_minimal() + 
+  scale_y_continuous(labels = scales::percent) + 
+  labs(x = &amp;#39;Linear Effect Size&amp;#39;, y = &amp;#39;Power&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;knitr::include_graphics(&amp;quot;https://user-images.githubusercontent.com/54796579/165579153-5cda2355-a8b3-4e98-8459-b231392ecd8f.png&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/165579153-5cda2355-a8b3-4e98-8459-b231392ecd8f.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;So it looks like we need an effect around “-225” or greater to have an 80% chance of finding a significant result. If we don’t think the effect is actually likely to be that large, then we need to figure out something else to do - for example, get a bigger sample!&lt;/p&gt;
+&lt;p&gt;Imagine that you are convinced that the true effect will be a reduction of kms flown of 90km. What sample size would you need to detect this effect?&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;power_levels &amp;lt;- c()
+
+sample_sizes_to_try &amp;lt;- c(1000, 3000, 5000, 7000)
+
+for (i in 1:length(sample_sizes_to_try)) {
+  power_levels[i] &amp;lt;- my_power_function(-90, sample_sizes_to_try[i])
+}
+
+# Where do we cross 80%?
+power_results &amp;lt;- tibble(sample_size = sample_sizes_to_try,
+                        power = power_levels)
+power_results&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 4 × 2
+##   sample_size power
+##         &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+## 1        1000 0.22 
+## 2        3000 0.52 
+## 3        5000 0.698
+## 4        7000 0.88&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(power_results, 
+       aes(x = sample_size, y = power)) +
+  geom_line(color = &amp;#39;red&amp;#39;, size = 1.5) + 
+  # add a horizontal line at 90%
+  geom_hline(aes(yintercept = .8), linetype = &amp;#39;dashed&amp;#39;) + 
+  # Prettify!
+  theme_minimal() + 
+  scale_y_continuous(labels = scales::percent) + 
+  labs(x = &amp;#39;Sample Size&amp;#39;, y = &amp;#39;Power&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;knitr::include_graphics(&amp;quot;https://user-images.githubusercontent.com/54796579/165579162-b99c0193-7ca8-4502-85ad-86d163fcfda0.png&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/165579162-b99c0193-7ca8-4502-85ad-86d163fcfda0.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;You would need a sample size of around 7000 to have an 80% chance of finding a significant result!&lt;/p&gt;
+&lt;p&gt;Now it’s your turn!&lt;/p&gt;
+&lt;p&gt;Try and adapt the function so that you can vary other parameters that have an effect on power. For example, you could try to change the proportion of managers getting the treatment, the standard deviation of the noise affecting Y or the significance levels that you are willing to accept for your coefficient of interest.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

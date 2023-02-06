@@ -1,0 +1,2974 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.0.0-beta.2 for Hugo" />
+  
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Sebastian Ramirez Ruiz" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Welcome Introduction! Welcome to our ninth tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.
+During this week’s lecture you were introduced to Panel Data and Fixed Effects." />
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-9/09-online-tutorial/" />
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    <meta name="theme-color" content="#1565c0" />
+  
+
+  
+  
+    
+    <script src="/2022-spring-stats2/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous" media="print" onload="this.media='all'">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/2022-spring-stats2/css/wowchemy.dd90b8698d7ba5e114b9de5647a585e5.css" />
+
+  
+
+
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+    <link rel="manifest" href="/2022-spring-stats2/index.webmanifest" />
+  
+
+  <link rel="icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_32x32_fill_lanczos_center_2.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_180x180_fill_lanczos_center_2.png" />
+
+  <link rel="canonical" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-9/09-online-tutorial/" />
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary" />
+  
+  <meta property="og:site_name" content="| Tutorials - Spring 2022 |" />
+  <meta property="og:url" content="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-9/09-online-tutorial/" />
+  <meta property="og:title" content="Panel Data and Fixed Effects | | Tutorials - Spring 2022 |" />
+  <meta property="og:description" content="Welcome Introduction! Welcome to our ninth tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.
+During this week’s lecture you were introduced to Panel Data and Fixed Effects." /><meta property="og:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" />
+    <meta property="twitter:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" /><meta property="og:locale" content="en-us" />
+  
+    
+    
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+
+
+
+
+  <title>Panel Data and Fixed Effects | | Tutorials - Spring 2022 |</title>
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/2022-spring-stats2/js/wowchemy-init.min.d876f1a6b98701f9238f2313b512a26f.js"></script>
+
+  
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-end" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/2022-spring-stats2/materials/"><span>Materials</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+        
+      
+        
+      
+
+      
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Panel Data and Fixed Effects</h1>
+
+  
+  <p class="page-subtitle">Our first steps in Panel Data and Fixed Effects with R</p>
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Jan 1, 0001
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+  
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+<script src="/2022-spring-stats2rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<script src="/2022-spring-stats2rmarkdown-libs/kePrint/kePrint.js"></script>
+<link href="/2022-spring-stats2rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
+
+
+<div id="welcome" class="section level2">
+<h2>Welcome</h2>
+<div id="introduction" class="section level3">
+<h3>Introduction!</h3>
+<p>Welcome to our ninth tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.</p>
+<p>During this week’s lecture you were introduced to Panel Data and Fixed Effects.</p>
+<p>In this lab session we will:</p>
+<ul>
+<li>Create three-way tables with <code>janitor::tabyl()</code></li>
+<li>Visualize trends across time with <code>ggplot2</code></li>
+<li>Learn how to extract our pooled, unit-fixed, and unit- and time-fixed effects estimates with Least Squares Dummy Variables (LSDV) estimation (with <code>lm()</code> and the de-meaning approach with <code>plm()</code>)</li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="measuring-the-effect-of-a-carbon-tax-on-national-carbon-dioxide-emissions-per-capita" class="section level2">
+<h2>Measuring the effect of a carbon tax on national carbon dioxide emissions per capita</h2>
+<p>After all the very valuable output you have generated in the past weeks, you have become a sensation within the policy analysis world. You are hired as an outside consultant by the Organization of Economic Non-Cooperation for Development (OENCD), they are interested in studying the effect of a carbon tax on national carbon dioxide emissions per capita. You are provided with data for the twenty-members of the organization from 2009 to 2019. <em>The data can be called a balanced panel based on the description given in the lecture (i.e. each panel member is observed every year)</em></p>
+<p><img src="https://news.mit.edu/sites/default/files/styles/news_article__image_gallery/public/images/201804/MIT-Carbon-Pricing_0.jpg?itok=KsqzQi8F" style="display: block; margin: auto;" /></p>
+<hr />
+<div id="packages" class="section level3">
+<h3>Packages</h3>
+<pre class="r"><code># These are the libraries we will use today. Make sure to install them in your console in case you have not done so previously.
+
+set.seed(42) #for consistent results
+
+library(dplyr) # to wrangle our data
+library(tidyr) # to wrangle our data - pivot_longer()
+library(lubridate) # for working with dates-times in a more intuitive manner
+library(ggplot2) # to render our graphs
+library(readr) # for loading the .csv data
+library(kableExtra) # to render better formatted tables
+library(stargazer) # for formatting your model output
+library(janitor) # for data management and tabyl()
+library(lmtest) # to gather our clustered standard errors - coeftest()
+library(plm)  # to gather our clustered standard errors - vcovHC() and plm()</code></pre>
+<hr />
+</div>
+<div id="our-data" class="section level3">
+<h3>Our data</h3>
+<pre class="r"><code>carbon_tax_df &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/seramirezruiz/stats-ii-lab/master/Session%207/data/carbon_tax_df.csv&quot;) # simulated data</code></pre>
+<p>Our dataset <em>carbon_tax_df</em>, contains the following information:</p>
+<ul>
+<li><code>country_name</code>: Name of the country</li>
+<li><code>country_code</code>: Three-letter country code</li>
+<li><code>year</code>: Year</li>
+<li><code>tax</code>: Dummy for whether the carbon tax was in place</li>
+<li><code>income_class</code>: Categorical variable with income label (Low to High)</li>
+<li><code>co2_per_capita</code>: carbon dioxide emissions per capita in metric tons (T)</li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="exploratory-analysis" class="section level2">
+<h2>Exploratory analysis</h2>
+<div id="let-explore-who-had-the-tax-in-place-at-what-point" class="section level4">
+<h4>Let’ explore who had the tax in place at what point</h4>
+<p>We can use what we have learned about the <code>janitor::tabyl()</code> function to check how many observations we have for each of the countries:</p>
+<ul>
+<li>One-way table:</li>
+</ul>
+<pre class="r"><code>carbon_tax_df %&gt;%
+  janitor::tabyl(country_name) %&gt;%
+  janitor::adorn_pct_formatting(digits = 1) %&gt;%
+  knitr::kable(col.names = c(&quot;Country&quot;, &quot;N&quot;, &quot;Percent, %&quot;)) %&gt;%
+  kableExtra::kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Country
+</th>
+<th style="text-align:right;">
+N
+</th>
+<th style="text-align:left;">
+Percent, %
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Adjikistan
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+8.3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Borovia
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+8.3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Carpania
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+8.3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Corinthia
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+8.3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Freedonia
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+8.3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Glenraven
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+8.3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Khemed
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+8.3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Laurania
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+8.3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Parano
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+8.3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ron
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+8.3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rumekistan
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+8.3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Transia
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+8.3%
+</td>
+</tr>
+</tbody>
+</table>
+<p>We can also explore how many countries had a <code>tax</code> in place every year.</p>
+<ul>
+<li>Two-way table:</li>
+</ul>
+<pre class="r"><code>carbon_tax_df %&gt;%
+  janitor::tabyl(tax, year) %&gt;%
+  janitor::adorn_totals(&quot;row&quot;) %&gt;%
+  janitor::adorn_percentages(&quot;col&quot;) %&gt;%
+  janitor::adorn_pct_formatting(digits = 1) %&gt;%
+  janitor::adorn_ns() %&gt;% 
+  knitr::kable() %&gt;%
+  kableExtra::kable_styling() %&gt;%
+  kableExtra::add_header_above(c(&quot;&quot;, &quot;Year&quot; = 11))</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="11">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Year
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+tax
+</th>
+<th style="text-align:left;">
+2009
+</th>
+<th style="text-align:left;">
+2010
+</th>
+<th style="text-align:left;">
+2011
+</th>
+<th style="text-align:left;">
+2012
+</th>
+<th style="text-align:left;">
+2013
+</th>
+<th style="text-align:left;">
+2014
+</th>
+<th style="text-align:left;">
+2015
+</th>
+<th style="text-align:left;">
+2016
+</th>
+<th style="text-align:left;">
+2017
+</th>
+<th style="text-align:left;">
+2018
+</th>
+<th style="text-align:left;">
+2019
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+100.0% (12)
+</td>
+<td style="text-align:left;">
+100.0% (12)
+</td>
+<td style="text-align:left;">
+83.3% (10)
+</td>
+<td style="text-align:left;">
+75.0% (9)
+</td>
+<td style="text-align:left;">
+66.7% (8)
+</td>
+<td style="text-align:left;">
+66.7% (8)
+</td>
+<td style="text-align:left;">
+41.7% (5)
+</td>
+<td style="text-align:left;">
+33.3% (4)
+</td>
+<td style="text-align:left;">
+33.3% (4)
+</td>
+<td style="text-align:left;">
+33.3% (4)
+</td>
+<td style="text-align:left;">
+41.7% (5)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+16.7% (2)
+</td>
+<td style="text-align:left;">
+25.0% (3)
+</td>
+<td style="text-align:left;">
+33.3% (4)
+</td>
+<td style="text-align:left;">
+33.3% (4)
+</td>
+<td style="text-align:left;">
+58.3% (7)
+</td>
+<td style="text-align:left;">
+66.7% (8)
+</td>
+<td style="text-align:left;">
+66.7% (8)
+</td>
+<td style="text-align:left;">
+66.7% (8)
+</td>
+<td style="text-align:left;">
+58.3% (7)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:left;">
+100.0% (12)
+</td>
+<td style="text-align:left;">
+100.0% (12)
+</td>
+<td style="text-align:left;">
+100.0% (12)
+</td>
+<td style="text-align:left;">
+100.0% (12)
+</td>
+<td style="text-align:left;">
+100.0% (12)
+</td>
+<td style="text-align:left;">
+100.0% (12)
+</td>
+<td style="text-align:left;">
+100.0% (12)
+</td>
+<td style="text-align:left;">
+100.0% (12)
+</td>
+<td style="text-align:left;">
+100.0% (12)
+</td>
+<td style="text-align:left;">
+100.0% (12)
+</td>
+<td style="text-align:left;">
+100.0% (12)
+</td>
+</tr>
+</tbody>
+</table>
+<p>We can further explore how many countries had a <code>tax</code> in place every year at the <code>income_class</code> cluster:</p>
+<ul>
+<li>Three-way table:</li>
+</ul>
+<pre class="r"><code>carbon_tax_df %&gt;%
+  janitor::tabyl(tax, year, income_class) %&gt;%
+  janitor::adorn_percentages(&quot;col&quot;) %&gt;%
+  janitor::adorn_pct_formatting(digits = 1) %&gt;%
+  janitor::adorn_ns() </code></pre>
+<pre><code>## $High
+##  tax       2009       2010      2011      2012      2013      2014      2015
+##    0 100.0% (3) 100.0% (3) 66.7% (2) 66.7% (2) 33.3% (1) 33.3% (1) 33.3% (1)
+##    1   0.0% (0)   0.0% (0) 33.3% (1) 33.3% (1) 66.7% (2) 66.7% (2) 66.7% (2)
+##       2016      2017      2018      2019
+##  33.3% (1) 33.3% (1) 33.3% (1) 33.3% (1)
+##  66.7% (2) 66.7% (2) 66.7% (2) 66.7% (2)
+## 
+## $`High-Middle`
+##  tax       2009       2010      2011      2012      2013      2014       2015
+##    0 100.0% (3) 100.0% (3) 66.7% (2) 66.7% (2) 66.7% (2) 66.7% (2)   0.0% (0)
+##    1   0.0% (0)   0.0% (0) 33.3% (1) 33.3% (1) 33.3% (1) 33.3% (1) 100.0% (3)
+##        2016       2017       2018      2019
+##    0.0% (0)   0.0% (0)   0.0% (0) 33.3% (1)
+##  100.0% (3) 100.0% (3) 100.0% (3) 66.7% (2)
+## 
+## $Low
+##  tax       2009       2010       2011       2012       2013       2014
+##    0 100.0% (3) 100.0% (3) 100.0% (3) 100.0% (3) 100.0% (3) 100.0% (3)
+##    1   0.0% (0)   0.0% (0)   0.0% (0)   0.0% (0)   0.0% (0)   0.0% (0)
+##        2015      2016      2017      2018      2019
+##  100.0% (3) 66.7% (2) 66.7% (2) 66.7% (2) 66.7% (2)
+##    0.0% (0) 33.3% (1) 33.3% (1) 33.3% (1) 33.3% (1)
+## 
+## $`Low-Middle`
+##  tax       2009       2010       2011      2012      2013      2014      2015
+##    0 100.0% (3) 100.0% (3) 100.0% (3) 66.7% (2) 66.7% (2) 66.7% (2) 33.3% (1)
+##    1   0.0% (0)   0.0% (0)   0.0% (0) 33.3% (1) 33.3% (1) 33.3% (1) 66.7% (2)
+##       2016      2017      2018      2019
+##  33.3% (1) 33.3% (1) 33.3% (1) 33.3% (1)
+##  66.7% (2) 66.7% (2) 66.7% (2) 66.7% (2)</code></pre>
+<p>As we can see, the three-way table creates a list containing the different combinations which are accesible with the <code>$</code> operator. We can do a little bit of code gymnastics to generate our nicely formated output by saving the <code>janitor::tabyl()</code> output into an object and printing each of the tables individually.</p>
+<pre class="r"><code>three_way_tab &lt;- carbon_tax_df %&gt;%
+  janitor::tabyl(tax, year, income_class) %&gt;%
+  janitor::adorn_percentages(&quot;col&quot;) %&gt;%
+  janitor::adorn_pct_formatting(digits = 1) %&gt;%
+  janitor::adorn_ns() </code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="12">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+High
+</div>
+</th>
+</tr>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="11">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Year
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:right;">
+tax
+</th>
+<th style="text-align:left;">
+2009
+</th>
+<th style="text-align:left;">
+2010
+</th>
+<th style="text-align:left;">
+2011
+</th>
+<th style="text-align:left;">
+2012
+</th>
+<th style="text-align:left;">
+2013
+</th>
+<th style="text-align:left;">
+2014
+</th>
+<th style="text-align:left;">
+2015
+</th>
+<th style="text-align:left;">
+2016
+</th>
+<th style="text-align:left;">
+2017
+</th>
+<th style="text-align:left;">
+2018
+</th>
+<th style="text-align:left;">
+2019
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+100.0% (3)
+</td>
+<td style="text-align:left;">
+100.0% (3)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="12">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+High-Middle
+</div>
+</th>
+</tr>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="11">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Year
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:right;">
+tax
+</th>
+<th style="text-align:left;">
+2009
+</th>
+<th style="text-align:left;">
+2010
+</th>
+<th style="text-align:left;">
+2011
+</th>
+<th style="text-align:left;">
+2012
+</th>
+<th style="text-align:left;">
+2013
+</th>
+<th style="text-align:left;">
+2014
+</th>
+<th style="text-align:left;">
+2015
+</th>
+<th style="text-align:left;">
+2016
+</th>
+<th style="text-align:left;">
+2017
+</th>
+<th style="text-align:left;">
+2018
+</th>
+<th style="text-align:left;">
+2019
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+100.0% (3)
+</td>
+<td style="text-align:left;">
+100.0% (3)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+100.0% (3)
+</td>
+<td style="text-align:left;">
+100.0% (3)
+</td>
+<td style="text-align:left;">
+100.0% (3)
+</td>
+<td style="text-align:left;">
+100.0% (3)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="12">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Low-Middle
+</div>
+</th>
+</tr>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="11">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Year
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:right;">
+tax
+</th>
+<th style="text-align:left;">
+2009
+</th>
+<th style="text-align:left;">
+2010
+</th>
+<th style="text-align:left;">
+2011
+</th>
+<th style="text-align:left;">
+2012
+</th>
+<th style="text-align:left;">
+2013
+</th>
+<th style="text-align:left;">
+2014
+</th>
+<th style="text-align:left;">
+2015
+</th>
+<th style="text-align:left;">
+2016
+</th>
+<th style="text-align:left;">
+2017
+</th>
+<th style="text-align:left;">
+2018
+</th>
+<th style="text-align:left;">
+2019
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+100.0% (3)
+</td>
+<td style="text-align:left;">
+100.0% (3)
+</td>
+<td style="text-align:left;">
+100.0% (3)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="12">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Low
+</div>
+</th>
+</tr>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="11">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Year
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:right;">
+tax
+</th>
+<th style="text-align:left;">
+2009
+</th>
+<th style="text-align:left;">
+2010
+</th>
+<th style="text-align:left;">
+2011
+</th>
+<th style="text-align:left;">
+2012
+</th>
+<th style="text-align:left;">
+2013
+</th>
+<th style="text-align:left;">
+2014
+</th>
+<th style="text-align:left;">
+2015
+</th>
+<th style="text-align:left;">
+2016
+</th>
+<th style="text-align:left;">
+2017
+</th>
+<th style="text-align:left;">
+2018
+</th>
+<th style="text-align:left;">
+2019
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+100.0% (3)
+</td>
+<td style="text-align:left;">
+100.0% (3)
+</td>
+<td style="text-align:left;">
+100.0% (3)
+</td>
+<td style="text-align:left;">
+100.0% (3)
+</td>
+<td style="text-align:left;">
+100.0% (3)
+</td>
+<td style="text-align:left;">
+100.0% (3)
+</td>
+<td style="text-align:left;">
+100.0% (3)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+<td style="text-align:left;">
+66.7% (2)
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+0.0% (0)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+<td style="text-align:left;">
+33.3% (1)
+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
+<div id="lets-explore-visually-the-levels-of-carbon-dioxide-emmissions" class="section level4">
+<h4>Let’s explore visually the levels of carbon dioxide emmissions</h4>
+<pre class="r"><code>ggplot(carbon_tax_df, aes(x = factor(year),
+                          y= co2_per_capita, 
+                          color = factor(tax))) +
+  geom_point() + #create scatterplot
+  labs(title = &quot;Exploratory plot of CO2 emissions per capita&quot;,
+       x = &quot;Year&quot;,
+       y = &quot;CO2 emissions in metric tons (T)&quot;,
+       color = &quot;Carbon tax&quot;) +
+  theme_minimal() +
+  theme(legend.position=&quot;bottom&quot;) + #move legend to the bottom
+  scale_color_manual(name = &quot; &quot;, # changes to fill dimension
+                     values = c(&quot;#a7a8aa&quot;, &quot;#cc0055&quot;),
+                     labels = c(&quot;Control&quot;, &quot;Treatment&quot;))
+</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/114688414-f6c5d880-9d14-11eb-8763-a71f2fc85d8d.png" style="display: block; margin: auto;" /></p>
+<ul>
+<li><strong><span style="color:#4B0082;">What do we see here?</span></strong></li>
+</ul>
+<hr />
+<pre class="r"><code>carbon_tax_df %&gt;%
+  dplyr::mutate(year_as_date = lubridate::ymd(year, truncated = 2L), #turning numeric to date format
+                income_class = factor(carbon_tax_df$income_class, 
+                                      levels = c(&quot;High&quot;, &quot;High-Middle&quot;,
+                                                 &quot;Low-Middle&quot;, &quot;Low&quot;))) %&gt;% #reordering the factors
+  ggplot(., aes(x = year_as_date, 
+                y= co2_per_capita, 
+                color = factor(tax))) +
+  geom_point() + #create scatterplot
+  geom_path(aes(group = 1)) + #to render consecutive lines disregarding the tax (you will likely use geom_line() for the assignment)
+  facet_wrap(country_name~income_class) + #to split plot into panels based on this dimension
+  scale_x_date(date_labels = &quot;%Y&quot;) + #telling ggplot that we want the ticks to be the years in the dates
+  labs(title = &quot;Exploratory plot of CO2 emissions per capita&quot;,
+       x = &quot;Year&quot;,
+       y = &quot;CO2 emissions in metric tons (T)&quot;,
+       color = &quot;Carbon tax&quot;) +
+  theme_bw() + 
+  scale_color_manual(name = &quot; &quot;, # changes to fill dimension
+                     values = c(&quot;#a7a8aa&quot;, &quot;#cc0055&quot;),
+                     labels = c(&quot;Control&quot;, &quot;Treatment&quot;))
+</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/114688423-f88f9c00-9d14-11eb-855e-8f9d2131bad7.png" style="display: block; margin: auto;" /></p>
+<ul>
+<li><strong><span style="color:#4B0082;">What do we see here?</span></strong></li>
+</ul>
+<hr />
+<p><em>Note: The exploratory data analysis portions of our scripts will not transfer directly to this week’s assignment; however, they will be very useful for your future endevours. Summarizing, graphing, and exploring your data will be critical to discover patterns, to spot anomalies, and to check assumptions</em></p>
+<hr />
+</div>
+</div>
+<div id="modeling-and-estimating" class="section level2">
+<h2>Modeling and estimating</h2>
+<p>We have seen during the lecture that balanced panel data can help us decompose the error term. With a balanced panel we can capture all unobserved, unit- and time-specific factors.</p>
+<p>In the example at hand, we can think of unit-specific factors as characteristics of individual countries that are constant over time (e.g. a country that just loves big pick-up trucks). We can also think about time-specific factors that affect all countries (e.g. global economic shocks).</p>
+<p>We can formulate this as:</p>
+<p><span class="math display">\[Y_{it} = β_0 + β_1D_{it} + \theta_{i} + \delta_t + \upsilon_{it}\]</span></p>
+<p>where <span class="math inline">\(\theta_i\)</span> reflects the time-invariant traits of the units, <span class="math inline">\(\delta_t\)</span> reflects the time-specific factors that affect everyone and <span class="math inline">\(\upsilon_{it}\)</span> is the <strong>idiosyncratic error</strong></p>
+<hr />
+<p>We will move forward by creating three models:</p>
+<ul>
+<li>A <strong>naive model</strong> (also known as a <em>pooled model</em>), where we will regress <code>co2_per_capita</code> on <code>tax</code>.</li>
+<li>A <strong>model with unit-fixed effects</strong>, where we will capture the <span class="math inline">\(\theta\)</span> portion of our error</li>
+<li>A <strong>model with time- and unit-fixed effects</strong>, where we will capture our <span class="math inline">\(\delta\)</span> and <span class="math inline">\(\theta\)</span> portions of our error term</li>
+</ul>
+<hr />
+<div id="naive-modeling" class="section level3">
+<h3>Naive modeling</h3>
+<pre class="r"><code>naive_carbon &lt;- lm(co2_per_capita ~ tax, data = carbon_tax_df)
+pooled_naive_carbon &lt;- plm(co2_per_capita ~ tax, 
+                           data = carbon_tax_df, 
+                           model = &quot;pooling&quot;)</code></pre>
+<div id="naive-model-with-lm" class="section level4">
+<h4>Naive model with lm()</h4>
+<pre class="r"><code>modelsummary::modelsummary(naive_carbon, 
+                           fmt = 2,
+                           gof_omit = &quot;AIC|BIC|Log.Lik.&quot;,
+                           statistic = &quot;conf.int&quot;,
+                           stars = T)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Model 1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+10.63***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[9.93, 11.32]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tax
+</td>
+<td style="text-align:center;">
+-6.26***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+[-7.38, -5.14]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+132
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.485
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.481
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:center;">
+122.394
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border:0;" colspan="100%">
+<sup></sup> + p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+<div id="naive-model-with-plm" class="section level4">
+<h4>Naive model with plm()</h4>
+<pre class="r"><code>modelsummary::modelsummary(pooled_naive_carbon, 
+                           fmt = 2,
+                           gof_omit = &quot;AIC|BIC|Log.Lik.&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Model 1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+10.63
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.35)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tax
+</td>
+<td style="text-align:center;">
+-6.26
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.57)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+132
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.485
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.481
+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong><span style="color:#4B0082;">What do we see here?</span></strong></p>
+<p>This model is telling us that on average, the <span class="math inline">\(CO_2\)</span> emissions per capita are reduced by 6.2 metric tons when a carbon tax is put in place. Still, after all the work we have done throughout the semester, we understand that there may be a plethora of factors that could be skewing the results of this bivariate regression.</p>
+<hr />
+</div>
+</div>
+<div id="unit-fixed-effects" class="section level3">
+<h3>Unit-fixed effects</h3>
+<p>We will learn two ways of gathering unit- and time-fixed effects in R:</p>
+<p>First, we will perform <strong>Least Squares Dummy Variables (LSDV) estimation</strong> with <em>lm()</em>, where we essentially get an individual estimate for each unit.</p>
+<p>Second, we will run our model with <em>plm()</em>, which will do the same mechanics, yet it will not estimate each of the units intercepts (because it relies on the “de-meaning” approach).</p>
+<pre class="r"><code>lsdv_unit_fe &lt;- lm(co2_per_capita ~ tax + country_name, data = carbon_tax_df)
+
+unit_fe &lt;- plm(co2_per_capita ~ tax, 
+               data = carbon_tax_df, 
+               index = c(&quot;country_name&quot;), # unit 
+               effect = &quot;individual&quot;,
+               model = &quot;within&quot;)</code></pre>
+<div id="unit-fixed-effects-with-lm-least-squares-dummy-variables-lsdv-estimation" class="section level4">
+<h4>Unit-fixed effects with lm() — Least Squares Dummy Variables (LSDV) estimation</h4>
+<pre class="r"><code>modelsummary::modelsummary(lsdv_unit_fe, 
+                           fmt = 2,
+                           gof_omit = &quot;AIC|BIC|Log.Lik.&quot;,
+                           statistic = &quot;conf.int&quot;,
+                           stars = T)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Model 1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+6.91***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[5.67, 8.15]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tax
+</td>
+<td style="text-align:center;">
+-4.44***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[-5.37, -3.50]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameBorovia
+</td>
+<td style="text-align:center;">
+1.51
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[-0.30, 3.31]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameCarpania
+</td>
+<td style="text-align:center;">
+5.11***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[3.30, 6.91]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameCorinthia
+</td>
+<td style="text-align:center;">
+6.43***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[4.68, 8.19]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameFreedonia
+</td>
+<td style="text-align:center;">
+6.12***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[4.33, 7.91]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameGlenraven
+</td>
+<td style="text-align:center;">
+0.37
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[-1.51, 2.26]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameKhemed
+</td>
+<td style="text-align:center;">
+-0.67
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[-2.56, 1.21]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameLaurania
+</td>
+<td style="text-align:center;">
+1.53
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[-0.32, 3.39]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameParano
+</td>
+<td style="text-align:center;">
+3.69***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[1.94, 5.45]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameRon
+</td>
+<td style="text-align:center;">
+2.71**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[0.91, 4.52]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameRumekistan
+</td>
+<td style="text-align:center;">
+7.43***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[5.68, 9.19]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameTransia
+</td>
+<td style="text-align:center;">
+1.88+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+[-0.03, 3.80]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+132
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.797
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.776
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:center;">
+38.844
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border:0;" colspan="100%">
+<sup></sup> + p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+<div id="unit-fixed-effects-with-plm" class="section level4">
+<h4>Unit-fixed effects with plm()</h4>
+<pre class="r"><code>modelsummary::modelsummary(unit_fe, 
+                           fmt = 2,
+                           gof_omit = &quot;AIC|BIC|Log.Lik.&quot;,
+                           statistic = &quot;conf.int&quot;,
+                           stars = T)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Model 1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+tax
+</td>
+<td style="text-align:center;">
+-4.44***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+[-5.36, -3.51]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+132
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.424
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.366
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border:0;" colspan="100%">
+<sup></sup> + p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001
+</td>
+</tr>
+</tfoot>
+</table>
+<hr />
+<p><strong><span style="color:#4B0082;">What do we see here?</span></strong></p>
+<p>Adding unit-level fixed effects to the model, i.e. accounting for unobserved, time-invariant characteristics of countries and only focusing on within-state variation, the imposition of a carbon tax reduces <span class="math inline">\(CO_2\)</span> per capita emissions by <strong>4.44 metric tons</strong>. Once we have captured the variation between countries, we can see that our results from the naive model were substantially biased. We can still try to capture the time-specific portion of the error.</p>
+<p><em>The results from the Least Squares Dummy Variables (LSDV) estimation are read in reference to a baseline. In this case, the constant is representing the intercept for Adjikistan. We can utilize the individual slopes for each country to say that Freedonians emit on average 6.12 more metric tons of <span class="math inline">\(CO_2\)</span> per capita than Adjikistanians.</em></p>
+<hr />
+</div>
+</div>
+<div id="unit--and-time-fixed-effects" class="section level3">
+<h3>Unit- and time-fixed effects</h3>
+<p>We will perform our regressions with <strong>Least Squares Dummy Variables (LSDV) estimation</strong> with <em>lm()</em> and our simplified way with <em>plm()</em>.</p>
+<pre class="r"><code>lsdv_unit_time_fe &lt;- lm(co2_per_capita ~ tax + country_name + factor(year), 
+                        data = carbon_tax_df)
+
+unit_time_fe &lt;- plm(co2_per_capita ~ tax, 
+                    data = carbon_tax_df, 
+                    index = c(&quot;country_name&quot;, &quot;year&quot;), # unit and time
+                    model = &quot;within&quot;, 
+                    effect = &quot;twoways&quot;)</code></pre>
+<div id="unit--and-time-fixed-effects-with-lm-least-squares-dummy-variables-lsdv-estimation" class="section level4">
+<h4>Unit- and time-fixed effects with lm() — Least Squares Dummy Variables (LSDV) estimation</h4>
+<pre class="r"><code>modelsummary::modelsummary(lsdv_unit_time_fe, 
+                           fmt = 2,
+                           gof_omit = &quot;AIC|BIC|Log.Lik.&quot;,
+                           statistic = &quot;conf.int&quot;,
+                           stars = T)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Model 1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+8.62***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[7.84, 9.41]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tax
+</td>
+<td style="text-align:center;">
+-3.91***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[-4.46, -3.35]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameBorovia
+</td>
+<td style="text-align:center;">
+1.27**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[0.44, 2.09]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameCarpania
+</td>
+<td style="text-align:center;">
+4.87***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[4.04, 5.69]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameCorinthia
+</td>
+<td style="text-align:center;">
+6.43***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[5.65, 7.22]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameFreedonia
+</td>
+<td style="text-align:center;">
+5.93***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[5.11, 6.74]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameGlenraven
+</td>
+<td style="text-align:center;">
+-0.01
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[-0.90, 0.87]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameKhemed
+</td>
+<td style="text-align:center;">
+-1.06*
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[-1.94, -0.17]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameLaurania
+</td>
+<td style="text-align:center;">
+1.20**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[0.33, 2.06]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameParano
+</td>
+<td style="text-align:center;">
+3.69***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[2.90, 4.48]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameRon
+</td>
+<td style="text-align:center;">
+2.47***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[1.65, 3.30]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameRumekistan
+</td>
+<td style="text-align:center;">
+7.43***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[6.64, 8.22]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country_nameTransia
+</td>
+<td style="text-align:center;">
+1.45**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[0.54, 2.36]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(year)2010
+</td>
+<td style="text-align:center;">
+-4.70***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[-5.45, -3.94]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(year)2011
+</td>
+<td style="text-align:center;">
+1.89***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[1.13, 2.65]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(year)2012
+</td>
+<td style="text-align:center;">
+-3.06***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[-3.83, -2.29]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(year)2013
+</td>
+<td style="text-align:center;">
+0.11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[-0.67, 0.88]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(year)2014
+</td>
+<td style="text-align:center;">
+-1.88***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[-2.65, -1.10]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(year)2015
+</td>
+<td style="text-align:center;">
+-3.02***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[-3.84, -2.20]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(year)2016
+</td>
+<td style="text-align:center;">
+-3.29***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[-4.13, -2.45]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(year)2017
+</td>
+<td style="text-align:center;">
+-0.96*
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[-1.80, -0.12]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(year)2018
+</td>
+<td style="text-align:center;">
+-2.49***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[-3.33, -1.65]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(year)2019
+</td>
+<td style="text-align:center;">
+-1.40**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+[-2.22, -0.58]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+132
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.963
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.955
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:center;">
+127.305
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border:0;" colspan="100%">
+<sup></sup> + p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+<div id="unit-fixed-effects-with-plm-1" class="section level4">
+<h4>Unit-fixed effects with plm()</h4>
+<pre class="r"><code>modelsummary::modelsummary(unit_time_fe, 
+                           fmt = 2,
+                           gof_omit = &quot;AIC|BIC|Log.Lik.&quot;,
+                           statistic = &quot;conf.int&quot;,
+                           stars = T)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Model 1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+tax
+</td>
+<td style="text-align:center;">
+-3.91***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+[-4.46, -3.36]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+132
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.641
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.568
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border:0;" colspan="100%">
+<sup></sup> + p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001
+</td>
+</tr>
+</tfoot>
+</table>
+<hr />
+<p><strong><span style="color:#4B0082;">What do we see here?</span></strong></p>
+<p>Now in addition to adding unit-level fixed effects to the model, we control for time-specific factors that affect the global per capita <span class="math inline">\(CO_2\)</span> emissions. The results suggest that the effect of a carbon-tax leads to a decrease <span class="math inline">\(CO_2\)</span> emissions of 3.91 metric tons per capita.</p>
+<hr />
+</div>
+<div id="test-of-serial-correlation-for-the-idiosyncratic-component-of-the-errors-in-panel-models" class="section level4">
+<h4>Test of serial correlation for the idiosyncratic component of the errors in panel models</h4>
+<p>In our models our assumption for the errors is <span class="math inline">\(υ_{it} ∼ iid(0, σ_υ^{2})\)</span>.</p>
+<p>With longer panels, serial correlation between errors is a problem:</p>
+<p><span class="math inline">\(Cor(υ_{it}, υ_i(t−1))≠0\)</span>.</p>
+<p>We can test for serial correlation in our time and unit FE specification model, as such:</p>
+<pre class="r"><code>pbgtest(unit_time_fe, order = 2)</code></pre>
+<pre><code>## 
+##  Breusch-Godfrey/Wooldridge test for serial correlation in panel models
+## 
+## data:  co2_per_capita ~ tax
+## chisq = 0.25101, df = 2, p-value = 0.8821
+## alternative hypothesis: serial correlation in idiosyncratic errors</code></pre>
+<p>In here, the null hypothesis is there is serial correlation of any order up to 2 (i.e., first- and second-order). In this case, we do not find any serial correlation, so we do not need to correct our standard errors manually. If we were to find serial correlation, we could introduce robust standard errors with a similar syntax to the one used last week for clustered standard errors:</p>
+<pre class="r"><code>model_with_robust_se &lt;- coeftest(unit_time_fe, vcov=vcovHC(unit_time_fe, type = &quot;sss&quot;))</code></pre>
+<hr />
+</div>
+</div>
+</div>
+<div id="drafting-some-brief-recommedations" class="section level2">
+<h2>Drafting some brief recommedations</h2>
+<p>You report back to the Organization of Economic Non-Cooperation for Development (OENCD). Based on your analysis of the data at hand, you suggest that the implementation of a carbon tax does have an effect on national carbon dioxide emissions per capita. Your results show that a carbon tax reduces <span class="math inline">\(CO_2\)</span> emissions by 3.91 metric tons per capita.</p>
+<p>Your results are welcomed internationally and all states move forward with the measure.</p>
+<p><img src="https://thumbs.gfycat.com/GreedyMiserableArrowcrab-size_restricted.gif" style="display: block; margin: auto;" /></p>
+</div>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="/2022-spring-stats2/author/sebastian-ramirez-ruiz/"><img class="avatar mr-3 avatar-circle" src="/2022-spring-stats2/author/sebastian-ramirez-ruiz/avatar_hua6e0cab168b48b32c9ff214f67d32a84_1144709_270x270_fill_q75_lanczos_center.jpg" alt="Sebastian Ramirez Ruiz"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/2022-spring-stats2/author/sebastian-ramirez-ruiz/">Sebastian Ramirez Ruiz</a></h5>
+      <h6 class="card-subtitle">PhD Researcher</h6>
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://seramirezruiz.github.io/" target="_blank" rel="noopener">
+        <i class="fas fa-globe"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/seramirezruiz" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/citations?user=Gbqiu-AAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+        <i class="fas fa-graduation-cap"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/seramirezruiz" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/latex.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+        <div class="search-hit-content">
+          <div class="search-hit-name">
+            <a href="{{relpermalink}}">{{title}}</a>
+            <div class="article-metadata search-hit-type">{{type}}</div>
+            <p class="search-hit-description">{{snippet}}</p>
+          </div>
+        </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+      
+      
+      
+      
+      
+      
+      
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+      
+    
+    
+    <script src="/2022-spring-stats2/en/js/wowchemy.min.e5856c0a0618a04dd7b1e07451b5f341.js"></script>
+
+    
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+
+
+</body>
+</html>

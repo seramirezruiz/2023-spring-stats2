@@ -1,0 +1,1127 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.0.0-beta.2 for Hugo" />
+  
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Sebastian Ramirez Ruiz" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Welcome! The practical component of the Statistics II: Statistical Modeling and Causal Inference course relies largely in R programming. Today we will center on some of the necessary skills to perform the assignments for the course." />
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://seramirezruiz.github.io/2023-spring-stats2/materials/session-1/foundations/" />
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    <meta name="theme-color" content="#1565c0" />
+  
+
+  
+  
+    
+    <script src="/2023-spring-stats2/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous" media="print" onload="this.media='all'">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/2023-spring-stats2/css/wowchemy.dd90b8698d7ba5e114b9de5647a585e5.css" />
+
+  
+
+
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+    <link rel="manifest" href="/2023-spring-stats2/index.webmanifest" />
+  
+
+  <link rel="icon" type="image/png" href="/2023-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_32x32_fill_lanczos_center_2.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/2023-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_180x180_fill_lanczos_center_2.png" />
+
+  <link rel="canonical" href="https://seramirezruiz.github.io/2023-spring-stats2/materials/session-1/foundations/" />
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary" />
+  
+  <meta property="og:site_name" content="| Tutorials - Spring 2023 |" />
+  <meta property="og:url" content="https://seramirezruiz.github.io/2023-spring-stats2/materials/session-1/foundations/" />
+  <meta property="og:title" content="R and RStudio basics | | Tutorials - Spring 2023 |" />
+  <meta property="og:description" content="Welcome! The practical component of the Statistics II: Statistical Modeling and Causal Inference course relies largely in R programming. Today we will center on some of the necessary skills to perform the assignments for the course." /><meta property="og:image" content="https://seramirezruiz.github.io/2023-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" />
+    <meta property="twitter:image" content="https://seramirezruiz.github.io/2023-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" /><meta property="og:locale" content="en-us" />
+  
+    
+      <meta
+        property="article:published_time"
+        content="2023-02-03T00:00:00&#43;00:00"
+      />
+    
+    <meta property="article:modified_time" content="2023-02-03T00:00:00&#43;00:00">
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+
+
+
+
+  <title>R and RStudio basics | | Tutorials - Spring 2023 |</title>
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/2023-spring-stats2/js/wowchemy-init.min.d876f1a6b98701f9238f2313b512a26f.js"></script>
+
+  
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/2023-spring-stats2/">| Tutorials - Spring 2023 |</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/2023-spring-stats2/">| Tutorials - Spring 2023 |</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-end" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/2023-spring-stats2/materials/"><span>Materials</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+        
+      
+        
+      
+
+      
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    
+
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+          Introduction
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/2023-spring-stats2/materials/"><i class="fas fa-arrow-left pr-1"></i>Materials</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/2023-spring-stats2/materials/session-1/">Introduction</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  <li class=""><a href="/2023-spring-stats2/materials/session-1/slides/">Slides</a></li>
+
+
+
+  <li class="active"><a href="/2023-spring-stats2/materials/session-1/foundations/">R and RStudio basics</a></li>
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#welcome">Welcome!</a></li>
+    <li><a href="#r-and-rstudio-basics">R and RStudio: Basics</a>
+      <ul>
+        <li><a href="#the-rstudio-layout">The RStudio layout</a></li>
+        <li><a href="#r-packages">R Packages</a></li>
+        <li><a href="#working-directory">Working directory</a></li>
+        <li><a href="#setting-your-working-directory">Setting your working directory</a></li>
+        <li><a href="#recommended-folder-structure-for-the-class">Recommended folder structure for the class</a></li>
+        <li><a href="#dealing-with-errors-in-r">Dealing with errors in R</a></li>
+      </ul>
+    </li>
+    <li><a href="#importing-data">Importing data</a>
+      <ul>
+        <li><a href="#the-double-colon-operator-">The double colon operator ::</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+      
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <article class="article">
+
+        <div class="docs-article-container">
+          
+            
+  <nav class="d-none d-md-flex" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      
+  
+  
+  
+
+  <li class="breadcrumb-item">
+    <a href="/2023-spring-stats2/">
+      
+        Home
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2023-spring-stats2/materials/">
+      
+        Materials
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2023-spring-stats2/materials/session-1/">
+      
+        Introduction
+      
+    </a>
+  </li>
+
+
+      <li class="breadcrumb-item active" aria-current="page">
+        R and RStudio basics
+      </li>
+    </ol>
+  </nav>
+
+
+          
+
+          <h1>R and RStudio basics</h1>
+
+          <div class="article-style">
+            <h2 id="welcome">Welcome!</h2>
+<p>The practical component of the <strong>Statistics II: Statistical Modeling and Causal Inference</strong> course relies largely in <em>R</em> programming. Today we will center on some of the necessary skills to perform the assignments for the course.</p>
+<p>In this tutorial, you will learn to:</p>
+<ul>
+<li>identify the some of the basic functionalities of <em>R</em> and <em>RStudio</em></li>
+<li>import data sets into your <em>R</em> environment</li>
+</ul>
+<h2 id="r-and-rstudio-basics">R and RStudio: Basics</h2>
+<h3 id="the-rstudio-layout">The RStudio layout</h3>
+<p><em>RStudio</em> is an integrated development environment (IDE) for R. Think of <em>RStudio</em> as a front that allows us to interact, compile, and render R code in a more instinctive way. The following image shows what the standard RStudio interface looks like:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure >
+
+
+  <a data-fancybox="" href="https://user-images.githubusercontent.com/54796579/92997228-088e9580-f512-11ea-9dad-556438c91f86.png" >
+
+
+  <img src="https://user-images.githubusercontent.com/54796579/92997228-088e9580-f512-11ea-9dad-556438c91f86.png" alt=""  >
+</a>
+
+
+
+</figure>
+
+<ol>
+<li>
+<p><strong>Console</strong>: The <em>console</em> provides a means to interact directly with <em>R</em>. You can type some code at the <em>console</em> and when you press ENTER, R will run that code. Depending on what you type, you may see some output in the <em>console</em> or if you make a mistake, you may get a warning or an error message.</p>
+</li>
+<li>
+<p><strong>Script editor</strong>: You will utilize the <em>script editor</em> to complete your assignments. The <em>script editor</em> will be the space where files will be displayed. For example, once you download and open the bi-weekly assignment .Rmd template, it will appear here. The editor is a where you should place code you care about, since the code from the console cannot be saved into a script.</p>
+</li>
+<li>
+<p><strong>Environment</strong>: This area holds the abstractions you have created with your code. If you run <code>myresult &lt;- 5+3+2</code>, the <code>myresult</code> object will appear there.</p>
+</li>
+<li>
+<p><strong>Plots and files</strong>: This area will be where graphic output will be generated. Additionally, if you write a question mark before any function, (i.e. <code>?mean</code>) the online documentation will be displayed here.</p>
+</li>
+</ol>
+<hr>
+<h3 id="r-packages">R Packages</h3>
+<p>For the most part, <em>R Packages</em> are collections of code and functions that leverage R programming to expand on the basic functionalities. Last week we met <code>dplyr</code> that aids R programmers in the process of data cleaning and manipulation. There are a plethora of packages in <em>R</em> designed to facilite the completion of tasks. In fact, this website is built with the <code>blogdown</code> package that lets you create websites using <code>RMarkdown</code> and Hugo</p>
+<p>Unlike other programming languages, in <em>R</em> you only need to install a package once. The following times you will only need to &ldquo;require&rdquo; the package. <strong>As a good practice I recommend running the code to install packages only in your R console, not in the code editor.</strong> You can install a package with the following syntax</p>
+<pre><code class="language-r">install.packages(&quot;name_of_your_package&quot;) #note that the quotation marks are mandatory at this stage
+</code></pre>
+<p>Once the package has been installed, you just need to &ldquo;call it&rdquo; every time you want to use it in a file by running:</p>
+<pre><code class="language-r">library(&quot;name_of_your_package&quot;) #either of this lines will require the package
+library(name_of_your_package) #library understands the code with, or without, quotation marks
+</code></pre>
+<div class="alert alert-note">
+  <div>
+    <strong>It is extremely important that you do not have any lines installing packages for your assignments because the file will fail to knit</strong>
+  </div>
+</div>
+
+<hr>
+<h3 id="working-directory">Working directory</h3>
+<p>The <em>working directory</em> is just a file path on your computer that sets the default location of any files you read into R, or save out of R. Normally, when you open <em>RStudio</em> it will have a default directory (a folder in your computer). You can check you directory by running <code>getwd()</code> in your console:</p>
+<pre><code class="language-r">#this is the default in my case
+getwd()
+#[1] &quot;/Users/sebastianramirezruiz&quot;
+</code></pre>
+<p><strong>When your RStudio is closed and you open a file from your finder in MacOS or file explorer in Windows, the default working directory will be the folder where the file is hosted</strong></p>
+<hr>
+<h3 id="setting-your-working-directory">Setting your working directory</h3>
+<p>You can set you directory manually from RStudio: use the menu to change your working directory under Session &gt; Set Working Directory &gt; Choose Directory.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure >
+
+
+  <a data-fancybox="" href="http://www.sthda.com/sthda/RDoc/images/rstudio-change-working-directory.png" >
+
+
+  <img src="http://www.sthda.com/sthda/RDoc/images/rstudio-change-working-directory.png" alt=""  >
+</a>
+
+
+
+</figure>
+
+<p>You can also use the <code>setwd()</code> function:</p>
+<pre><code class="language-r">setwd(&quot;/path/to/your/directory&quot;) #in macOS
+setwd(&quot;c:/path/to/your/directory&quot;) #in windows
+</code></pre>
+<hr>
+<h3 id="recommended-folder-structure-for-the-class">Recommended folder structure for the class</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure >
+
+
+  <a data-fancybox="" href="https://user-images.githubusercontent.com/54796579/92937233-5ee4d100-f44b-11ea-9ee7-cc7209b80562.png" >
+
+
+  <img src="https://user-images.githubusercontent.com/54796579/92937233-5ee4d100-f44b-11ea-9ee7-cc7209b80562.png" alt=""  >
+</a>
+
+
+
+</figure>
+
+<p>We recommend you pay close attention to your folder structure. You will receive a new folder for each assignment. Make the folder your working directory when working on the assignment. This folder will be populated with the template .Rmd and the data for the week. When you knit the file, the <strong>.html</strong> will be created in this folder.</p>
+<div class="alert alert-note">
+  <div>
+    <strong>We will learn more about the assignment submission workflow next week. Still, avoid changing the name of the files you receive in Github since it will create issues.</strong>
+  </div>
+</div>
+
+<hr>
+<h3 id="dealing-with-errors-in-r">Dealing with errors in R</h3>
+<p>Errors in R occur when code is used in a way that it is not intended. For example when you try to add two character strings, you will get the following error:</p>
+<pre><code class="language-r">&quot;hello&quot; + &quot;world&quot;
+Error in &quot;hello&quot; + &quot;world&quot;: non-numeric argument to binary operator
+</code></pre>
+<p>Normally, when something has gone wrong with your program, <em>R</em> will notify you of an error in the <strong>console</strong>. There are errors that will prevent the code from running, while others will only produce <strong>warning</strong> messages. In the following case, the code will run, but you will notice that the string <strong>&ldquo;three&rdquo;</strong> is turned into a NA.</p>
+<pre><code class="language-r">as.numeric(c(&quot;1&quot;, &quot;2&quot;, &quot;three&quot;))
+Warning: NAs introduced by coercion
+[1]  1  2 NA
+</code></pre>
+<p>Since we will be utilizing widely used packages and functions in the course of the semester, the errors that you may come across in the process of completing your assignments will be common for other R users. Most errors occur because of typos. A Google search of the error message can take you a long way as well. Most of the times the first entry on <strong>stackoverflow.com</strong> will solve the problem.</p>
+<hr>
+<h2 id="importing-data">Importing data</h2>
+<p>Next we will work with data provided by the <code>palmerpenguins</code> package; however, most practical applications will require you to work with your own data. In fact, for most assignments, you will be given a data set to work with. As we will see in the coming weeks, data are messy. You know what else is messy? Data formats. You may be acquainted with a couple of them <em>(.csv, .tsv, .xlsx)</em>.</p>
+<p>Fortunately for us, the <code>tidyverse</code> has two packages that make the process of loading data sets from different formats very easy.</p>
+<ul>
+<li><code>readr</code>: The goal of <code>readr</code> is to provide a fast and friendly way to read rectangular data (like <strong>csv, tsv, rds, and fwf</strong>)</li>
+<li><code>haven</code>: The goal of <code>haven</code> is to enable R to read and write various data formats used by other statistical packages (like <strong>dta, sas, and sav</strong>)</li>
+</ul>
+<p>You can read more about how to load different types of data in the respective documentations of the packages — <a href="https://readr.tidyverse.org/" target="_blank" rel="noopener">readr</a> and <a href="https://haven.tidyverse.org/" target="_blank" rel="noopener">haven</a></p>
+<hr>
+<p>For the assignments you will be required to load datasets. You can do that by installing the <code>readr</code> package and utilizing:</p>
+<pre><code class="language-r">#with readr
+your_data_frame &lt;- readr::read_rds(&quot;path_for_the_file&quot;)
+
+#you can alternatively use a base R option
+your_data_frame &lt;- base::readRDS(&quot;path_for_the_file&quot;)
+</code></pre>
+<p>This week&rsquo;s mock assignment will feature a <strong>.tsv</strong> file. When in doubt just Google <strong>&ldquo;How to load x_format data in R?&quot;</strong> That will do the trick!</p>
+<hr>
+<h3 id="the-double-colon-operator-">The double colon operator ::</h3>
+<p>You may have noted in the previous section that the functions were preceded by their package name and two colons, for example: <code>readr::read_rds()</code>. The double colon operator <code>::</code> helps us ensure that we select functions from a particular package. We utilize the operator to explicitly state where the function is coming. This may become even more important when you are doing data analysis as part of a team further in your careers. Though it is likely that this will not be a problem during the course, we can try to employ the following convention <code>package_name::function()</code> to ensure that we will not encounter errors in our knitting process:</p>
+<pre><code class="language-r">dplyr::select()
+</code></pre>
+<hr>
+<p>Let&rsquo;s look at what happens when we load <code>tidyverse</code>.</p>
+<pre><code class="language-r">library(tidyverse)
+
+#── Attaching packages ──────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 #──
+#✓ ggplot2 3.3.2     ✓ purrr   0.3.4
+#✓ tibble  3.0.3     ✓ dplyr   1.0.2
+#✓ tidyr   1.1.2     ✓ stringr 1.4.0
+#✓ readr   1.3.1     ✓ forcats 0.5.0
+#── Conflicts ─────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() #──
+#x dplyr::filter() masks stats::filter()
+#x dplyr::lag()    masks stats::lag()
+</code></pre>
+<p>You may notice that <em>R</em> points out some conflicts where some functions are being masked. The default in this machine will become the <code>filter()</code> from the <code>dplyr</code> package during this session. If you were to run some code that is based on the <code>filter()</code> from the <code>stats</code> package, your code will probably result in errors.</p>
+<hr>
+
+          </div>
+
+          
+
+
+
+          
+          
+          <div class="article-widget">
+            
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/2023-spring-stats2/materials/session-1/slides/" rel="next">01 - Slides</a>
+  </div>
+  
+  
+</div>
+
+          </div>
+          
+        </div>
+
+        <div class="body-footer">
+          <p>Last updated on Feb 3, 2023</p>
+
+          
+
+
+
+
+
+          
+
+
+
+
+          
+
+
+  
+  
+
+
+
+        </div>
+
+      </article>
+
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/latex.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+    <script>
+      anchors.add();
+    </script>
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+        <div class="search-hit-content">
+          <div class="search-hit-name">
+            <a href="{{relpermalink}}">{{title}}</a>
+            <div class="article-metadata search-hit-type">{{type}}</div>
+            <p class="search-hit-description">{{snippet}}</p>
+          </div>
+        </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+      
+      
+      
+      
+      
+      
+      
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+      
+    
+    
+    <script src="/2023-spring-stats2/en/js/wowchemy.min.19f909e1de7a44d522247b24f6d35ab2.js"></script>
+
+    
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+
+
+</body>
+</html>

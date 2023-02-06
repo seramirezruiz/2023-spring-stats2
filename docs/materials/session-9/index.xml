@@ -1,0 +1,2168 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>📊 09 - Panel Data and Fixed Effects | | Tutorials - Spring 2022 |</title>
+    <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-9/</link>
+      <atom:link href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-9/index.xml" rel="self" type="application/rss+xml" />
+    <description>📊 09 - Panel Data and Fixed Effects</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Tue, 13 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
+      <title>📊 09 - Panel Data and Fixed Effects</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-9/</link>
+    </image>
+    
+    <item>
+      <title>08 - Slides</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-9/slides/</link>
+      <pubDate>Tue, 13 Apr 2021 00:00:00 +0000</pubDate>
+      <guid>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-9/slides/</guid>
+      <description>&lt;h2 id=&#34;slides&#34;&gt;Slides&lt;/h2&gt;
+&lt;iframe src=&#34;../w9_panel.pdf#view=fit&#34; width=&#34;100%&#34; height=&#34;500px&#34;&gt;
+    &lt;/iframe&gt;
+&lt;!--
+## Courses in this program
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure &gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;featured.jpg&#34; &gt;
+
+
+  &lt;img src=&#34;featured.jpg&#34; alt=&#34;&#34;  &gt;
+&lt;/a&gt;
+
+
+
+&lt;/figure&gt;
+
+
+&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    The parameter $\mu$ is the mean or expectation of the distribution.
+$\sigma$ is its standard deviation.
+The variance of the distribution is $\sigma^{2}$.
+  &lt;/div&gt;
+&lt;/div&gt;
+
+--&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Panel Data and Fixed Effects</title>
+      <link>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-9/09-online-tutorial/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://seramirezruiz.github.io/2022-spring-stats2/materials/session-9/09-online-tutorial/</guid>
+      <description>
+&lt;script src=&#34;https://seramirezruiz.github.io/2022-spring-stats2/2022-spring-stats2rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://seramirezruiz.github.io/2022-spring-stats2/2022-spring-stats2rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://seramirezruiz.github.io/2022-spring-stats2/2022-spring-stats2rmarkdown-libs/lightable/lightable.css&#34; rel=&#34;stylesheet&#34; /&gt;
+
+
+&lt;div id=&#34;welcome&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Welcome&lt;/h2&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Introduction!&lt;/h3&gt;
+&lt;p&gt;Welcome to our ninth tutorial for the Statistics II: Statistical Modeling &amp;amp; Causal Inference (with R) course.&lt;/p&gt;
+&lt;p&gt;During this week’s lecture you were introduced to Panel Data and Fixed Effects.&lt;/p&gt;
+&lt;p&gt;In this lab session we will:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Create three-way tables with &lt;code&gt;janitor::tabyl()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Visualize trends across time with &lt;code&gt;ggplot2&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Learn how to extract our pooled, unit-fixed, and unit- and time-fixed effects estimates with Least Squares Dummy Variables (LSDV) estimation (with &lt;code&gt;lm()&lt;/code&gt; and the de-meaning approach with &lt;code&gt;plm()&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;measuring-the-effect-of-a-carbon-tax-on-national-carbon-dioxide-emissions-per-capita&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Measuring the effect of a carbon tax on national carbon dioxide emissions per capita&lt;/h2&gt;
+&lt;p&gt;After all the very valuable output you have generated in the past weeks, you have become a sensation within the policy analysis world. You are hired as an outside consultant by the Organization of Economic Non-Cooperation for Development (OENCD), they are interested in studying the effect of a carbon tax on national carbon dioxide emissions per capita. You are provided with data for the twenty-members of the organization from 2009 to 2019. &lt;em&gt;The data can be called a balanced panel based on the description given in the lecture (i.e. each panel member is observed every year)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://news.mit.edu/sites/default/files/styles/news_article__image_gallery/public/images/201804/MIT-Carbon-Pricing_0.jpg?itok=KsqzQi8F&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;packages&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Packages&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# These are the libraries we will use today. Make sure to install them in your console in case you have not done so previously.
+
+set.seed(42) #for consistent results
+
+library(dplyr) # to wrangle our data
+library(tidyr) # to wrangle our data - pivot_longer()
+library(lubridate) # for working with dates-times in a more intuitive manner
+library(ggplot2) # to render our graphs
+library(readr) # for loading the .csv data
+library(kableExtra) # to render better formatted tables
+library(stargazer) # for formatting your model output
+library(janitor) # for data management and tabyl()
+library(lmtest) # to gather our clustered standard errors - coeftest()
+library(plm)  # to gather our clustered standard errors - vcovHC() and plm()&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;our-data&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Our data&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;carbon_tax_df &amp;lt;- readr::read_csv(&amp;quot;https://raw.githubusercontent.com/seramirezruiz/stats-ii-lab/master/Session%207/data/carbon_tax_df.csv&amp;quot;) # simulated data&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Our dataset &lt;em&gt;carbon_tax_df&lt;/em&gt;, contains the following information:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;country_name&lt;/code&gt;: Name of the country&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;country_code&lt;/code&gt;: Three-letter country code&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;year&lt;/code&gt;: Year&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tax&lt;/code&gt;: Dummy for whether the carbon tax was in place&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;income_class&lt;/code&gt;: Categorical variable with income label (Low to High)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;co2_per_capita&lt;/code&gt;: carbon dioxide emissions per capita in metric tons (T)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exploratory-analysis&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Exploratory analysis&lt;/h2&gt;
+&lt;div id=&#34;let-explore-who-had-the-tax-in-place-at-what-point&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Let’ explore who had the tax in place at what point&lt;/h4&gt;
+&lt;p&gt;We can use what we have learned about the &lt;code&gt;janitor::tabyl()&lt;/code&gt; function to check how many observations we have for each of the countries:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;One-way table:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;carbon_tax_df %&amp;gt;%
+  janitor::tabyl(country_name) %&amp;gt;%
+  janitor::adorn_pct_formatting(digits = 1) %&amp;gt;%
+  knitr::kable(col.names = c(&amp;quot;Country&amp;quot;, &amp;quot;N&amp;quot;, &amp;quot;Percent, %&amp;quot;)) %&amp;gt;%
+  kableExtra::kable_styling()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+N
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Percent, %
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Adjikistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.3%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Borovia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.3%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Carpania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.3%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Corinthia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.3%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Freedonia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.3%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Glenraven
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.3%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Khemed
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.3%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Laurania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.3%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Parano
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.3%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Ron
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.3%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rumekistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.3%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Transia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+8.3%
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;We can also explore how many countries had a &lt;code&gt;tax&lt;/code&gt; in place every year.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Two-way table:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;carbon_tax_df %&amp;gt;%
+  janitor::tabyl(tax, year) %&amp;gt;%
+  janitor::adorn_totals(&amp;quot;row&amp;quot;) %&amp;gt;%
+  janitor::adorn_percentages(&amp;quot;col&amp;quot;) %&amp;gt;%
+  janitor::adorn_pct_formatting(digits = 1) %&amp;gt;%
+  janitor::adorn_ns() %&amp;gt;% 
+  knitr::kable() %&amp;gt;%
+  kableExtra::kable_styling() %&amp;gt;%
+  kableExtra::add_header_above(c(&amp;quot;&amp;quot;, &amp;quot;Year&amp;quot; = 11))&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;empty-cells: hide;border-bottom:hidden;&#34; colspan=&#34;1&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; &#34; colspan=&#34;11&#34;&gt;
+&lt;div style=&#34;border-bottom: 1px solid #ddd; padding-bottom: 5px; &#34;&gt;
+Year
+&lt;/div&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+tax
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2009
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2010
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2011
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2012
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2013
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2014
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2015
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2016
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2017
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2018
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2019
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (12)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (12)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+83.3% (10)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+75.0% (9)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (8)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (8)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+41.7% (5)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (4)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (4)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (4)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+41.7% (5)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+16.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+25.0% (3)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (4)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (4)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+58.3% (7)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (8)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (8)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (8)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+58.3% (7)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Total
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (12)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (12)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (12)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (12)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (12)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (12)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (12)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (12)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (12)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (12)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (12)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;We can further explore how many countries had a &lt;code&gt;tax&lt;/code&gt; in place every year at the &lt;code&gt;income_class&lt;/code&gt; cluster:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Three-way table:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;carbon_tax_df %&amp;gt;%
+  janitor::tabyl(tax, year, income_class) %&amp;gt;%
+  janitor::adorn_percentages(&amp;quot;col&amp;quot;) %&amp;gt;%
+  janitor::adorn_pct_formatting(digits = 1) %&amp;gt;%
+  janitor::adorn_ns() &lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## $High
+##  tax       2009       2010      2011      2012      2013      2014      2015
+##    0 100.0% (3) 100.0% (3) 66.7% (2) 66.7% (2) 33.3% (1) 33.3% (1) 33.3% (1)
+##    1   0.0% (0)   0.0% (0) 33.3% (1) 33.3% (1) 66.7% (2) 66.7% (2) 66.7% (2)
+##       2016      2017      2018      2019
+##  33.3% (1) 33.3% (1) 33.3% (1) 33.3% (1)
+##  66.7% (2) 66.7% (2) 66.7% (2) 66.7% (2)
+## 
+## $`High-Middle`
+##  tax       2009       2010      2011      2012      2013      2014       2015
+##    0 100.0% (3) 100.0% (3) 66.7% (2) 66.7% (2) 66.7% (2) 66.7% (2)   0.0% (0)
+##    1   0.0% (0)   0.0% (0) 33.3% (1) 33.3% (1) 33.3% (1) 33.3% (1) 100.0% (3)
+##        2016       2017       2018      2019
+##    0.0% (0)   0.0% (0)   0.0% (0) 33.3% (1)
+##  100.0% (3) 100.0% (3) 100.0% (3) 66.7% (2)
+## 
+## $Low
+##  tax       2009       2010       2011       2012       2013       2014
+##    0 100.0% (3) 100.0% (3) 100.0% (3) 100.0% (3) 100.0% (3) 100.0% (3)
+##    1   0.0% (0)   0.0% (0)   0.0% (0)   0.0% (0)   0.0% (0)   0.0% (0)
+##        2015      2016      2017      2018      2019
+##  100.0% (3) 66.7% (2) 66.7% (2) 66.7% (2) 66.7% (2)
+##    0.0% (0) 33.3% (1) 33.3% (1) 33.3% (1) 33.3% (1)
+## 
+## $`Low-Middle`
+##  tax       2009       2010       2011      2012      2013      2014      2015
+##    0 100.0% (3) 100.0% (3) 100.0% (3) 66.7% (2) 66.7% (2) 66.7% (2) 33.3% (1)
+##    1   0.0% (0)   0.0% (0)   0.0% (0) 33.3% (1) 33.3% (1) 33.3% (1) 66.7% (2)
+##       2016      2017      2018      2019
+##  33.3% (1) 33.3% (1) 33.3% (1) 33.3% (1)
+##  66.7% (2) 66.7% (2) 66.7% (2) 66.7% (2)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;As we can see, the three-way table creates a list containing the different combinations which are accesible with the &lt;code&gt;$&lt;/code&gt; operator. We can do a little bit of code gymnastics to generate our nicely formated output by saving the &lt;code&gt;janitor::tabyl()&lt;/code&gt; output into an object and printing each of the tables individually.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;three_way_tab &amp;lt;- carbon_tax_df %&amp;gt;%
+  janitor::tabyl(tax, year, income_class) %&amp;gt;%
+  janitor::adorn_percentages(&amp;quot;col&amp;quot;) %&amp;gt;%
+  janitor::adorn_pct_formatting(digits = 1) %&amp;gt;%
+  janitor::adorn_ns() &lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; &#34; colspan=&#34;12&#34;&gt;
+&lt;div style=&#34;border-bottom: 1px solid #ddd; padding-bottom: 5px; &#34;&gt;
+High
+&lt;/div&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th style=&#34;empty-cells: hide;border-bottom:hidden;&#34; colspan=&#34;1&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; &#34; colspan=&#34;11&#34;&gt;
+&lt;div style=&#34;border-bottom: 1px solid #ddd; padding-bottom: 5px; &#34;&gt;
+Year
+&lt;/div&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+tax
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2009
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2010
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2011
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2012
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2013
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2014
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2015
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2016
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2017
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2018
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2019
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (3)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (3)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; &#34; colspan=&#34;12&#34;&gt;
+&lt;div style=&#34;border-bottom: 1px solid #ddd; padding-bottom: 5px; &#34;&gt;
+High-Middle
+&lt;/div&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th style=&#34;empty-cells: hide;border-bottom:hidden;&#34; colspan=&#34;1&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; &#34; colspan=&#34;11&#34;&gt;
+&lt;div style=&#34;border-bottom: 1px solid #ddd; padding-bottom: 5px; &#34;&gt;
+Year
+&lt;/div&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+tax
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2009
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2010
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2011
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2012
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2013
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2014
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2015
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2016
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2017
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2018
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2019
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (3)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (3)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (3)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (3)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (3)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (3)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; &#34; colspan=&#34;12&#34;&gt;
+&lt;div style=&#34;border-bottom: 1px solid #ddd; padding-bottom: 5px; &#34;&gt;
+Low-Middle
+&lt;/div&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th style=&#34;empty-cells: hide;border-bottom:hidden;&#34; colspan=&#34;1&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; &#34; colspan=&#34;11&#34;&gt;
+&lt;div style=&#34;border-bottom: 1px solid #ddd; padding-bottom: 5px; &#34;&gt;
+Year
+&lt;/div&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+tax
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2009
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2010
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2011
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2012
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2013
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2014
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2015
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2016
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2017
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2018
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2019
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (3)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (3)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (3)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; &#34; colspan=&#34;12&#34;&gt;
+&lt;div style=&#34;border-bottom: 1px solid #ddd; padding-bottom: 5px; &#34;&gt;
+Low
+&lt;/div&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th style=&#34;empty-cells: hide;border-bottom:hidden;&#34; colspan=&#34;1&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; &#34; colspan=&#34;11&#34;&gt;
+&lt;div style=&#34;border-bottom: 1px solid #ddd; padding-bottom: 5px; &#34;&gt;
+Year
+&lt;/div&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+tax
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2009
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2010
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2011
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2012
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2013
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2014
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2015
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2016
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2017
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2018
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+2019
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (3)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (3)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (3)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (3)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (3)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (3)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+100.0% (3)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+66.7% (2)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+0.0% (0)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+33.3% (1)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;lets-explore-visually-the-levels-of-carbon-dioxide-emmissions&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Let’s explore visually the levels of carbon dioxide emmissions&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(carbon_tax_df, aes(x = factor(year),
+                          y= co2_per_capita, 
+                          color = factor(tax))) +
+  geom_point() + #create scatterplot
+  labs(title = &amp;quot;Exploratory plot of CO2 emissions per capita&amp;quot;,
+       x = &amp;quot;Year&amp;quot;,
+       y = &amp;quot;CO2 emissions in metric tons (T)&amp;quot;,
+       color = &amp;quot;Carbon tax&amp;quot;) +
+  theme_minimal() +
+  theme(legend.position=&amp;quot;bottom&amp;quot;) + #move legend to the bottom
+  scale_color_manual(name = &amp;quot; &amp;quot;, # changes to fill dimension
+                     values = c(&amp;quot;#a7a8aa&amp;quot;, &amp;quot;#cc0055&amp;quot;),
+                     labels = c(&amp;quot;Control&amp;quot;, &amp;quot;Treatment&amp;quot;))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/114688414-f6c5d880-9d14-11eb-8763-a71f2fc85d8d.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;span style=&#34;color:#4B0082;&#34;&gt;What do we see here?&lt;/span&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;carbon_tax_df %&amp;gt;%
+  dplyr::mutate(year_as_date = lubridate::ymd(year, truncated = 2L), #turning numeric to date format
+                income_class = factor(carbon_tax_df$income_class, 
+                                      levels = c(&amp;quot;High&amp;quot;, &amp;quot;High-Middle&amp;quot;,
+                                                 &amp;quot;Low-Middle&amp;quot;, &amp;quot;Low&amp;quot;))) %&amp;gt;% #reordering the factors
+  ggplot(., aes(x = year_as_date, 
+                y= co2_per_capita, 
+                color = factor(tax))) +
+  geom_point() + #create scatterplot
+  geom_path(aes(group = 1)) + #to render consecutive lines disregarding the tax (you will likely use geom_line() for the assignment)
+  facet_wrap(country_name~income_class) + #to split plot into panels based on this dimension
+  scale_x_date(date_labels = &amp;quot;%Y&amp;quot;) + #telling ggplot that we want the ticks to be the years in the dates
+  labs(title = &amp;quot;Exploratory plot of CO2 emissions per capita&amp;quot;,
+       x = &amp;quot;Year&amp;quot;,
+       y = &amp;quot;CO2 emissions in metric tons (T)&amp;quot;,
+       color = &amp;quot;Carbon tax&amp;quot;) +
+  theme_bw() + 
+  scale_color_manual(name = &amp;quot; &amp;quot;, # changes to fill dimension
+                     values = c(&amp;quot;#a7a8aa&amp;quot;, &amp;quot;#cc0055&amp;quot;),
+                     labels = c(&amp;quot;Control&amp;quot;, &amp;quot;Treatment&amp;quot;))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/54796579/114688423-f88f9c00-9d14-11eb-855e-8f9d2131bad7.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;span style=&#34;color:#4B0082;&#34;&gt;What do we see here?&lt;/span&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;em&gt;Note: The exploratory data analysis portions of our scripts will not transfer directly to this week’s assignment; however, they will be very useful for your future endevours. Summarizing, graphing, and exploring your data will be critical to discover patterns, to spot anomalies, and to check assumptions&lt;/em&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;modeling-and-estimating&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Modeling and estimating&lt;/h2&gt;
+&lt;p&gt;We have seen during the lecture that balanced panel data can help us decompose the error term. With a balanced panel we can capture all unobserved, unit- and time-specific factors.&lt;/p&gt;
+&lt;p&gt;In the example at hand, we can think of unit-specific factors as characteristics of individual countries that are constant over time (e.g. a country that just loves big pick-up trucks). We can also think about time-specific factors that affect all countries (e.g. global economic shocks).&lt;/p&gt;
+&lt;p&gt;We can formulate this as:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[Y_{it} = β_0 + β_1D_{it} + \theta_{i} + \delta_t + \upsilon_{it}\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;where &lt;span class=&#34;math inline&#34;&gt;\(\theta_i\)&lt;/span&gt; reflects the time-invariant traits of the units, &lt;span class=&#34;math inline&#34;&gt;\(\delta_t\)&lt;/span&gt; reflects the time-specific factors that affect everyone and &lt;span class=&#34;math inline&#34;&gt;\(\upsilon_{it}\)&lt;/span&gt; is the &lt;strong&gt;idiosyncratic error&lt;/strong&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;We will move forward by creating three models:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;strong&gt;naive model&lt;/strong&gt; (also known as a &lt;em&gt;pooled model&lt;/em&gt;), where we will regress &lt;code&gt;co2_per_capita&lt;/code&gt; on &lt;code&gt;tax&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;model with unit-fixed effects&lt;/strong&gt;, where we will capture the &lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt; portion of our error&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;model with time- and unit-fixed effects&lt;/strong&gt;, where we will capture our &lt;span class=&#34;math inline&#34;&gt;\(\delta\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt; portions of our error term&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;naive-modeling&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Naive modeling&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;naive_carbon &amp;lt;- lm(co2_per_capita ~ tax, data = carbon_tax_df)
+pooled_naive_carbon &amp;lt;- plm(co2_per_capita ~ tax, 
+                           data = carbon_tax_df, 
+                           model = &amp;quot;pooling&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;naive-model-with-lm&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Naive model with lm()&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;modelsummary::modelsummary(naive_carbon, 
+                           fmt = 2,
+                           gof_omit = &amp;quot;AIC|BIC|Log.Lik.&amp;quot;,
+                           statistic = &amp;quot;conf.int&amp;quot;,
+                           stars = T)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Model 1
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+(Intercept)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+10.63***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[9.93, 11.32]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+tax
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+-6.26***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;box-shadow: 0px 1px&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;box-shadow: 0px 1px&#34;&gt;
+[-7.38, -5.14]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Num.Obs.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+132
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+R2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.485
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+R2 Adj.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.481
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+F
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+122.394
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;tfoot&gt;
+&lt;tr&gt;
+&lt;td style=&#34;padding: 0; border:0;&#34; colspan=&#34;100%&#34;&gt;
+&lt;sup&gt;&lt;/sup&gt; + p &amp;lt; 0.1, * p &amp;lt; 0.05, ** p &amp;lt; 0.01, *** p &amp;lt; 0.001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tfoot&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;naive-model-with-plm&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Naive model with plm()&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;modelsummary::modelsummary(pooled_naive_carbon, 
+                           fmt = 2,
+                           gof_omit = &amp;quot;AIC|BIC|Log.Lik.&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Model 1
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+(Intercept)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+10.63
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+(0.35)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+tax
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+-6.26
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;box-shadow: 0px 1px&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;box-shadow: 0px 1px&#34;&gt;
+(0.57)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Num.Obs.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+132
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+R2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.485
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+R2 Adj.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.481
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;&lt;span style=&#34;color:#4B0082;&#34;&gt;What do we see here?&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;This model is telling us that on average, the &lt;span class=&#34;math inline&#34;&gt;\(CO_2\)&lt;/span&gt; emissions per capita are reduced by 6.2 metric tons when a carbon tax is put in place. Still, after all the work we have done throughout the semester, we understand that there may be a plethora of factors that could be skewing the results of this bivariate regression.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;unit-fixed-effects&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Unit-fixed effects&lt;/h3&gt;
+&lt;p&gt;We will learn two ways of gathering unit- and time-fixed effects in R:&lt;/p&gt;
+&lt;p&gt;First, we will perform &lt;strong&gt;Least Squares Dummy Variables (LSDV) estimation&lt;/strong&gt; with &lt;em&gt;lm()&lt;/em&gt;, where we essentially get an individual estimate for each unit.&lt;/p&gt;
+&lt;p&gt;Second, we will run our model with &lt;em&gt;plm()&lt;/em&gt;, which will do the same mechanics, yet it will not estimate each of the units intercepts (because it relies on the “de-meaning” approach).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;lsdv_unit_fe &amp;lt;- lm(co2_per_capita ~ tax + country_name, data = carbon_tax_df)
+
+unit_fe &amp;lt;- plm(co2_per_capita ~ tax, 
+               data = carbon_tax_df, 
+               index = c(&amp;quot;country_name&amp;quot;), # unit 
+               effect = &amp;quot;individual&amp;quot;,
+               model = &amp;quot;within&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;unit-fixed-effects-with-lm-least-squares-dummy-variables-lsdv-estimation&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Unit-fixed effects with lm() — Least Squares Dummy Variables (LSDV) estimation&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;modelsummary::modelsummary(lsdv_unit_fe, 
+                           fmt = 2,
+                           gof_omit = &amp;quot;AIC|BIC|Log.Lik.&amp;quot;,
+                           statistic = &amp;quot;conf.int&amp;quot;,
+                           stars = T)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Model 1
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+(Intercept)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+6.91***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[5.67, 8.15]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+tax
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+-4.44***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[-5.37, -3.50]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameBorovia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+1.51
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[-0.30, 3.31]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameCarpania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+5.11***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[3.30, 6.91]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameCorinthia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+6.43***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[4.68, 8.19]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameFreedonia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+6.12***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[4.33, 7.91]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameGlenraven
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.37
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[-1.51, 2.26]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameKhemed
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+-0.67
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[-2.56, 1.21]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameLaurania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+1.53
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[-0.32, 3.39]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameParano
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+3.69***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[1.94, 5.45]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameRon
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+2.71**
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[0.91, 4.52]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameRumekistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+7.43***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[5.68, 9.19]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameTransia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+1.88+
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;box-shadow: 0px 1px&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;box-shadow: 0px 1px&#34;&gt;
+[-0.03, 3.80]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Num.Obs.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+132
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+R2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.797
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+R2 Adj.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.776
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+F
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+38.844
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;tfoot&gt;
+&lt;tr&gt;
+&lt;td style=&#34;padding: 0; border:0;&#34; colspan=&#34;100%&#34;&gt;
+&lt;sup&gt;&lt;/sup&gt; + p &amp;lt; 0.1, * p &amp;lt; 0.05, ** p &amp;lt; 0.01, *** p &amp;lt; 0.001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tfoot&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;unit-fixed-effects-with-plm&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Unit-fixed effects with plm()&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;modelsummary::modelsummary(unit_fe, 
+                           fmt = 2,
+                           gof_omit = &amp;quot;AIC|BIC|Log.Lik.&amp;quot;,
+                           statistic = &amp;quot;conf.int&amp;quot;,
+                           stars = T)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Model 1
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+tax
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+-4.44***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;box-shadow: 0px 1px&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;box-shadow: 0px 1px&#34;&gt;
+[-5.36, -3.51]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Num.Obs.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+132
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+R2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.424
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+R2 Adj.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.366
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;tfoot&gt;
+&lt;tr&gt;
+&lt;td style=&#34;padding: 0; border:0;&#34; colspan=&#34;100%&#34;&gt;
+&lt;sup&gt;&lt;/sup&gt; + p &amp;lt; 0.1, * p &amp;lt; 0.05, ** p &amp;lt; 0.01, *** p &amp;lt; 0.001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tfoot&gt;
+&lt;/table&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;&lt;span style=&#34;color:#4B0082;&#34;&gt;What do we see here?&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Adding unit-level fixed effects to the model, i.e. accounting for unobserved, time-invariant characteristics of countries and only focusing on within-state variation, the imposition of a carbon tax reduces &lt;span class=&#34;math inline&#34;&gt;\(CO_2\)&lt;/span&gt; per capita emissions by &lt;strong&gt;4.44 metric tons&lt;/strong&gt;. Once we have captured the variation between countries, we can see that our results from the naive model were substantially biased. We can still try to capture the time-specific portion of the error.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;The results from the Least Squares Dummy Variables (LSDV) estimation are read in reference to a baseline. In this case, the constant is representing the intercept for Adjikistan. We can utilize the individual slopes for each country to say that Freedonians emit on average 6.12 more metric tons of &lt;span class=&#34;math inline&#34;&gt;\(CO_2\)&lt;/span&gt; per capita than Adjikistanians.&lt;/em&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;unit--and-time-fixed-effects&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Unit- and time-fixed effects&lt;/h3&gt;
+&lt;p&gt;We will perform our regressions with &lt;strong&gt;Least Squares Dummy Variables (LSDV) estimation&lt;/strong&gt; with &lt;em&gt;lm()&lt;/em&gt; and our simplified way with &lt;em&gt;plm()&lt;/em&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;lsdv_unit_time_fe &amp;lt;- lm(co2_per_capita ~ tax + country_name + factor(year), 
+                        data = carbon_tax_df)
+
+unit_time_fe &amp;lt;- plm(co2_per_capita ~ tax, 
+                    data = carbon_tax_df, 
+                    index = c(&amp;quot;country_name&amp;quot;, &amp;quot;year&amp;quot;), # unit and time
+                    model = &amp;quot;within&amp;quot;, 
+                    effect = &amp;quot;twoways&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;unit--and-time-fixed-effects-with-lm-least-squares-dummy-variables-lsdv-estimation&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Unit- and time-fixed effects with lm() — Least Squares Dummy Variables (LSDV) estimation&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;modelsummary::modelsummary(lsdv_unit_time_fe, 
+                           fmt = 2,
+                           gof_omit = &amp;quot;AIC|BIC|Log.Lik.&amp;quot;,
+                           statistic = &amp;quot;conf.int&amp;quot;,
+                           stars = T)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Model 1
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+(Intercept)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+8.62***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[7.84, 9.41]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+tax
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+-3.91***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[-4.46, -3.35]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameBorovia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+1.27**
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[0.44, 2.09]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameCarpania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+4.87***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[4.04, 5.69]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameCorinthia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+6.43***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[5.65, 7.22]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameFreedonia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+5.93***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[5.11, 6.74]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameGlenraven
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+-0.01
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[-0.90, 0.87]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameKhemed
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+-1.06*
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[-1.94, -0.17]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameLaurania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+1.20**
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[0.33, 2.06]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameParano
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+3.69***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[2.90, 4.48]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameRon
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+2.47***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[1.65, 3.30]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameRumekistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+7.43***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[6.64, 8.22]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+country_nameTransia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+1.45**
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[0.54, 2.36]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+factor(year)2010
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+-4.70***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[-5.45, -3.94]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+factor(year)2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+1.89***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[1.13, 2.65]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+factor(year)2012
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+-3.06***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[-3.83, -2.29]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+factor(year)2013
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.11
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[-0.67, 0.88]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+factor(year)2014
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+-1.88***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[-2.65, -1.10]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+factor(year)2015
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+-3.02***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[-3.84, -2.20]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+factor(year)2016
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+-3.29***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[-4.13, -2.45]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+factor(year)2017
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+-0.96*
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[-1.80, -0.12]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+factor(year)2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+-2.49***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+[-3.33, -1.65]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+factor(year)2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+-1.40**
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;box-shadow: 0px 1px&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;box-shadow: 0px 1px&#34;&gt;
+[-2.22, -0.58]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Num.Obs.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+132
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+R2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.963
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+R2 Adj.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.955
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+F
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+127.305
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;tfoot&gt;
+&lt;tr&gt;
+&lt;td style=&#34;padding: 0; border:0;&#34; colspan=&#34;100%&#34;&gt;
+&lt;sup&gt;&lt;/sup&gt; + p &amp;lt; 0.1, * p &amp;lt; 0.05, ** p &amp;lt; 0.01, *** p &amp;lt; 0.001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tfoot&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;unit-fixed-effects-with-plm-1&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Unit-fixed effects with plm()&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;modelsummary::modelsummary(unit_time_fe, 
+                           fmt = 2,
+                           gof_omit = &amp;quot;AIC|BIC|Log.Lik.&amp;quot;,
+                           statistic = &amp;quot;conf.int&amp;quot;,
+                           stars = T)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Model 1
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+tax
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+-3.91***
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;box-shadow: 0px 1px&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;box-shadow: 0px 1px&#34;&gt;
+[-4.46, -3.36]
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Num.Obs.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+132
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+R2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.641
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+R2 Adj.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+0.568
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;tfoot&gt;
+&lt;tr&gt;
+&lt;td style=&#34;padding: 0; border:0;&#34; colspan=&#34;100%&#34;&gt;
+&lt;sup&gt;&lt;/sup&gt; + p &amp;lt; 0.1, * p &amp;lt; 0.05, ** p &amp;lt; 0.01, *** p &amp;lt; 0.001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tfoot&gt;
+&lt;/table&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;&lt;span style=&#34;color:#4B0082;&#34;&gt;What do we see here?&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Now in addition to adding unit-level fixed effects to the model, we control for time-specific factors that affect the global per capita &lt;span class=&#34;math inline&#34;&gt;\(CO_2\)&lt;/span&gt; emissions. The results suggest that the effect of a carbon-tax leads to a decrease &lt;span class=&#34;math inline&#34;&gt;\(CO_2\)&lt;/span&gt; emissions of 3.91 metric tons per capita.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;test-of-serial-correlation-for-the-idiosyncratic-component-of-the-errors-in-panel-models&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Test of serial correlation for the idiosyncratic component of the errors in panel models&lt;/h4&gt;
+&lt;p&gt;In our models our assumption for the errors is &lt;span class=&#34;math inline&#34;&gt;\(υ_{it} ∼ iid(0, σ_υ^{2})\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;With longer panels, serial correlation between errors is a problem:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(Cor(υ_{it}, υ_i(t−1))≠0\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;We can test for serial correlation in our time and unit FE specification model, as such:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pbgtest(unit_time_fe, order = 2)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  Breusch-Godfrey/Wooldridge test for serial correlation in panel models
+## 
+## data:  co2_per_capita ~ tax
+## chisq = 0.25101, df = 2, p-value = 0.8821
+## alternative hypothesis: serial correlation in idiosyncratic errors&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In here, the null hypothesis is there is serial correlation of any order up to 2 (i.e., first- and second-order). In this case, we do not find any serial correlation, so we do not need to correct our standard errors manually. If we were to find serial correlation, we could introduce robust standard errors with a similar syntax to the one used last week for clustered standard errors:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;model_with_robust_se &amp;lt;- coeftest(unit_time_fe, vcov=vcovHC(unit_time_fe, type = &amp;quot;sss&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;drafting-some-brief-recommedations&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Drafting some brief recommedations&lt;/h2&gt;
+&lt;p&gt;You report back to the Organization of Economic Non-Cooperation for Development (OENCD). Based on your analysis of the data at hand, you suggest that the implementation of a carbon tax does have an effect on national carbon dioxide emissions per capita. Your results show that a carbon tax reduces &lt;span class=&#34;math inline&#34;&gt;\(CO_2\)&lt;/span&gt; emissions by 3.91 metric tons per capita.&lt;/p&gt;
+&lt;p&gt;Your results are welcomed internationally and all states move forward with the measure.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://thumbs.gfycat.com/GreedyMiserableArrowcrab-size_restricted.gif&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

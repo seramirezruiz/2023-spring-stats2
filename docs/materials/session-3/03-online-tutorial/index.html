@@ -1,0 +1,1269 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.0.0-beta.2 for Hugo" />
+  
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Sebastian Ramirez Ruiz" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="# Load packages. Install them first, in case you don&#39;t have them yet. library(palmerpenguins) # To get our example&#39;s dataset library(tidyverse) # To use dplyr functions and the pipe operator when needed library(ggplot2) # To visualize data (this package is also loaded by library(tidyverse)) library(ggdag) # To create our DAGs Welcome This week&#39;s tutorial will be divided in two broader camps." />
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-3/03-online-tutorial/" />
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    <meta name="theme-color" content="#1565c0" />
+  
+
+  
+  
+    
+    <script src="/2022-spring-stats2/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous" media="print" onload="this.media='all'">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/2022-spring-stats2/css/wowchemy.dd90b8698d7ba5e114b9de5647a585e5.css" />
+
+  
+
+
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+    <link rel="manifest" href="/2022-spring-stats2/index.webmanifest" />
+  
+
+  <link rel="icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_32x32_fill_lanczos_center_2.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_180x180_fill_lanczos_center_2.png" />
+
+  <link rel="canonical" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-3/03-online-tutorial/" />
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary" />
+  
+  <meta property="og:site_name" content="| Tutorials - Spring 2022 |" />
+  <meta property="og:url" content="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-3/03-online-tutorial/" />
+  <meta property="og:title" content="Basics of Data Visualization and DAGs in R | | Tutorials - Spring 2022 |" />
+  <meta property="og:description" content="# Load packages. Install them first, in case you don&#39;t have them yet. library(palmerpenguins) # To get our example&#39;s dataset library(tidyverse) # To use dplyr functions and the pipe operator when needed library(ggplot2) # To visualize data (this package is also loaded by library(tidyverse)) library(ggdag) # To create our DAGs Welcome This week&#39;s tutorial will be divided in two broader camps." /><meta property="og:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" />
+    <meta property="twitter:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" /><meta property="og:locale" content="en-us" />
+  
+    
+    
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+
+
+
+
+  <title>Basics of Data Visualization and DAGs in R | | Tutorials - Spring 2022 |</title>
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/2022-spring-stats2/js/wowchemy-init.min.d876f1a6b98701f9238f2313b512a26f.js"></script>
+
+  
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-end" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/2022-spring-stats2/materials/"><span>Materials</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+        
+      
+        
+      
+
+      
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    
+
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+          Dataviz and DAGs
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/2022-spring-stats2/materials/"><i class="fas fa-arrow-left pr-1"></i>Materials</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/2022-spring-stats2/materials/session-3/">Dataviz and DAGs</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  <li class=""><a href="/2022-spring-stats2/materials/session-3/slides/">Slides</a></li>
+
+
+
+  <li class="active"><a href="/2022-spring-stats2/materials/session-3/03-online-tutorial/">Basics of Data Visualization and DAGs in R</a></li>
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      
+
+      
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <article class="article">
+
+        <div class="docs-article-container">
+          
+            
+  <nav class="d-none d-md-flex" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      
+  
+  
+  
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/">
+      
+        Home
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/">
+      
+        Materials
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/session-3/">
+      
+        Dataviz and DAGs
+      
+    </a>
+  </li>
+
+
+      <li class="breadcrumb-item active" aria-current="page">
+        Basics of Data Visualization and DAGs in R
+      </li>
+    </ol>
+  </nav>
+
+
+          
+
+          <h1>Basics of Data Visualization and DAGs in R</h1>
+
+          <div class="article-style">
+            
+
+
+<pre class="r"><code># Load packages. Install them first, in case you don&#39;t have them yet.
+
+library(palmerpenguins) # To get our example&#39;s dataset
+library(tidyverse) # To use dplyr functions and the pipe operator when needed
+library(ggplot2) # To visualize data (this package is also loaded by library(tidyverse))
+library(ggdag) # To create our DAGs</code></pre>
+<hr />
+<div id="welcome" class="section level1">
+<h1>Welcome</h1>
+<p>This week's tutorial will be divided in two broader camps.</p>
+<ul>
+<li>First, we will learn some basics of data visualization with <code>ggplot</code>.</li>
+<li>Second, we will start our exploration of <strong>directed acyclic graphs (DAGs)</strong> for causal inference.</li>
+</ul>
+<hr />
+</div>
+<div id="introduction-to-ggplot2" class="section level1">
+<h1>Introduction to <code>ggplot2</code></h1>
+<p><code>ggplot2</code> is by far the most popular visualization package in <strong>R</strong>. <code>ggplot2</code> implements the <strong>grammar of graphics</strong> to render a versatile syntax of creating visuals. The underlying logic of the package relies on deconstructing the structure of graphs (if you are interested in this you can read this <a href="http://vita.had.co.nz/papers/layered-grammar.pdf">article</a>).</p>
+<p>For the purposes of this introduction to visualization with ggplot, we care about the layered nature of visualizing with <code>ggplot2</code>.</p>
+<p><img src="https://user-images.githubusercontent.com/54796579/94537983-b94fa100-0243-11eb-8d12-c2e685141092.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>*<em>This tutorial is based largely on chapters 7 to 10 from the <a href="http://qpolr.com/dataviz.html">QPOLR book</a></em></p>
+<hr />
+<div id="our-building-blocks" class="section level2">
+<h2>Our building blocks</h2>
+<p>During this week, we will learn about the following building blocks:</p>
+<ul>
+<li><strong>Data</strong>: the data frame, or data frames, we will use to plot</li>
+<li><strong>Aesthetics</strong>: the variables we will be working with</li>
+<li><strong>Geometric objects</strong>: the type of visualization</li>
+<li><strong>Theme adjustments</strong>: size, text, colors etc</li>
+</ul>
+<hr />
+<div id="data" class="section level3">
+<h3>Data</h3>
+<p>The first building block for our plots are the data we intend to map. In <code>ggplot2</code>, we always have to specify the object where our data lives. In other words, you will always have to specify a data frame, as such:</p>
+<pre class="r"><code>ggplot(name_of_your_df)</code></pre>
+<p>In the future, we will see how to combine multiple data sources to build a single plot. For now, we will work under the assumption that all your data live in the same object.</p>
+<hr />
+</div>
+<div id="aesthetics" class="section level3">
+<h3>Aesthetics</h3>
+<p>The second building block for our plots are the aesthetics. We need to specify the variables in the data frame we will be using and what role they play.</p>
+<p>To do this we will use the function <code>aes()</code> within the <code>ggplot()</code> function after the data frame <strong>(remember to add a comma after the data frame)</strong>.</p>
+<pre class="r"><code>ggplot(name_of_your_df, aes(x = your_x_axis_variable, y = your_y_axis_variable))</code></pre>
+<p>Beyond your axis, you can add more aesthetics representing further dimensions of the data in the two dimensional graphic plane, such as: size, color, fill, to name but a few.</p>
+<hr />
+</div>
+<div id="geometric-objects" class="section level3">
+<h3>Geometric objects</h3>
+<p>The third layer to render our graph is a geomethic object. To add one, we need to add a plus (<strong>+</strong>) at the end of the initial line and state the type of geometric object we want to add, for example, <code>geom_point()</code> for a scatter plot, or <code>geom_bar()</code> for barplots.</p>
+<pre class="r"><code>ggplot(name_of_your_df, aes(x = your_x_axis_variable, y = your_y_axis_variable)) +
+  geom_point()</code></pre>
+<hr />
+</div>
+<div id="theme" class="section level3">
+<h3>Theme</h3>
+<p>At this point our plot may just need some final thouches. We may want to fix the axes names or get rid of the default gray background. To do so, we need to add an additional layer preceded by a plus sign (+).</p>
+<p>If we want to change the names in our axes, we can utilize the <code>labs()</code> function.</p>
+<p>We can also employ some of the pre-loaded themes, for example, <code>theme_minimal()</code>.</p>
+<pre class="r"><code>ggplot(name_of_your_df, aes(x = your_x_axis_variable, y = your_y_axis_variable)) +
+  geom_point() +
+  theme_minimal() +
+  labs(x = &quot;Name you want displayed&quot;,
+       y = &quot;Name you want displayed&quot;)</code></pre>
+<hr />
+</div>
+<div id="our-first-plot" class="section level3">
+<h3>Our first plot</h3>
+<p>For our very first plot using <code>ggplot2</code>, we will use the <code>penguins</code> data from last week.</p>
+<p>We would like to create a scatterplot that illustrates the relationship between the length of a penguin's flipper and their weight.</p>
+<p>To do so, we need three of our building blocks: a) data, b) aesthetics, and c) a geometric object (<code>geom_point()</code>).</p>
+<pre class="r"><code>ggplot(penguins, aes(x = flipper_length_mm, y=body_mass_g)) +
+  geom_point()</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/108834786-e1fb7d00-75ce-11eb-8a23-81414b76c484.png" width="70%" style="display: block; margin: auto;" /></p>
+<hr />
+<b>
+<p style= "color: #9F24FF">
+EXERCISE:
+<p>
+<p></b> Once we have our scatterplot. Can you think of a way to adapt the code to:</p>
+<ul>
+<li><ol style="list-style-type: decimal">
+<li>convey another dimension through color, the species of penguin</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: decimal">
+<li>change the axes names</li>
+</ol></li>
+<li><ol start="3" style="list-style-type: decimal">
+<li>render the graph with <code>theme_minimal()</code>.</li>
+</ol></li>
+</ul>
+<details class="spoiler "  id="spoiler-0">
+  <summary>Answer</summary>
+  <p><pre class="r"><code>ggplot(penguins, aes(x = flipper_length_mm, y=body_mass_g, color=species)) +
+  geom_point() +
+  theme_minimal() +
+  labs(x = &quot;Flipper Length (mm)&quot;,
+       y = &quot;Body mass (g)&quot;,
+       color = &quot;Species&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/108834863-f770a700-75ce-11eb-8fb4-b410dcd830f9.png" width="70%" style="display: block; margin: auto;" /></p>
+</p>
+</details>
+<hr />
+</div>
+</div>
+</div>
+<div id="visualizing-effectively" class="section level1">
+<h1>Visualizing effectively</h1>
+<div id="plotting-distributions" class="section level2">
+<h2>Plotting distributions</h2>
+<p>If we are interested in plotting distributions of our data, we can leverage geometric objects, such as:</p>
+<ul>
+<li><code>geom_histogram()</code>: visualizes the distribution of a single continuous variable by dividing the x axis into bins and counting the number of observations in each bin (the default is 30 bins).</li>
+<li><code>geom_density()</code>: computes and draws kernel density estimate, which is a smoothed version of the histogram.</li>
+<li><code>geom_bar()</code>: renders barplots and in plotting distributions behaves in a very similar way from <code>geom_histogram()</code> (can also be used with two dimensions)</li>
+</ul>
+<p>This is a histogram presenting the weight distribution of penguins in our sample. .</p>
+<pre class="r"><code>ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram()</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/108834871-f93a6a80-75ce-11eb-9a05-2161f6bad744.png" width="70%" style="display: block; margin: auto;" /></p>
+<hr />
+<b>
+<p style= "color: #9F24FF">
+EXERCISE:
+<p>
+<p></b> Let's adapt the code of our histogram:</p>
+<ul>
+<li><ol style="list-style-type: decimal">
+<li>add <code>bins = 15</code> argument (type different numbers)</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: decimal">
+<li>add <code>fill = &quot;#FF6666&quot;</code> (type &quot;red&quot;, &quot;blue&quot;, instead of #FF6666)</li>
+</ol></li>
+<li><ol start="3" style="list-style-type: decimal">
+<li>change the geom to <code>_density</code> and <code>_bar</code></li>
+</ol></li>
+</ul>
+<details class="spoiler "  id="spoiler-1">
+  <summary>Answer</summary>
+  <p><ul>
+<li><ol style="list-style-type: decimal">
+<li><strong>Histogram with bins argument</strong></li>
+</ol></li>
+</ul>
+<pre class="r"><code>ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(bins = 15)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/108834874-f9d30100-75ce-11eb-869e-d25423127afe.png" width="70%" style="display: block; margin: auto;" /></p>
+<ul>
+<li><ol start="2" style="list-style-type: decimal">
+<li><strong>Histogram with bins and fill arguments</strong></li>
+</ol></li>
+</ul>
+<pre class="r"><code>ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(bins = 25, fill = &quot;#FF6666&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/108834878-fa6b9780-75ce-11eb-833d-8675c65c2d34.png" width="70%" style="display: block; margin: auto;" /></p>
+<ul>
+<li><ol start="3" style="list-style-type: decimal">
+<li><code>geom_density()</code> and <code>geom_bar()</code></li>
+</ol></li>
+</ul>
+<pre class="r"><code>ggplot(penguins, aes(x = body_mass_g)) +
+  geom_density(alpha = 0.5, fill = &quot;#FF6666&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/108834879-fa6b9780-75ce-11eb-8b54-e73421f810fb.png" width="70%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(penguins, aes(x = body_mass_g)) +
+  geom_bar(fill = &quot;#FF6666&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/108834882-fb042e00-75ce-11eb-8fd0-e309766734c0.png" width="70%" style="display: block; margin: auto;" /></p>
+</p>
+</details>
+<hr />
+<div id="plotting-relationships" class="section level3">
+<h3>Plotting relationships</h3>
+<p>We can utilize graphs to explore how different variables are related. In fact, we did so before in our scatterplot. We can also use box plots and lines to show some of these relationships.</p>
+<p>For example, this boxplot showcasing the distribution of weight by species:</p>
+<pre class="r"><code>ggplot(penguins, aes(x = species, y = body_mass_g)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(x = &quot;Species&quot;,
+       y = &quot;Body mass (g)&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/108834883-fb042e00-75ce-11eb-9081-f0fe68593721.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>Or this adaptation of our initial plot with a line of best fit for the observed data by each species:</p>
+<pre class="r"><code>ggplot(penguins, aes(x= flipper_length_mm, y = body_mass_g, color = species)) +
+  geom_point() + 
+  geom_smooth(method = &quot;lm&quot;, se = F) +
+  theme_minimal() +
+  labs(x = &quot;Length of the flipper&quot;,
+       y = &quot;Body mass (g)&quot;,
+       color = &quot;Species&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/108834884-fb042e00-75ce-11eb-8a4a-e10efcd16bd5.png" width="70%" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+<div id="next-steps" class="section level3">
+<h3>Next steps</h3>
+<p>Now that you have been introduced to some of the basics of <code>ggplot2</code>, <strong>the best way to move forward is to experiment</strong>. As we have discussed before, the <strong>R</strong> community is very open. Perhaps, you can gather some inspiration from the Tidy Tuesday social data project in R where users explore a new dataset each week and share their visualizations and code on Twitter under #TidyTuesday. You can explore some of the previous visualizations <a href="https://shiny.rstudio.com/gallery/tidy-tuesday.html">here</a> and try to replicate their code.</p>
+<p><em><a href="https://github.com/erikgahner/awesome-ggplot2">Here is a curated list</a> of awesome <code>ggplot2</code> resources.</em></p>
+<hr />
+</div>
+</div>
+<div id="directed-acyclic-graphs-dags" class="section level2">
+<h2>Directed Acyclic Graphs (DAGs)</h2>
+<p>This week we learned that <strong>directed acyclic graphs (DAGs)</strong> are very useful to express our beliefs about relationships among variables.</p>
+<p>DAGs are compatible with the potential outcomes framework. They give us a more convinient and intuitive way of laying out causal models. Next week we will learn how they can help us develop a modeling strategy.</p>
+<p>Today, we will focus on their structure and some DAG basics with the <code>ggdag</code> package.</p>
+<hr />
+<div id="creating-dags-in-r" class="section level3">
+<h3>Creating DAGs in R</h3>
+<p>To create our DAGs in <strong>R</strong> we will use the <code>ggdag</code> packages.</p>
+<p>The first thing we will need to do is to create a <strong>dagified</strong> object. That is an object where we state our variables and the relationships they have to each other. Once we have our <strong>dag object</strong> we just need to plot with the <code>ggdag()</code> function.</p>
+<p>Let's say we want to re-create this DAG:</p>
+<p><img src="https://user-images.githubusercontent.com/54796579/108728442-e4f06200-7529-11eb-90a9-90ae6bff6f06.png" width="50%" style="display: block; margin: auto;" /></p>
+<p>We would like to express the following links:</p>
+<ul>
+<li>P -&gt; D</li>
+<li>D -&gt; M</li>
+<li>D -&gt; Y</li>
+<li>M -&gt; Y</li>
+</ul>
+<p>To do so in <strong>R</strong> with <code>ggdag</code>, we would use the following syntax:</p>
+<pre class="r"><code>dag_object &lt;- ggdag::dagify(variable_being_pointed_at ~ variable_pointing,
+                            variable_being_pointed_at ~ variable_pointing,
+                            variable_being_pointed_at ~ variable_pointing)</code></pre>
+<p>After this we would just:</p>
+<pre class="r"><code>ggdag::ggdag(dag_object)</code></pre>
+<p><strong>Let's plot this DAG</strong></p>
+<pre class="r"><code>our_dag &lt;- ggdag::dagify(d ~ p,
+                         m ~ d,
+                         y ~ d,
+                         y ~ m)
+
+ggdag::ggdag(our_dag)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/108834887-fb9cc480-75ce-11eb-8ec0-a2c28143612e.png" width="70%" style="display: block; margin: auto;" /></p>
+<hr />
+<b>
+<p style= "color: #9F24FF">
+EXERCISE:
+<p>
+<p></b> See what happens when you add <code>+ theme_minimal()</code>, <code>+ theme_void()</code>, or <code>+ theme_dag() to the DAG. What package do you think is laying behind the mappings of</code>ggdag`?</p>
+<details class="spoiler "  id="spoiler-2">
+  <summary>Answer</summary>
+  <p><pre class="r"><code>our_dag &lt;- ggdag::dagify(d ~ p,
+                         m ~ d,
+                         y ~ d,
+                         y ~ m)
+
+ggdag::ggdag(our_dag) +
+  theme_minimal()
+
+ggdag::ggdag(our_dag) +
+  theme_void()</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/108834889-fb9cc480-75ce-11eb-9365-bb22788e4a10.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="https://user-images.githubusercontent.com/54796579/108834890-fc355b00-75ce-11eb-95bc-76a89d88095f.png" width="70%" style="display: block; margin: auto;" /></p>
+</p>
+</details>
+<hr />
+</div>
+<div id="polishing-our-dags-in-r" class="section level3">
+<h3>Polishing our DAGs in R</h3>
+<p>As you may have seen, the DAG is not rendered with the nodes in the positions we want.</p>
+<p>If you ever want to explicitly tell <code>ggdag</code> where to position each node, you can tell it in a Cartesian coordinate plane.</p>
+<p><img src="https://user-images.githubusercontent.com/54796579/108733908-30f1d580-752f-11eb-8588-241acb7e3dd6.png" width="35%" style="display: block; margin: auto;" /></p>
+<p>Let's take <strong>P</strong> as the point (0,0):</p>
+<p><img src="https://user-images.githubusercontent.com/54796579/108735739-2fc1a800-7531-11eb-8764-5e881b120615.png" width="50%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>coord_dag &lt;- list(
+  x = c(p = 0, d = 1, m = 2, y = 3),
+  y = c(p = 0, d = 0, m = 1, y = 0)
+)
+
+our_dag &lt;- ggdag::dagify(d ~ p,
+                         m ~ d,
+                         y ~ d,
+                         y ~ m,
+                         coords = coord_dag)
+
+ggdag::ggdag(our_dag) + theme_void()</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/108834892-fc355b00-75ce-11eb-8a50-054ed9c5fffb.png" width="70%" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+<div id="more-complex-example" class="section level3">
+<h3>More complex example:</h3>
+<p>Let's say we're looking at the relationship between smoking and cardiac arrest. We might assume that smoking causes changes in cholesterol, which causes cardiac arrest:</p>
+<pre class="r"><code>smoking_ca_dag &lt;- ggdag::dagify(cardiacarrest ~ cholesterol,
+                                cholesterol ~ smoking + weight,
+                                smoking ~ unhealthy,
+                                weight ~ unhealthy,
+                                labels = c(&quot;cardiacarrest&quot; = &quot;Cardiac\n Arrest&quot;, 
+                                           &quot;smoking&quot; = &quot;Smoking&quot;,
+                                           &quot;cholesterol&quot; = &quot;Cholesterol&quot;,
+                                           &quot;unhealthy&quot; = &quot;Unhealthy\n Lifestyle&quot;,
+                                           &quot;weight&quot; = &quot;Weight&quot;)
+                                )
+
+ggdag::ggdag(smoking_ca_dag, # the dag object we created
+             text = FALSE, # this means the original names won&#39;t be shown
+             use_labels = &quot;label&quot;) + # instead use the new names
+  theme_void()</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/108834893-fccdf180-75ce-11eb-8494-937fd8b8da95.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>In this example, we:</p>
+<ul>
+<li><ol style="list-style-type: decimal">
+<li>Used more meaningful variable names</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: decimal">
+<li>Created a variable that was the result of two variables vs. just one (cholesterol)</li>
+</ol></li>
+<li><ol start="3" style="list-style-type: decimal">
+<li>Used the &quot;labels&quot; argument to rename our variables (this is useful if your desired final variable name is more than one word)</li>
+</ol></li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="common-dag-path-structures" class="section level2">
+<h2>Common DAG path structures</h2>
+<p><img src="https://user-images.githubusercontent.com/54796579/94547573-b8bd0780-024f-11eb-9565-03b1d1109c3b.png" width="90%" style="display: block; margin: auto;" /></p>
+<hr />
+<pre class="r"><code>coord_dag &lt;- list(
+  x = c(d = 0, x = 1, y = 2),
+  y = c(d = 0, x = 1, y = 0)
+)
+
+our_dag &lt;- ggdag::dagify(x ~ d,
+                         y ~ d,
+                         y ~ x,
+                         coords = coord_dag)
+
+ggdag::ggdag(our_dag) + theme_void()</code></pre>
+</div>
+<div id="section" class="section level2">
+<h2><img src="https://user-images.githubusercontent.com/54796579/108834894-fccdf180-75ce-11eb-89ef-d0e7ecf2719f.png" width="70%" style="display: block; margin: auto;" /></h2>
+<b>
+<p style= "color: #9F24FF">
+EXERCISE:
+<p>
+<p></b> Let's adapt the code to make <strong>X</strong> a <strong>confounder</strong> and a <strong>collider</strong>.</p>
+<details class="spoiler "  id="spoiler-3">
+  <summary>Answer</summary>
+  <p><ul>
+<li><ol style="list-style-type: decimal">
+<li><strong>X as a confounder</strong></li>
+</ol></li>
+</ul>
+<pre class="r"><code>coord_dag &lt;- list(
+  x = c(d = 0, x = 1, y = 2),
+  y = c(d = 0, x = 1, y = 0)
+)
+<p>our_dag &lt;- ggdag::dagify(d ~ x, #line from x to d
+y ~ d, #line from d to y
+y ~ x, #line from x to y
+coords = coord_dag)</p>
+<p>ggdag::ggdag(our_dag) + theme_void()</code></pre></p>
+<p><img src="https://user-images.githubusercontent.com/54796579/108834897-fd668800-75ce-11eb-8ce1-771415724e13.png" width="70%" style="display: block; margin: auto;" /></p>
+<ul>
+<li><ol start="2" style="list-style-type: decimal">
+<li><strong>X as a collider</strong></li>
+</ol></li>
+</ul>
+<pre class="r"><code>coord_dag &lt;- list(
+  x = c(d = 0, x = 1, y = 2),
+  y = c(d = 0, x = 1, y = 0)
+)
+<p>our_dag &lt;- ggdag::dagify(x ~ d, #line from d to x
+y ~ d, #line from d to y
+x ~ y, #line from y to x
+coords = coord_dag)</p>
+<p>ggdag::ggdag(our_dag) + theme_void()</code></pre></p>
+<p><img src="https://user-images.githubusercontent.com/54796579/108834900-fd668800-75ce-11eb-9a0c-e9de3be4fd93.png" width="70%" style="display: block; margin: auto;" /></p>
+</p>
+</details>
+</div>
+</div>
+
+          </div>
+
+          
+
+
+
+          
+          
+          <div class="article-widget">
+            
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/2022-spring-stats2/materials/session-3/slides/" rel="next">03 - Slides</a>
+  </div>
+  
+  
+</div>
+
+          </div>
+          
+        </div>
+
+        <div class="body-footer">
+          <p>Last updated on Jan 1, 0001</p>
+
+          
+
+
+
+
+
+          
+
+
+
+
+          
+
+
+  
+  
+
+
+
+        </div>
+
+      </article>
+
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/latex.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+    <script>
+      anchors.add();
+    </script>
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+        <div class="search-hit-content">
+          <div class="search-hit-name">
+            <a href="{{relpermalink}}">{{title}}</a>
+            <div class="article-metadata search-hit-type">{{type}}</div>
+            <p class="search-hit-description">{{snippet}}</p>
+          </div>
+        </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+      
+      
+      
+      
+      
+      
+      
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+      
+    
+    
+    <script src="/2022-spring-stats2/en/js/wowchemy.min.e5856c0a0618a04dd7b1e07451b5f341.js"></script>
+
+    
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1543 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.0.0-beta.2 for Hugo" />
+  
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Sebastian Ramirez Ruiz" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Welcome Introduction! Welcome to our sixth tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.
+During this week&#39;s lecture you reviewed what happens when experiments break due to non-compliance." />
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-6/06-online-tutorial/" />
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    <meta name="theme-color" content="#1565c0" />
+  
+
+  
+  
+    
+    <script src="/2022-spring-stats2/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous" media="print" onload="this.media='all'">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/2022-spring-stats2/css/wowchemy.dd90b8698d7ba5e114b9de5647a585e5.css" />
+
+  
+
+
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+    <link rel="manifest" href="/2022-spring-stats2/index.webmanifest" />
+  
+
+  <link rel="icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_32x32_fill_lanczos_center_2.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_180x180_fill_lanczos_center_2.png" />
+
+  <link rel="canonical" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-6/06-online-tutorial/" />
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary" />
+  
+  <meta property="og:site_name" content="| Tutorials - Spring 2022 |" />
+  <meta property="og:url" content="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-6/06-online-tutorial/" />
+  <meta property="og:title" content="Instrumental Variables | | Tutorials - Spring 2022 |" />
+  <meta property="og:description" content="Welcome Introduction! Welcome to our sixth tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.
+During this week&#39;s lecture you reviewed what happens when experiments break due to non-compliance." /><meta property="og:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" />
+    <meta property="twitter:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" /><meta property="og:locale" content="en-us" />
+  
+    
+    
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+
+
+
+
+  <title>Instrumental Variables | | Tutorials - Spring 2022 |</title>
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/2022-spring-stats2/js/wowchemy-init.min.d876f1a6b98701f9238f2313b512a26f.js"></script>
+
+  
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-end" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/2022-spring-stats2/materials/"><span>Materials</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+        
+      
+        
+      
+
+      
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    
+
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+          IVs in R
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/2022-spring-stats2/materials/"><i class="fas fa-arrow-left pr-1"></i>Materials</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/2022-spring-stats2/materials/session-6/">IVs in R</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  <li class=""><a href="/2022-spring-stats2/materials/session-6/slides/">Slides</a></li>
+
+
+
+  <li class="active"><a href="/2022-spring-stats2/materials/session-6/06-online-tutorial/">Instrumental Variables</a></li>
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      
+
+      
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <article class="article">
+
+        <div class="docs-article-container">
+          
+            
+  <nav class="d-none d-md-flex" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      
+  
+  
+  
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/">
+      
+        Home
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/">
+      
+        Materials
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/session-6/">
+      
+        IVs in R
+      
+    </a>
+  </li>
+
+
+      <li class="breadcrumb-item active" aria-current="page">
+        Instrumental Variables
+      </li>
+    </ol>
+  </nav>
+
+
+          
+
+          <h1>Instrumental Variables</h1>
+
+          <div class="article-style">
+            
+<script src="/2021-spring-stats2rmarkdown-libs/kePrint/kePrint.js"></script>
+<link href="/2021-spring-stats2rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
+
+
+<div id="welcome" class="section level2">
+<h2>Welcome</h2>
+<div id="introduction" class="section level3">
+<h3>Introduction!</h3>
+<p>Welcome to our sixth tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.</p>
+<p>During this week's lecture you reviewed what happens when experiments break due to non-compliance. You were also introduced to <strong>encouragement experimental setups</strong>, and their the observational analogue, <strong>instrumental variables</strong>. Finally, you learned how you can estimate local average treatment effects by breaking out the variation in <strong>D</strong> into two parts.</p>
+<p>In this lab session we will:</p>
+<ul>
+<li>Review how to manually extract the LATE through the <strong>wald estimator</strong></li>
+<li>Learn how to perform Two-stage Least Squares regression (2SLS) with <code>ivreg()</code> from the <code>AER</code> package</li>
+<li>Illustrate the mechanics of Two-stage Least Squares regression (2SLS) with <code>lm()</code></li>
+</ul>
+<hr />
+<div id="packages" class="section level4">
+<h4>Packages</h4>
+<pre class="r"><code># These are the libraries we will use today. Make sure to install them in your console in case you have not done so previously.
+
+library(tidyverse) # To load the collection of packages in the tidyverse
+library(dplyr) # To wrangle our data (this package is also loaded by library(tidyverse))
+library(readr) # To load the .csv data (this package is also loaded by library(tidyverse))
+library(ggplot2) # To create plots (this package is also loaded by library(tidyverse))
+library(tidyr) # To use pivot_wider() (this package is also loaded by library(tidyverse))
+library(ggdag) # To dagify and plot our DAG objects in R
+#library(summarytools) # for ctable()
+library(broom) # To format regression output
+library(janitor) # To examine our data with tabyl()
+library(stargazer) # To format model output
+library(knitr) # To create HTML tables with kable()
+library(kableExtra) # To format the HTML tables
+library(AER) # To run 2SLS with ivreg()</code></pre>
+<hr />
+</div>
+</div>
+</div>
+<div id="measuring-the-effect-of-mosquito-net-use-on-malaria-infections" class="section level2">
+<h2>Measuring the effect of mosquito net use on malaria infections</h2>
+<p>Imagine that the organization you work for is laying out a project to distribute mosquito nets to help combat malaria transmitions.</p>
+<p>The funding agency requires a impact evaluation report from your organization. You are in charge of running the evaluation of this program.</p>
+<p>You realize that there are potential <span style="color:#6600cc;">unobserved counfounders</span> that could bias the observed differences in malaria risk for mosquito net users and non-users. You also think about the ethical considerations of fully randomizing who receives the nets, so you remember your Statistics II lecture on IVs and set up an <strong>encouragement design</strong>.</p>
+<p>Your benificiaries are scattered across ten villages. You decide to randomly select five villages to <span style="color:#cc0055;">send SMS reminders every night encouraging them to use the mosquito nets</span>. (This example is using simulated data) <br><br></p>
+<p><img src="https://user-images.githubusercontent.com/54796579/110632472-f2535080-81a7-11eb-9143-60ab36ecff07.png" width="90%" style="display: block; margin: auto;" /></p>
+<hr />
+<div id="assumptions" class="section level3">
+<h3>Assumptions</h3>
+<p>To render credible results for the evaluation of this program, we need to fulfill a certain set of assumtions:</p>
+<p><strong>a) Relevance:</strong> Also known as non-zero average encouragement effect. Does our <span class="math inline">\(Z\)</span> create variation in our <span class="math inline">\(D\)</span>? In other words, is the mosquito net use different under the encouragement group? (Statistically testable)</p>
+<p><strong>b) Exogeneity/Ignorability of the instrument:</strong> Potential outcomes and treatments are independent of <span class="math inline">\(Z\)</span>. In this case given by out randomization of encouragement by villages.</p>
+<p><strong>c) Exclusion restriction:</strong> The instrument only affects the outcome via the treatment. In other words, there are no alternative paths through which our SMS can have an effect on malaria infections other that the use of the mosquito nets.</p>
+<p><strong>d) Monotonicity:</strong> No defiers. We assume that non-compliers fall in the camp of always- and never-takers. We would not expect subjects who when encouraged would not use the nets, but would use them if they did not recieve the SMS reminder.</p>
+<hr />
+</div>
+</div>
+<div id="exploring-our-data" class="section level2">
+<h2>Exploring our data</h2>
+<pre class="r"><code>evaluation_df &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/seramirezruiz/stats-ii-lab/master/Session%205/data/evaluation_data.csv&quot;) # loading simulated data frame of the intervention</code></pre>
+<p>You receive the results of your intervention from the M&amp;E officers. There are 1000 inhabitants across the ten villages. This is what the data look like:</p>
+<ul>
+<li><code>village_name</code>: A character string with the name of the village</li>
+<li><code>sms</code>: A binary marker for the SMS encouragement</li>
+<li><code>net_use</code>: A binary marker for mosquito net use</li>
+<li><code>malaria</code>: A binary marker for malaria infection</li>
+</ul>
+<hr />
+<h4 style="color:#cc0055;">
+Compliance types
+</h4>
+<p>You may remember, this table from the lecture:</p>
+<p><img src="https://raw.githubusercontent.com/seramirezruiz/stats-ii-lab/master/Session%205/data/compliance.png" width="90%" style="display: block; margin: auto;" /></p>
+<hr />
+<p>We can crosstabulate our data with <code>janitor::tabyl()</code> and the additional features of the <code>janitor::adorn_*</code> functions.</p>
+<p>Why <code>janitor::tabyl()</code>? Because as prospective policy analysts we will do a lot of counting.</p>
+<p>As the <a href="https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html">vignette</a> of the package even puts it:</p>
+<p>Analysts do a lot of counting. Indeed, it’s been said that 'data science is mostly counting things.' But the base R function for counting, <code>table()</code>, leaves much to be desired:</p>
+<ul>
+<li>It doesn’t accept data.frame inputs (and thus doesn’t play nicely with the %&gt;% pipe)</li>
+<li>It doesn’t output data.frames</li>
+<li>Its results are hard to format. Compare the look and formatting choices of an R table to a Microsoft Excel PivotTable.</li>
+</ul>
+<p>This is how it works. Say we are interested in exploring the number of persons in each of the observed strata, we would do:</p>
+<pre class="r"><code>evaluation_df %&gt;% # your data frame
+  janitor::tabyl(net_use, sms) %&gt;% # the two dimensions for the table (D, Z)
+  janitor::adorn_totals(c(&quot;row&quot;, &quot;col&quot;)) %&gt;% # add totals for rows and cols
+  knitr::kable() %&gt;% # turn into a kable table for nice rendering in HTML
+  kableExtra::kable_styling() %&gt;% 
+  kableExtra::add_header_above(c(&quot;&quot;, &quot;sms&quot; = 2, &quot;&quot;)) #add header for sms</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+sms
+</div>
+</th>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+net_use
+</th>
+<th style="text-align:right;">
+0
+</th>
+<th style="text-align:right;">
+1
+</th>
+<th style="text-align:right;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:right;">
+335
+</td>
+<td style="text-align:right;">
+110
+</td>
+<td style="text-align:right;">
+445
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+165
+</td>
+<td style="text-align:right;">
+390
+</td>
+<td style="text-align:right;">
+555
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+1000
+</td>
+</tr>
+</tbody>
+</table>
+<p><em>If you want to learn more about the syntax of <code>tabyl()</code>, make sure to check the</em> <a href="https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html">vignette</a></p>
+<hr />
+<h4 style="color:#6600cc;">
+Exercise
+</h4>
+<h5">Let's explore the compliance types from this table
+</h4>
+<ul>
+<li>Where are our compliers and non-compliers?</li>
+<li>How many people were encouraged via SMS, but did not use the net?</li>
+<li>How many people were not encouraged via SMS, yet they utilized the net?</li>
+</ul>
+<hr />
+<h4 style="color:#cc0055;">
+Average malaria infections across strata
+</h4>
+<p>We can utilize the <code>tabyl()</code> syntax and our knowledge from the grammar of graphics to table and visualize the distribution of malaria on each stratum:</p>
+<h5 style = "color:#cc0055;">
+Table: Count of malaria infections across strata (Y,Z)
+</h4>
+<pre class="r"><code>evaluation_df %&gt;% # your data frame
+  janitor::tabyl(malaria, sms) %&gt;% # the two dimensions for the table (Y, Z)
+  janitor::adorn_totals(c(&quot;row&quot;, &quot;col&quot;)) %&gt;% # add totals for rows and cols
+  knitr::kable() %&gt;% # turn into a kable table for nice rendering in HTML
+  kableExtra::kable_styling() %&gt;% 
+  kableExtra::add_header_above(c(&quot;&quot;, &quot;sms&quot; = 2, &quot;&quot;)) #add header for sms</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+sms
+</div>
+</th>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+malaria
+</th>
+<th style="text-align:right;">
+0
+</th>
+<th style="text-align:right;">
+1
+</th>
+<th style="text-align:right;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:right;">
+248
+</td>
+<td style="text-align:right;">
+410
+</td>
+<td style="text-align:right;">
+658
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+252
+</td>
+<td style="text-align:right;">
+90
+</td>
+<td style="text-align:right;">
+342
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+1000
+</td>
+</tr>
+</tbody>
+</table>
+<h5 style = "color:#cc0055;">
+Plot: Distribution of malaria infections across strata
+</h4>
+<pre class="r"><code>ggplot(evaluation_df, aes(x = factor(sms), 
+                          y = factor(net_use), 
+                          color = factor(malaria))) +
+  geom_jitter() +
+  theme_minimal() +
+  scale_x_discrete(labels = c(&quot;SMS = 0&quot;, &quot;SMS = 1&quot;)) +
+  scale_y_discrete(limits = c(&quot;1&quot;,&quot;0&quot;), labels = c(&quot;NET = 1&quot;, &quot;NET = 0&quot;)) +
+  scale_color_manual(values = c(&quot;#CDCDCD&quot;, &quot;#CC0055&quot;),
+                       labels = c(&quot;Not infected&quot;, &quot;Infected&quot;)) +
+  labs(x = &quot;Encouragement&quot;,
+       y = &quot;Treatment&quot;,
+       color = &quot;&quot;) +
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/111189828-c3c5e300-85b6-11eb-8a6e-cb958c5fa0bf.png" width="90%" style="display: block; margin: auto;" /></p>
+<hr />
+<h4 style="color:#6600cc;">
+Exercise
+</h4>
+<ul>
+<li>What insights can we gather from the table and plot?</li>
+</ul>
+<hr />
+</div>
+<div id="exploring-our-set-up" class="section level2">
+<h2>Exploring our set-up</h2>
+<div id="lets-check-whether-sms-encouragement-is-a-strong-instrument" class="section level4">
+<h4>Let's check whether SMS encouragement is a strong instrument</h4>
+<p>In other words, we are looking at the relevance assumption. Does our SMS encouragement create changes in our mosquito net use?</p>
+<pre class="r"><code>lm(net_use ~ sms, data = evaluation_df) %&gt;%
+  stargazer::stargazer(type = &quot;text&quot;)</code></pre>
+<pre><code>## 
+## ===============================================
+##                         Dependent variable:    
+##                     ---------------------------
+##                               net_use          
+## -----------------------------------------------
+## sms                          0.450***          
+##                               (0.028)          
+##                                                
+## Constant                     0.330***          
+##                               (0.020)          
+##                                                
+## -----------------------------------------------
+## Observations                   1,000           
+## R2                             0.205           
+## Adjusted R2                    0.204           
+## Residual Std. Error      0.444 (df = 998)      
+## F Statistic          257.315*** (df = 1; 998)  
+## ===============================================
+## Note:               *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>Economists have established as a &quot;rule-of-thumb&quot; for the case of a single endogenous regressor to be considered a strong instrument should have a <strong>F-statistic</strong> <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> greater than 10. From this regression, we can see that SMS encouragement is a strong instrument.</p>
+<p>Additionally, the substantive read in this case is that only 33% of those who did not receive the SMS utilized the mosquito nets, where as 78% of those who got the SMS encouragement did. <br><br></p>
+<hr />
+</div>
+<div id="lets-gather-a-naïve-estimate-of-mosquito-net-use-and-malaria-infection." class="section level4">
+<h4>Let's gather a naïve estimate of mosquito net use and malaria infection.</h4>
+<p>Why do you think we call this a naïve estimate?</p>
+<pre class="r"><code>naive_model &lt;- lm(malaria ~ net_use, data = evaluation_df)
+stargazer::stargazer(naive_model, type = &quot;text&quot;)</code></pre>
+<pre><code>## 
+## ===============================================
+##                         Dependent variable:    
+##                     ---------------------------
+##                               malaria          
+## -----------------------------------------------
+## net_use                      -0.615***         
+##                               (0.023)          
+##                                                
+## Constant                     0.683***          
+##                               (0.017)          
+##                                                
+## -----------------------------------------------
+## Observations                   1,000           
+## R2                             0.415           
+## Adjusted R2                    0.414           
+## Residual Std. Error      0.363 (df = 998)      
+## F Statistic          707.002*** (df = 1; 998)  
+## ===============================================
+## Note:               *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<hr />
+<h4 style="color:#6600cc;">
+Exercise
+</h4>
+<ul>
+<li>What would our expectations be under the naïve model?</li>
+</ul>
+<p><br><br></p>
+<hr />
+</div>
+<div id="lets-gather-our-intent-to-treat-effect-itt" class="section level4">
+<h4>Let's gather our intent-to-treat effect (ITT)</h4>
+<p>This is the effect that our SMS encouragement had on malaria infections. <span class="math display">\[ITT = E(Malaria_i|SMS=1) - E(Malaria_i|SMS=0)\]</span></p>
+<pre class="r"><code>itt_model &lt;- lm(malaria ~ sms, data = evaluation_df)
+stargazer::stargazer(itt_model, type = &quot;text&quot;)</code></pre>
+<pre><code>## 
+## ===============================================
+##                         Dependent variable:    
+##                     ---------------------------
+##                               malaria          
+## -----------------------------------------------
+## sms                          -0.324***         
+##                               (0.028)          
+##                                                
+## Constant                     0.504***          
+##                               (0.020)          
+##                                                
+## -----------------------------------------------
+## Observations                   1,000           
+## R2                             0.117           
+## Adjusted R2                    0.116           
+## Residual Std. Error      0.446 (df = 998)      
+## F Statistic          131.753*** (df = 1; 998)  
+## ===============================================
+## Note:               *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<hr />
+<h4 style="color:#6600cc;">
+Exercise
+</h4>
+<ul>
+<li>What does this tell us?</li>
+</ul>
+<p><br><br></p>
+<hr />
+</div>
+</div>
+<div id="lets-gather-out-local-average-treatment-effect-late" class="section level2">
+<h2>Let's gather out local average treatment effect (LATE)</h2>
+<p>We have several options for this:</p>
+<ul>
+<li><strong>Wald Estimator</strong> We can calculate this by hand. Let's try that now using the values from the table we created earlier. We can also calculate the average malaria rates among those who did and did not receive an SMS (no SMS = 0.504, yes SMS = 0.18).</li>
+</ul>
+<h5 style = "color:#cc0055;">
+Table: Observations across strata (D,Z)
+</h4>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+sms
+</div>
+</th>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+net_use
+</th>
+<th style="text-align:right;">
+0
+</th>
+<th style="text-align:right;">
+1
+</th>
+<th style="text-align:right;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:right;">
+335
+</td>
+<td style="text-align:right;">
+110
+</td>
+<td style="text-align:right;">
+445
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+165
+</td>
+<td style="text-align:right;">
+390
+</td>
+<td style="text-align:right;">
+555
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+1000
+</td>
+</tr>
+</tbody>
+</table>
+<h5 style = "color:#cc0055;">
+Table: Count of malaria infections across strata (Y,Z)
+</h4>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+sms
+</div>
+</th>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+malaria
+</th>
+<th style="text-align:right;">
+0
+</th>
+<th style="text-align:right;">
+1
+</th>
+<th style="text-align:right;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:right;">
+248
+</td>
+<td style="text-align:right;">
+410
+</td>
+<td style="text-align:right;">
+658
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+252
+</td>
+<td style="text-align:right;">
+90
+</td>
+<td style="text-align:right;">
+342
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+1000
+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4>
+Local Average Treatment Effect (LATE) manually
+</h4>
+<p><br></p>
+<blockquote>
+<p><span class="math display">\[LATE = \frac{cov(Y_i,Z_i)}{cov(D_i,Z_i)}\]</span></p>
+</blockquote>
+<p><strong>Let's take a look at our numerator</strong> <span class="math inline">\(cov(Y_i,Z_i)\)</span>, also <span class="math inline">\(ITT\)</span><br></p>
+<blockquote>
+<p><span class="math inline">\(E(Y|Z = 1) = \frac{90}{(410+90)} = 0.18\)</span> <br> <span class="math inline">\(E(Y|Z = 0) = \frac{252}{(252+248)} = 0.504\)</span> <br></p>
+</blockquote>
+<p><strong>Let's take a look at our denominator</strong> <span class="math inline">\(cov(D_i,Z_i)\)</span> <br></p>
+<blockquote>
+<p><span class="math inline">\(E(D∣Z = 1) = \frac{390}{(390 + 110)} = 0.78\)</span> <br> <span class="math inline">\(E(D∣Z = 0) = \frac{165}{(165 + 335)} = 0.33\)</span> <br></p>
+</blockquote>
+<p><strong>We can calculate our LATE</strong></p>
+<blockquote>
+<p><span class="math display">\[LATE =  \frac{(0.18 - 0.504)}{(0.78 - 0.33)} = -0.72\]</span><br></p>
+</blockquote>
+<hr />
+<ul>
+<li><strong>Two-stage Least Squares (2SLS)</strong>. We will learn how to do this with <code>ivreg()</code>, which is part of the <code>AER</code> package. It fits instrumental-variable regression through two-stage least squares. The syntax is the following:</li>
+</ul>
+<pre class="r"><code>ivreg(outcome ~ treatment | instrument, data)</code></pre>
+<p>In our case:</p>
+<pre class="r"><code>late_model &lt;- AER::ivreg(malaria ~ net_use | sms, data = evaluation_df)
+summary(late_model)</code></pre>
+<pre><code>## 
+## Call:
+## AER::ivreg(formula = malaria ~ net_use | sms, data = evaluation_df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.7416 -0.0216 -0.0216  0.2584  0.9784 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.74160    0.03089   24.00   &lt;2e-16 ***
+## net_use     -0.72000    0.05159  -13.96   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.3671 on 998 degrees of freedom
+## Multiple R-Squared: 0.4025,  Adjusted R-squared: 0.4019 
+## Wald test: 194.8 on 1 and 998 DF,  p-value: &lt; 2.2e-16</code></pre>
+<hr />
+<h4 style="color:#6600cc;">
+Exercise
+</h4>
+<ul>
+<li>What is the substantive reading of these results?</li>
+<li>What would you tell the funding partner in your evaluation report?</li>
+</ul>
+<p><br><br></p>
+<hr />
+</div>
+<div id="mechanics-behind-two-stage-least-squares-2sls" class="section level2">
+<h2>Mechanics behind two-stage least squares (2SLS)</h2>
+<p><img src="https://raw.githubusercontent.com/seramirezruiz/stats-ii-lab/master/Session%205/data/instrumental-variables.gif" style="display: block; margin: auto;" /></p>
+<p>What ivreg() is doing in the background is the following:</p>
+<pre class="r"><code>net_use_hat &lt;- lm(net_use ~ sms, evaluation_df)$fitted.values # get fitted values from first stage (the part of x that is exogenously driven by z)
+summary(lm(evaluation_df$malaria ~ net_use_hat)) # run second stage with instrumented x (careful, the standard errors are wrong; better use ivreg() from AER instead)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = evaluation_df$malaria ~ net_use_hat)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -0.504 -0.180 -0.180  0.496  0.820 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.74160    0.03757   19.74   &lt;2e-16 ***
+## net_use_hat -0.72000    0.06273  -11.48   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4463 on 998 degrees of freedom
+## Multiple R-squared:  0.1166, Adjusted R-squared:  0.1157 
+## F-statistic: 131.8 on 1 and 998 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p><br><br></p>
+<hr />
+</div>
+<div id="thinking-about-the-validity-of-instruments" class="section level2">
+<h2>Thinking about the validity of instruments</h2>
+<p><img src="https://raw.githubusercontent.com/seramirezruiz/stats-ii-lab/master/Session%205/data/validity_ivs.png" style="display: block; margin: auto;" /></p>
+<p><strong>We can also adapt the <code>ivreg()</code> syntax to accomodate valid conditional instruments:</strong></p>
+<pre class="r"><code>AER::ivreg(Y ~ D + W | Z + W, data = your_df)</code></pre>
+<p><br></p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>An F statistic is a value you get when you run an ANOVA test or a regression analysis to find out if the means between two populations are significantly different. It’s similar to a t-statistic from a t-test; A-T test will tell you if a single variable is statistically significant and an F test will tell you if a group of variables are jointly significant.<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+
+          </div>
+
+          
+
+
+
+          
+          
+          <div class="article-widget">
+            
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/2022-spring-stats2/materials/session-6/slides/" rel="next">05 - Slides</a>
+  </div>
+  
+  
+</div>
+
+          </div>
+          
+        </div>
+
+        <div class="body-footer">
+          <p>Last updated on Jan 1, 0001</p>
+
+          
+
+
+
+
+
+          
+
+
+
+
+          
+
+
+  
+  
+
+
+
+        </div>
+
+      </article>
+
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/latex.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+    <script>
+      anchors.add();
+    </script>
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+        <div class="search-hit-content">
+          <div class="search-hit-name">
+            <a href="{{relpermalink}}">{{title}}</a>
+            <div class="article-metadata search-hit-type">{{type}}</div>
+            <p class="search-hit-description">{{snippet}}</p>
+          </div>
+        </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+      
+      
+      
+      
+      
+      
+      
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+      
+    
+    
+    <script src="/2022-spring-stats2/en/js/wowchemy.min.e5856c0a0618a04dd7b1e07451b5f341.js"></script>
+
+    
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+
+
+</body>
+</html>

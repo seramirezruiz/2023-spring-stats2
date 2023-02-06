@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories | | Tutorials - Spring 2023 |</title>
+    <link>https://seramirezruiz.github.io/2023-spring-stats2/categories/</link>
+      <atom:link href="https://seramirezruiz.github.io/2023-spring-stats2/categories/index.xml" rel="self" type="application/rss+xml" />
+    <description>Categories</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language>
+    <image>
+      <url>https://seramirezruiz.github.io/2023-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
+      <title>Categories</title>
+      <link>https://seramirezruiz.github.io/2023-spring-stats2/categories/</link>
+    </image>
+    
+  </channel>
+</rss>

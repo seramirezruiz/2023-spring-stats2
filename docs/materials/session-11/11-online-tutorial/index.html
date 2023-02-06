@@ -1,0 +1,1295 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.0.0-beta.2 for Hugo" />
+  
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Sebastian Ramirez Ruiz" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Introduction! Welcome to our eleventh tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.
+In this lab session we will develop our own simulation to understand the concept of power analysis a bit better." />
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-11/11-online-tutorial/" />
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    <meta name="theme-color" content="#1565c0" />
+  
+
+  
+  
+    
+    <script src="/2022-spring-stats2/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous" media="print" onload="this.media='all'">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/2022-spring-stats2/css/wowchemy.dd90b8698d7ba5e114b9de5647a585e5.css" />
+
+  
+
+
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+    <link rel="manifest" href="/2022-spring-stats2/index.webmanifest" />
+  
+
+  <link rel="icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_32x32_fill_lanczos_center_2.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_180x180_fill_lanczos_center_2.png" />
+
+  <link rel="canonical" href="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-11/11-online-tutorial/" />
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary" />
+  
+  <meta property="og:site_name" content="| Tutorials - Spring 2022 |" />
+  <meta property="og:url" content="https://seramirezruiz.github.io/2022-spring-stats2/materials/session-11/11-online-tutorial/" />
+  <meta property="og:title" content="Power Analysis | | Tutorials - Spring 2022 |" />
+  <meta property="og:description" content="Introduction! Welcome to our eleventh tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.
+In this lab session we will develop our own simulation to understand the concept of power analysis a bit better." /><meta property="og:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" />
+    <meta property="twitter:image" content="https://seramirezruiz.github.io/2022-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png" /><meta property="og:locale" content="en-us" />
+  
+    
+    
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+
+
+
+
+  <title>Power Analysis | | Tutorials - Spring 2022 |</title>
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/2022-spring-stats2/js/wowchemy-init.min.d876f1a6b98701f9238f2313b512a26f.js"></script>
+
+  
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/2022-spring-stats2/">| Tutorials - Spring 2022 |</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-end" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/2022-spring-stats2/materials/"><span>Materials</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+        
+      
+        
+      
+
+      
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    
+
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+          Statistical Power and Power Analysis in R
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/2022-spring-stats2/materials/"><i class="fas fa-arrow-left pr-1"></i>Materials</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/2022-spring-stats2/materials/session-11/">Statistical Power and Power Analysis in R</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  <li class=""><a href="/2022-spring-stats2/materials/session-11/slides/">Slides</a></li>
+
+
+
+  <li class="active"><a href="/2022-spring-stats2/materials/session-11/11-online-tutorial/">Power Analysis</a></li>
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      
+
+      
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <article class="article">
+
+        <div class="docs-article-container">
+          
+            
+  <nav class="d-none d-md-flex" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      
+  
+  
+  
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/">
+      
+        Home
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/">
+      
+        Materials
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/2022-spring-stats2/materials/session-11/">
+      
+        Statistical Power and Power Analysis in R
+      
+    </a>
+  </li>
+
+
+      <li class="breadcrumb-item active" aria-current="page">
+        Power Analysis
+      </li>
+    </ol>
+  </nav>
+
+
+          
+
+          <h1>Power Analysis</h1>
+
+          <div class="article-style">
+            
+<script src="/2022-spring-stats2rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<script src="/2022-spring-stats2rmarkdown-libs/kePrint/kePrint.js"></script>
+<link href="/2022-spring-stats2rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction!</h2>
+<p>Welcome to our eleventh tutorial for the Statistics II: Statistical Modeling &amp; Causal Inference (with R) course.</p>
+<p>In this lab session we will develop our own simulation to understand the concept of power analysis a bit better.</p>
+<p>We will also learn to apply for-loops and functions!</p>
+<p>This session is heavily based on material provided by Nick Huntington-Klein. Check out his fantastic materials under <a href="https://nickch-k.github.io/EconometricsSlides/" class="uri">https://nickch-k.github.io/EconometricsSlides/</a></p>
+<hr />
+<div id="packages" class="section level4">
+<h4>Packages</h4>
+<pre class="r"><code># These are the libraries we will use today. Make sure to install them in your console in case you have not done so previously.
+
+library(tidyverse)
+library(broom)
+
+set.seed(42) # for consistent results</code></pre>
+<hr />
+</div>
+</div>
+<div id="statistical-power" class="section level2">
+<h2>Statistical Power</h2>
+<p>Statistics is an area where the lessons of violent video games are more or less true: if you want to solve a really tough problem, you need to bring a whole lot of firepower.</p>
+<p>Once we have our study design down, there are a number of things that can turn statistical analysis into a fairly weak tool and make us less likely to find the truth:</p>
+<ol style="list-style-type: decimal">
+<li>Really tiny effects are really hard to find</li>
+<li>Most statistical analyses are about looking at variation. If there’s little variation in the data, we won’t have much to go on</li>
+<li>If there’s a lot of stuff going on other than the effect we’re looking for, it will be hard to pull the signal from the noise</li>
+<li>If we have really high standards for what counts as evidence, then a lot of good evidence is going to be ignored so we need more evidence to make up for it</li>
+</ol>
+<p>Conveniently, all of these problems can be solved by increasing our firepower, by which we mean sample size. Power analysis is our way of figuring out exactly how much firepower we need to bring. If it’s more than we’re willing to provide, we might want to turn around and go back home.</p>
+<hr />
+<div id="what-power-analysis-does" class="section level3">
+<h3>What Power Analysis Does</h3>
+<p>Using X as shorthand for the treatment and Y as shorthand for the outcome, assuming we’re doing a power analysis for the a study of the relationship between X and Y, power analysis balances five things:</p>
+<ol style="list-style-type: decimal">
+<li>The size of the effect (e.g. coefficient in a regression)</li>
+<li>The amount of variation in the treatment (the variance of X, say)</li>
+<li>The amount of other variation in Y (the R2, or the variation from the residual after explaining Y with X)</li>
+<li>Statistical precision (the standard error of the estimate, statistical power, i.e. the true-positive rate)</li>
+<li>The sample size</li>
+</ol>
+<p>A power analysis holds four of these constant and tells you what the fifth can be. So, for example, it might say “<em>if we think the effect is probably A, and there’s B variation in X, and there’s C variation in Y unrelated to X, and you want to have at least a D% chance of finding an effect if it’s really there, then you’ll need a sample size of at least E.</em>” This tells us the <strong>minimum sample size</strong> necessary to get sufficient statistical power.</p>
+<p>Or we can go in other directions. “<em>If you’re going to have a sample size of A, and there’s B variation in X, and there’s C variation in Y unrelated to X, and you want to have at least a D% chance of finding an effect if it’s really there, then the effect must be at least as large as E.</em>” This tells us the <strong>minimum detectable effect</strong>, i.e. the smallest effect you can hope to have a chance of reasonably measuring given your sample size.</p>
+<p>How about that “statistical precision” option? Usually, you have a target level of statistical power (thus the name “power analysis”). Statistical power is the true-positive rate. That is, if there’s truly an effect there, and sampling variation means that you have an 80% chance of rejecting the null of no-effect in a given sample, then you have 80% statistical power. Statistical power is dependent on the kind of test you’re running, too - if you are doing a hypothesis test at the 95% confidence level, you’re more likely to reject the null (and thus will have higher statistical power) than if you’re doing a hypothesis test at the 99% confidence level. The more careful you are about false positives, the more likely you are to get a false negative. So there’s a tradeoff there.</p>
+<p>In order to do power analysis, <strong>you need to be able to fill in the values for four of those five pieces, so that power analysis can tell you the fifth one</strong>. How do we know those things? In practical terms, power analysis isn’t a homework assignment, it’s guidance. It doesn’t need to be exact. A little guesswork (although ideally as little as possible) is necessary. After all, even getting the minimum sample size necessary doesn’t guarantee your analysis is good, it just gives you a pretty good chance of finding a result if it’s there. Often, people take the results of their power analysis as a baseline and then make sure to overshoot the mark, under the assumption they’ve been too conservative. So don’t worry about being accurate, just try to make the numbers in the analysis close enough to be useful.</p>
+<hr />
+</div>
+</div>
+<div id="simulation-example" class="section level2">
+<h2>Simulation Example</h2>
+<p>If the analysis you’re planning to do is a standard one, you can use one of many, many available “power analysis calculators” to do the work for you (for example, see <a href="http://powerandsamplesize.com/" class="uri">http://powerandsamplesize.com/</a>).</p>
+<p>However, running simulations in this context is a great way to i) understand power analysis and ii) apply your R skills!</p>
+<hr />
+<div id="step-1-make-up-data-with-the-properties-we-want" class="section level3">
+<h3>Step 1: Make Up Data With The Properties We Want</h3>
+<p>Lets have a look at two useful functions to implement simulations:</p>
+<p><code>rnorm()</code> takes three arguments: the sample size, the mean, and the standard deviation. <code>rnorm(100, 0, 3)</code> produces 100 random normal draws from a normal distribution with a mean of 0 and a standard deviation of 3.</p>
+<p><code>sample()</code> takes a bunch of arguments, but the important ones are the set to sample from, the sample size, replace, and prob. <code>sample(c('Treated','Untreated'), 500, replace = TRUE, prob = c(.2,.8))</code> produces 500 random observations that are either ‘Treated’ or ‘Untreated’. Since prob = c(.2,.8), there’s a 20% chance of each draw being the first one (‘Treated’) and an 80% chance it’s the second (‘Untreated’). You pretty much always want replace = TRUE since that says that you can get the same thing more than once (i.e. more than one ‘Treated’ observation).</p>
+<p>You can then design whatever sort of data you like - the data generating process is in your hands! You can use variables generated using random data to create other variables as well - now you have a causal link!</p>
+<p><strong>Our setting:</strong></p>
+<p>In this case, imagine you have been tasked with analyzing an experiment run by a big multinational firm. A random subset of managers (treatment group) is supposed to receive a workshop on the climate change related consequences of flying and potential ways of replacing in-person meetings with international clients with online alternatives. The outcome of interest is the amount of kilometers flown to and from business meetings.</p>
+<p>Let’s construct a simulated dataset reflecting the true relationship:</p>
+<pre class="r"><code># Make a tibble (or data.frame) to contain our data
+tib &lt;- tibble::tibble(
+  # Start by creating the variables that don&#39;t depend on anything else
+  # Around 20% of managers are supposed to take the workshop (1), and the remaining 80% will be the control group (0)
+  #You will receive data on 1000 managers
+  workshop = sample(c(1,0), 1000, replace = TRUE, prob = c(.2,.8))
+) %&gt;%
+  # Then mutate in any variables that depend on earlier variables
+  # Don&#39;t forget to add additional noise!
+  # The *true effect* of workshop on kms_flown is -90km
+  dplyr::mutate(kms_flown = -90*workshop + rnorm(1000, mean = 4000, sd = 1000))</code></pre>
+<p>Just from this construction we have set:</p>
+<ol style="list-style-type: lower-alpha">
+<li>the true effect of X on Y (i.e, a reduction of 90km flown),</li>
+<li>the amount of variation in X (by the characteristics of the binomial distribution),</li>
+<li>the amount of variation in Y not coming from X (it’s a normal distribution with a mean of 4000km and standard deviation of 1000km),</li>
+<li>the sample size (1000 managers).</li>
+</ol>
+<hr />
+<h4 style="color:#cc0065">
+Let’s see what we simulated
+</h4>
+<pre class="r"><code>ggplot(tib, aes(x=kms_flown, fill=factor(workshop))) +
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(name = &quot;Workshop&quot;,
+                    values = c(&quot;#a7a8aa&quot;, &quot;#cc0055&quot;),
+                    labels = c(&quot;Control&quot;, &quot;Treatment&quot;)) +
+  labs(x = &quot;Distance flown by manager (kms)&quot;,
+       y = &quot;Density&quot;) +
+  theme_minimal() +
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<pre class="r"><code>knitr::include_graphics(&quot;https://user-images.githubusercontent.com/54796579/165579120-f28b782e-334f-4375-b536-60d84219cc12.png&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/165579120-f28b782e-334f-4375-b536-60d84219cc12.png" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+<div id="step-2-perform-the-analysis" class="section level3">
+<h3>Step 2: Perform the Analysis</h3>
+<p>Given that we are planning an experiment, we will regress Y on X to get the causal effect of the workshop on kms flown.</p>
+<pre class="r"><code>model&lt;-lm(kms_flown ~ workshop, data = tib)
+modelsummary::modelsummary(model,
+             fmt = 2,
+             gof_omit = &quot;AIC|BIC|Log.Lik.&quot;,
+             statistic = &quot;conf.int&quot;,
+             stars = T)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Model 1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+3949.91***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+[3880.71, 4019.10]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+workshop
+</td>
+<td style="text-align:center;">
+4.70
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+[-151.59, 160.98]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+1000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+-0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:center;">
+0.003
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border:0;" colspan="100%">
+<sup></sup> + p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001
+</td>
+</tr>
+</tfoot>
+</table>
+<pre class="r"><code>tidy(model)</code></pre>
+<pre><code>## # A tibble: 2 × 5
+##   term        estimate std.error statistic p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept)  3950.        35.3  112.       0    
+## 2 workshop        4.70      79.6    0.0590   0.953</code></pre>
+<pre class="r"><code># Let&#39;s extract the p-value on the coefficient of interest
+tidy(model)$p.value[2]</code></pre>
+<pre><code>## [1] 0.9529955</code></pre>
+<pre class="r"><code># And if we&#39;re just interested in significance, say at the 95% level...
+sig &lt;- tidy(model)$p.value[2] &lt;= .05
+sig</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>With this particular sample of simulated data, our experimental design does not detect any significant effect of the treatment on the outcome. But…</p>
+<hr />
+</div>
+<div id="step-3-repeat" class="section level3">
+<h3>Step 3: Repeat!</h3>
+<p>…of course, this is only one generated data set. That doesn’t tell us much of anything about the sampling variation! So we need to do this all a bunch of times, maybe a few thousand, and see what we get.</p>
+<p>While an R purist would probably opt for doing this with one of the <code>apply()</code> functions, for simplicity we’re just going to use the good ol’ for() loop.</p>
+<p><code>for (iterator in range) { code }</code> will run the code code a bunch of times, each time setting the iterator variable to a different value in range, until it’s tried all of them, like this:</p>
+<pre class="r"><code>for (i in 1:5) {
+  print(i)
+}</code></pre>
+<pre><code>## [1] 1
+## [1] 2
+## [1] 3
+## [1] 4
+## [1] 5</code></pre>
+<p>We’re going to take all of the steps we’ve done so far and put them inside those curly braces {}. Then we’re going to repeat the whole process a bunch of times!</p>
+<pre class="r"><code>for (i in 1:2000) {
+  # Have to re-create the data EVERY TIME or it will just be the same data over and over
+  tib &lt;- tibble::tibble(
+    workshop = sample(c(1,0), 1000, replace = TRUE, prob = c(.2,.8))
+  ) %&gt;%
+    dplyr::mutate(kms_flown = -90*workshop + rnorm(1000, mean = 4000, sd = 1000))
+  
+  # Run the analysis
+  model &lt;- lm(kms_flown ~ workshop, data = tib)
+  
+  # Get the results
+  coef_on_X &lt;- tidy(model)$estimate[2]
+  print(coef_on_X)
+  sig &lt;- tidy(model)$p.value[2] &lt;= .05
+  print(sig)
+}</code></pre>
+<p>If we run this code, it will generate our data 2000 times (i in 1:2000) and run the analysis on each of those data sets. Then it will get the coefficient on X and whether it’s significant at the 95% level and print those to screen.</p>
+<p>Of course, this will just leave us with 2000 results printed to screen. Not that useful!</p>
+<hr />
+</div>
+<div id="step-4-store-the-results" class="section level3">
+<h3>Step 4: Store the Results</h3>
+<p>So instead of printing to screen, we’re going to save all of the results so we can look at them afterwards.</p>
+<p>We’ll start by creating some blank vectors to store our data in, like <code>results &lt;- c()</code>. Then, as we do the analysis over and over, instead of printing the results to screen, we can store them in <code>results[i]</code>, which will put it in the <span class="math inline">\(i^{th}\)</span> position of the vector, adding on new elements as i grows higher and higher with our for() loop.</p>
+<pre class="r"><code>coef_results &lt;- c()
+sig_results &lt;- c()
+
+for (i in 1:2000) {
+# Have to re-create the data EVERY TIME or it will just be the same data over and over
+  tib &lt;- tibble::tibble(
+    workshop = sample(c(1,0), 1000, replace = TRUE, prob = c(.2,.8))
+  ) %&gt;%
+    dplyr::mutate(kms_flown = -90*workshop + rnorm(1000, mean = 4000, sd = 1000))
+  
+  # Run the analysis
+  model &lt;- lm(kms_flown ~ workshop, data = tib)
+  
+  # Get the results
+  coef_results[i] &lt;- tidy(model)$estimate[2]
+  sig_results[i] &lt;- tidy(model)$p.value[2] &lt;= .05
+}</code></pre>
+<hr />
+</div>
+<div id="step-5-examine-the-results" class="section level3">
+<h3>Step 5: Examine the Results</h3>
+<p>Our true effect is -90km. Our estimate of statistical power is the proportion of the results that are significantly different from zero:</p>
+<pre class="r"><code>mean(sig_results)</code></pre>
+<pre><code>## [1] 0.1885</code></pre>
+<p>So we have statistical power of around 21%. Even though we know the true parameter is -90km, only in 21% of the cases is the coefficient estimate significant!</p>
+<p>We might also want to check the distribution of the coefficient estimate directly with geom_density() in <code>ggplot2</code> to make sure it looks appropriate and there aren’t weird outliers implying a super sensitive analysis.</p>
+<pre class="r"><code>results_tibble &lt;- tibble::tibble(coef = coef_results,
+                                 sig = sig_results)</code></pre>
+<pre class="r"><code>ggplot(results_tibble, aes(x = coef)) + 
+  geom_density() + 
+  geom_vline(xintercept = -90, linetype=&quot;dotted&quot;,  color = &quot;#cc0065&quot;) +
+  # Prettify!
+  theme_minimal() + 
+  labs(x = &#39;Coefficient&#39;, y = &#39;Density&#39;)</code></pre>
+<pre class="r"><code>knitr::include_graphics(&quot;https://user-images.githubusercontent.com/54796579/165579130-dd855e74-9019-4206-8ba3-809fa3884a23.png&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/165579130-dd855e74-9019-4206-8ba3-809fa3884a23.png" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(results_tibble, aes(x = sig, fill = sig)) + 
+  geom_bar() + 
+  # Prettify!
+  theme_minimal() + 
+  labs(x = &#39;Coefficient&#39;, y = &#39;Count&#39;) + 
+  scale_x_discrete(labels = c(&#39;Insignificant&#39;,&#39;Significant&#39;)) +
+  scale_fill_manual(values = c(&quot;#a7a8aa&quot;, &quot;#cc0055&quot;)) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<pre class="r"><code>knitr::include_graphics(&quot;https://user-images.githubusercontent.com/54796579/165579137-71f87545-ac16-4bd1-935c-de24ccbef59c.png&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/165579137-71f87545-ac16-4bd1-935c-de24ccbef59c.png" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+</div>
+<div id="change-and-compare" class="section level2">
+<h2>Change and Compare!</h2>
+<p>The goal of power analysis isn’t usually to just take one set of data-generating characteristics and generate a single power estimate, it’s to do things like calculate the minimum detectable effect or smallest sample size for a given power level.</p>
+<p>How can we do that here? By trying different values of effect size and sample size and seeing what we get.</p>
+<p>To do this, we’re first going to take everything we’ve done so far and put it inside a function. This function will be called <code>my_power_function</code> and take two arguments: “effect” (the effect of X on Y) and “sample_size”. We will be able to later change this inputs when applying the function and compare the results! The function <strong>will return the share power of your estimates based on the two given inputs</strong>.</p>
+<pre class="r"><code>my_power_function &lt;- function(effect, sample_size) {
+  sig_results &lt;- c()
+  
+  for (i in 1:500) { #Noticed that we only repeat 500 times in order to speed calculations
+    # Have to re-create the data EVERY TIME or it will just be the same data over and over
+    tib &lt;- tibble::tibble(
+    workshop = sample(c(1,0), sample_size, replace = TRUE, prob = c(.2,.8))
+  ) %&gt;%
+    dplyr::mutate(kms_flown = effect*workshop + rnorm(sample_size, mean = 4000, sd = 1000))
+  
+  # Run the analysis
+  model &lt;- lm(kms_flown ~ workshop, data = tib)
+    
+    # Get the results
+    sig_results[i] &lt;- tidy(model)$p.value[2] &lt;= .05
+  }
+  
+  sig_results %&gt;%
+    mean() %&gt;%
+    return()
+}</code></pre>
+<p>Now we can just call the function, setting effect and sample_size to whatever we want, and get the power back! Let’s check it with the values we had before and make sure we’re in the same range:</p>
+<pre class="r"><code>my_power_function(-90, 1000)</code></pre>
+<pre><code>## [1] 0.204</code></pre>
+<p>Seems good!</p>
+<p>Now let’s say we really are stuck with a sample size of 1000 and we want to know the minimum detectable effect size we can get a power of .8 with. To do this, we can just run our function with sample_size = 1000 and a bunch of different effect values until we get back a power above .8!</p>
+<pre class="r"><code>power_levels &lt;- c()
+
+effects_to_try &lt;- c(-10, -90, -200, -250 ,-300, -400, -500)
+
+for (i in 1:length(effects_to_try)) {
+  power_levels[i] &lt;- my_power_function(effects_to_try[i], 1000)
+}
+
+# Where do we cross 80%?
+power_results &lt;- tibble(effect = effects_to_try,
+                        power = power_levels)
+power_results</code></pre>
+<pre><code>## # A tibble: 7 × 2
+##   effect power
+##    &lt;dbl&gt; &lt;dbl&gt;
+## 1    -10 0.042
+## 2    -90 0.186
+## 3   -200 0.74 
+## 4   -250 0.856
+## 5   -300 0.97 
+## 6   -400 1    
+## 7   -500 1</code></pre>
+<pre class="r"><code>ggplot(power_results, 
+       aes(x = effect, y = power)) +
+  geom_line(color = &#39;#cc0065&#39;, size = 1.5) + 
+  # add a horizontal line at 90%
+  geom_hline(aes(yintercept = .8), linetype = &#39;dashed&#39;) + 
+  # Prettify!
+  theme_minimal() + 
+  scale_y_continuous(labels = scales::percent) + 
+  labs(x = &#39;Linear Effect Size&#39;, y = &#39;Power&#39;)</code></pre>
+<pre class="r"><code>knitr::include_graphics(&quot;https://user-images.githubusercontent.com/54796579/165579153-5cda2355-a8b3-4e98-8459-b231392ecd8f.png&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/165579153-5cda2355-a8b3-4e98-8459-b231392ecd8f.png" style="display: block; margin: auto;" /></p>
+<p>So it looks like we need an effect around “-225” or greater to have an 80% chance of finding a significant result. If we don’t think the effect is actually likely to be that large, then we need to figure out something else to do - for example, get a bigger sample!</p>
+<p>Imagine that you are convinced that the true effect will be a reduction of kms flown of 90km. What sample size would you need to detect this effect?</p>
+<pre class="r"><code>power_levels &lt;- c()
+
+sample_sizes_to_try &lt;- c(1000, 3000, 5000, 7000)
+
+for (i in 1:length(sample_sizes_to_try)) {
+  power_levels[i] &lt;- my_power_function(-90, sample_sizes_to_try[i])
+}
+
+# Where do we cross 80%?
+power_results &lt;- tibble(sample_size = sample_sizes_to_try,
+                        power = power_levels)
+power_results</code></pre>
+<pre><code>## # A tibble: 4 × 2
+##   sample_size power
+##         &lt;dbl&gt; &lt;dbl&gt;
+## 1        1000 0.22 
+## 2        3000 0.52 
+## 3        5000 0.698
+## 4        7000 0.88</code></pre>
+<pre class="r"><code>ggplot(power_results, 
+       aes(x = sample_size, y = power)) +
+  geom_line(color = &#39;red&#39;, size = 1.5) + 
+  # add a horizontal line at 90%
+  geom_hline(aes(yintercept = .8), linetype = &#39;dashed&#39;) + 
+  # Prettify!
+  theme_minimal() + 
+  scale_y_continuous(labels = scales::percent) + 
+  labs(x = &#39;Sample Size&#39;, y = &#39;Power&#39;)</code></pre>
+<pre class="r"><code>knitr::include_graphics(&quot;https://user-images.githubusercontent.com/54796579/165579162-b99c0193-7ca8-4502-85ad-86d163fcfda0.png&quot;)</code></pre>
+<p><img src="https://user-images.githubusercontent.com/54796579/165579162-b99c0193-7ca8-4502-85ad-86d163fcfda0.png" style="display: block; margin: auto;" /></p>
+<p>You would need a sample size of around 7000 to have an 80% chance of finding a significant result!</p>
+<p>Now it’s your turn!</p>
+<p>Try and adapt the function so that you can vary other parameters that have an effect on power. For example, you could try to change the proportion of managers getting the treatment, the standard deviation of the noise affecting Y or the significance levels that you are willing to accept for your coefficient of interest.</p>
+<hr />
+</div>
+
+          </div>
+
+          
+
+
+
+          
+          
+          <div class="article-widget">
+            
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/2022-spring-stats2/materials/session-11/slides/" rel="next">10 - Slides</a>
+  </div>
+  
+  
+</div>
+
+          </div>
+          
+        </div>
+
+        <div class="body-footer">
+          <p>Last updated on Jan 1, 0001</p>
+
+          
+
+
+
+
+
+          
+
+
+
+
+          
+
+
+  
+  
+
+
+
+        </div>
+
+      </article>
+
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/latex.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+    <script>
+      anchors.add();
+    </script>
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+        <div class="search-hit-content">
+          <div class="search-hit-name">
+            <a href="{{relpermalink}}">{{title}}</a>
+            <div class="article-metadata search-hit-type">{{type}}</div>
+            <p class="search-hit-description">{{snippet}}</p>
+          </div>
+        </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+      
+      
+      
+      
+      
+      
+      
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+      
+    
+    
+    <script src="/2022-spring-stats2/en/js/wowchemy.min.e5856c0a0618a04dd7b1e07451b5f341.js"></script>
+
+    
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+
+
+</body>
+</html>

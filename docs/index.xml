@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>| Tutorials - Spring 2023 |</title>
+    <link>https://seramirezruiz.github.io/2023-spring-stats2/</link>
+      <atom:link href="https://seramirezruiz.github.io/2023-spring-stats2/index.xml" rel="self" type="application/rss+xml" />
+    <description>| Tutorials - Spring 2023 |</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Fri, 03 Feb 2023 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://seramirezruiz.github.io/2023-spring-stats2/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
+      <title>| Tutorials - Spring 2023 |</title>
+      <link>https://seramirezruiz.github.io/2023-spring-stats2/</link>
+    </image>
+    
+    <item>
+      <title>01 - Slides</title>
+      <link>https://seramirezruiz.github.io/2023-spring-stats2/materials/session-1/slides/</link>
+      <pubDate>Fri, 03 Feb 2023 00:00:00 +0000</pubDate>
+      <guid>https://seramirezruiz.github.io/2023-spring-stats2/materials/session-1/slides/</guid>
+      <description>&lt;h2 id=&#34;slides&#34;&gt;Slides&lt;/h2&gt;
+&lt;iframe src=&#34;../w1-intro.pdf#view=fit&#34; width=&#34;100%&#34; height=&#34;500px&#34;&gt;
+    &lt;/iframe&gt;
+&lt;!--
+## Courses in this program
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure &gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;featured.jpg&#34; &gt;
+
+
+  &lt;img src=&#34;featured.jpg&#34; alt=&#34;&#34;  &gt;
+&lt;/a&gt;
+
+
+
+&lt;/figure&gt;
+
+
+&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    The parameter $\mu$ is the mean or expectation of the distribution.
+$\sigma$ is its standard deviation.
+The variance of the distribution is $\sigma^{2}$.
+  &lt;/div&gt;
+&lt;/div&gt;
+
+--&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>R and RStudio basics</title>
+      <link>https://seramirezruiz.github.io/2023-spring-stats2/materials/session-1/foundations/</link>
+      <pubDate>Fri, 03 Feb 2023 00:00:00 +0000</pubDate>
+      <guid>https://seramirezruiz.github.io/2023-spring-stats2/materials/session-1/foundations/</guid>
+      <description>&lt;h2 id=&#34;welcome&#34;&gt;Welcome!&lt;/h2&gt;
+&lt;p&gt;The practical component of the &lt;strong&gt;Statistics II: Statistical Modeling and Causal Inference&lt;/strong&gt; course relies largely in &lt;em&gt;R&lt;/em&gt; programming. Today we will center on some of the necessary skills to perform the assignments for the course.&lt;/p&gt;
+&lt;p&gt;In this tutorial, you will learn to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;identify the some of the basic functionalities of &lt;em&gt;R&lt;/em&gt; and &lt;em&gt;RStudio&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;import data sets into your &lt;em&gt;R&lt;/em&gt; environment&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;r-and-rstudio-basics&#34;&gt;R and RStudio: Basics&lt;/h2&gt;
+&lt;h3 id=&#34;the-rstudio-layout&#34;&gt;The RStudio layout&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;RStudio&lt;/em&gt; is an integrated development environment (IDE) for R. Think of &lt;em&gt;RStudio&lt;/em&gt; as a front that allows us to interact, compile, and render R code in a more instinctive way. The following image shows what the standard RStudio interface looks like:&lt;/p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure &gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://user-images.githubusercontent.com/54796579/92997228-088e9580-f512-11ea-9dad-556438c91f86.png&#34; &gt;
+
+
+  &lt;img src=&#34;https://user-images.githubusercontent.com/54796579/92997228-088e9580-f512-11ea-9dad-556438c91f86.png&#34; alt=&#34;&#34;  &gt;
+&lt;/a&gt;
+
+
+
+&lt;/figure&gt;
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Console&lt;/strong&gt;: The &lt;em&gt;console&lt;/em&gt; provides a means to interact directly with &lt;em&gt;R&lt;/em&gt;. You can type some code at the &lt;em&gt;console&lt;/em&gt; and when you press ENTER, R will run that code. Depending on what you type, you may see some output in the &lt;em&gt;console&lt;/em&gt; or if you make a mistake, you may get a warning or an error message.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Script editor&lt;/strong&gt;: You will utilize the &lt;em&gt;script editor&lt;/em&gt; to complete your assignments. The &lt;em&gt;script editor&lt;/em&gt; will be the space where files will be displayed. For example, once you download and open the bi-weekly assignment .Rmd template, it will appear here. The editor is a where you should place code you care about, since the code from the console cannot be saved into a script.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Environment&lt;/strong&gt;: This area holds the abstractions you have created with your code. If you run &lt;code&gt;myresult &amp;lt;- 5+3+2&lt;/code&gt;, the &lt;code&gt;myresult&lt;/code&gt; object will appear there.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Plots and files&lt;/strong&gt;: This area will be where graphic output will be generated. Additionally, if you write a question mark before any function, (i.e. &lt;code&gt;?mean&lt;/code&gt;) the online documentation will be displayed here.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;r-packages&#34;&gt;R Packages&lt;/h3&gt;
+&lt;p&gt;For the most part, &lt;em&gt;R Packages&lt;/em&gt; are collections of code and functions that leverage R programming to expand on the basic functionalities. Last week we met &lt;code&gt;dplyr&lt;/code&gt; that aids R programmers in the process of data cleaning and manipulation. There are a plethora of packages in &lt;em&gt;R&lt;/em&gt; designed to facilite the completion of tasks. In fact, this website is built with the &lt;code&gt;blogdown&lt;/code&gt; package that lets you create websites using &lt;code&gt;RMarkdown&lt;/code&gt; and Hugo&lt;/p&gt;
+&lt;p&gt;Unlike other programming languages, in &lt;em&gt;R&lt;/em&gt; you only need to install a package once. The following times you will only need to &amp;ldquo;require&amp;rdquo; the package. &lt;strong&gt;As a good practice I recommend running the code to install packages only in your R console, not in the code editor.&lt;/strong&gt; You can install a package with the following syntax&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;install.packages(&amp;quot;name_of_your_package&amp;quot;) #note that the quotation marks are mandatory at this stage
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once the package has been installed, you just need to &amp;ldquo;call it&amp;rdquo; every time you want to use it in a file by running:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;name_of_your_package&amp;quot;) #either of this lines will require the package
+library(name_of_your_package) #library understands the code with, or without, quotation marks
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    &lt;strong&gt;It is extremely important that you do not have any lines installing packages for your assignments because the file will fail to knit&lt;/strong&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;h3 id=&#34;working-directory&#34;&gt;Working directory&lt;/h3&gt;
+&lt;p&gt;The &lt;em&gt;working directory&lt;/em&gt; is just a file path on your computer that sets the default location of any files you read into R, or save out of R. Normally, when you open &lt;em&gt;RStudio&lt;/em&gt; it will have a default directory (a folder in your computer). You can check you directory by running &lt;code&gt;getwd()&lt;/code&gt; in your console:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#this is the default in my case
+getwd()
+#[1] &amp;quot;/Users/sebastianramirezruiz&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;When your RStudio is closed and you open a file from your finder in MacOS or file explorer in Windows, the default working directory will be the folder where the file is hosted&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;setting-your-working-directory&#34;&gt;Setting your working directory&lt;/h3&gt;
+&lt;p&gt;You can set you directory manually from RStudio: use the menu to change your working directory under Session &amp;gt; Set Working Directory &amp;gt; Choose Directory.&lt;/p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure &gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;http://www.sthda.com/sthda/RDoc/images/rstudio-change-working-directory.png&#34; &gt;
+
+
+  &lt;img src=&#34;http://www.sthda.com/sthda/RDoc/images/rstudio-change-working-directory.png&#34; alt=&#34;&#34;  &gt;
+&lt;/a&gt;
+
+
+
+&lt;/figure&gt;
+
+&lt;p&gt;You can also use the &lt;code&gt;setwd()&lt;/code&gt; function:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;setwd(&amp;quot;/path/to/your/directory&amp;quot;) #in macOS
+setwd(&amp;quot;c:/path/to/your/directory&amp;quot;) #in windows
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;recommended-folder-structure-for-the-class&#34;&gt;Recommended folder structure for the class&lt;/h3&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure &gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://user-images.githubusercontent.com/54796579/92937233-5ee4d100-f44b-11ea-9ee7-cc7209b80562.png&#34; &gt;
+
+
+  &lt;img src=&#34;https://user-images.githubusercontent.com/54796579/92937233-5ee4d100-f44b-11ea-9ee7-cc7209b80562.png&#34; alt=&#34;&#34;  &gt;
+&lt;/a&gt;
+
+
+
+&lt;/figure&gt;
+
+&lt;p&gt;We recommend you pay close attention to your folder structure. You will receive a new folder for each assignment. Make the folder your working directory when working on the assignment. This folder will be populated with the template .Rmd and the data for the week. When you knit the file, the &lt;strong&gt;.html&lt;/strong&gt; will be created in this folder.&lt;/p&gt;
+&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    &lt;strong&gt;We will learn more about the assignment submission workflow next week. Still, avoid changing the name of the files you receive in Github since it will create issues.&lt;/strong&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;h3 id=&#34;dealing-with-errors-in-r&#34;&gt;Dealing with errors in R&lt;/h3&gt;
+&lt;p&gt;Errors in R occur when code is used in a way that it is not intended. For example when you try to add two character strings, you will get the following error:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;quot;hello&amp;quot; + &amp;quot;world&amp;quot;
+Error in &amp;quot;hello&amp;quot; + &amp;quot;world&amp;quot;: non-numeric argument to binary operator
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Normally, when something has gone wrong with your program, &lt;em&gt;R&lt;/em&gt; will notify you of an error in the &lt;strong&gt;console&lt;/strong&gt;. There are errors that will prevent the code from running, while others will only produce &lt;strong&gt;warning&lt;/strong&gt; messages. In the following case, the code will run, but you will notice that the string &lt;strong&gt;&amp;ldquo;three&amp;rdquo;&lt;/strong&gt; is turned into a NA.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;as.numeric(c(&amp;quot;1&amp;quot;, &amp;quot;2&amp;quot;, &amp;quot;three&amp;quot;))
+Warning: NAs introduced by coercion
+[1]  1  2 NA
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Since we will be utilizing widely used packages and functions in the course of the semester, the errors that you may come across in the process of completing your assignments will be common for other R users. Most errors occur because of typos. A Google search of the error message can take you a long way as well. Most of the times the first entry on &lt;strong&gt;stackoverflow.com&lt;/strong&gt; will solve the problem.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;importing-data&#34;&gt;Importing data&lt;/h2&gt;
+&lt;p&gt;Next we will work with data provided by the &lt;code&gt;palmerpenguins&lt;/code&gt; package; however, most practical applications will require you to work with your own data. In fact, for most assignments, you will be given a data set to work with. As we will see in the coming weeks, data are messy. You know what else is messy? Data formats. You may be acquainted with a couple of them &lt;em&gt;(.csv, .tsv, .xlsx)&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Fortunately for us, the &lt;code&gt;tidyverse&lt;/code&gt; has two packages that make the process of loading data sets from different formats very easy.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;readr&lt;/code&gt;: The goal of &lt;code&gt;readr&lt;/code&gt; is to provide a fast and friendly way to read rectangular data (like &lt;strong&gt;csv, tsv, rds, and fwf&lt;/strong&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;haven&lt;/code&gt;: The goal of &lt;code&gt;haven&lt;/code&gt; is to enable R to read and write various data formats used by other statistical packages (like &lt;strong&gt;dta, sas, and sav&lt;/strong&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You can read more about how to load different types of data in the respective documentations of the packages — &lt;a href=&#34;https://readr.tidyverse.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;readr&lt;/a&gt; and &lt;a href=&#34;https://haven.tidyverse.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;haven&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;For the assignments you will be required to load datasets. You can do that by installing the &lt;code&gt;readr&lt;/code&gt; package and utilizing:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#with readr
+your_data_frame &amp;lt;- readr::read_rds(&amp;quot;path_for_the_file&amp;quot;)
+
+#you can alternatively use a base R option
+your_data_frame &amp;lt;- base::readRDS(&amp;quot;path_for_the_file&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This week&amp;rsquo;s mock assignment will feature a &lt;strong&gt;.tsv&lt;/strong&gt; file. When in doubt just Google &lt;strong&gt;&amp;ldquo;How to load x_format data in R?&amp;quot;&lt;/strong&gt; That will do the trick!&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;the-double-colon-operator-&#34;&gt;The double colon operator ::&lt;/h3&gt;
+&lt;p&gt;You may have noted in the previous section that the functions were preceded by their package name and two colons, for example: &lt;code&gt;readr::read_rds()&lt;/code&gt;. The double colon operator &lt;code&gt;::&lt;/code&gt; helps us ensure that we select functions from a particular package. We utilize the operator to explicitly state where the function is coming. This may become even more important when you are doing data analysis as part of a team further in your careers. Though it is likely that this will not be a problem during the course, we can try to employ the following convention &lt;code&gt;package_name::function()&lt;/code&gt; to ensure that we will not encounter errors in our knitting process:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;dplyr::select()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;p&gt;Let&amp;rsquo;s look at what happens when we load &lt;code&gt;tidyverse&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(tidyverse)
+
+#── Attaching packages ──────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 #──
+#✓ ggplot2 3.3.2     ✓ purrr   0.3.4
+#✓ tibble  3.0.3     ✓ dplyr   1.0.2
+#✓ tidyr   1.1.2     ✓ stringr 1.4.0
+#✓ readr   1.3.1     ✓ forcats 0.5.0
+#── Conflicts ─────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() #──
+#x dplyr::filter() masks stats::filter()
+#x dplyr::lag()    masks stats::lag()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You may notice that &lt;em&gt;R&lt;/em&gt; points out some conflicts where some functions are being masked. The default in this machine will become the &lt;code&gt;filter()&lt;/code&gt; from the &lt;code&gt;dplyr&lt;/code&gt; package during this session. If you were to run some code that is based on the &lt;code&gt;filter()&lt;/code&gt; from the &lt;code&gt;stats&lt;/code&gt; package, your code will probably result in errors.&lt;/p&gt;
+&lt;hr&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Slides</title>
+      <link>https://seramirezruiz.github.io/2023-spring-stats2/slides/example/</link>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
+      <guid>https://seramirezruiz.github.io/2023-spring-stats2/slides/example/</guid>
+      <description>&lt;h1 id=&#34;create-slides-in-markdown-with-wowchemy&#34;&gt;Create slides in Markdown with Wowchemy&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://wowchemy.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Wowchemy&lt;/a&gt; | &lt;a href=&#34;https://owchemy.com/docs/managing-content/#create-slides&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Documentation&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;features&#34;&gt;Features&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Efficiently write slides in Markdown&lt;/li&gt;
+&lt;li&gt;3-in-1: Create, Present, and Publish your slides&lt;/li&gt;
+&lt;li&gt;Supports speaker notes&lt;/li&gt;
+&lt;li&gt;Mobile friendly slides&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;controls&#34;&gt;Controls&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Next: &lt;code&gt;Right Arrow&lt;/code&gt; or &lt;code&gt;Space&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Previous: &lt;code&gt;Left Arrow&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Start: &lt;code&gt;Home&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Finish: &lt;code&gt;End&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Overview: &lt;code&gt;Esc&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Speaker notes: &lt;code&gt;S&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Fullscreen: &lt;code&gt;F&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Zoom: &lt;code&gt;Alt + Click&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/hakimel/reveal.js#pdf-export&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PDF Export&lt;/a&gt;: &lt;code&gt;E&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;code-highlighting&#34;&gt;Code Highlighting&lt;/h2&gt;
+&lt;p&gt;Inline code: &lt;code&gt;variable&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Code block:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;porridge = &amp;quot;blueberry&amp;quot;
+if porridge == &amp;quot;blueberry&amp;quot;:
+    print(&amp;quot;Eating...&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;math&#34;&gt;Math&lt;/h2&gt;
+&lt;p&gt;In-line math: $x + y = z$&lt;/p&gt;
+&lt;p&gt;Block math:&lt;/p&gt;
+&lt;p&gt;$$
+f\left( x \right) = ;\frac{{2\left( {x + 4} \right)\left( {x - 4} \right)}}{{\left( {x + 4} \right)\left( {x + 1} \right)}}
+$$&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;fragments&#34;&gt;Fragments&lt;/h2&gt;
+&lt;p&gt;Make content appear incrementally&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{{% fragment %}} One {{% /fragment %}}
+{{% fragment %}} **Two** {{% /fragment %}}
+{{% fragment %}} Three {{% /fragment %}}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Press &lt;code&gt;Space&lt;/code&gt; to play!&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;fragment &#34; &gt;
+One
+&lt;/span&gt;
+&lt;span class=&#34;fragment &#34; &gt;
+&lt;strong&gt;Two&lt;/strong&gt;
+&lt;/span&gt;
+&lt;span class=&#34;fragment &#34; &gt;
+Three
+&lt;/span&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;A fragment can accept two optional parameters:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;class&lt;/code&gt;: use a custom style (requires definition in custom CSS)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;weight&lt;/code&gt;: sets the order in which a fragment appears&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;speaker-notes&#34;&gt;Speaker Notes&lt;/h2&gt;
+&lt;p&gt;Add speaker notes to your presentation&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-markdown&#34;&gt;{{% speaker_note %}}
+- Only the speaker can read these notes
+- Press `S` key to view
+{{% /speaker_note %}}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Press the &lt;code&gt;S&lt;/code&gt; key to view the speaker notes!&lt;/p&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;ul&gt;
+&lt;li&gt;Only the speaker can read these notes&lt;/li&gt;
+&lt;li&gt;Press &lt;code&gt;S&lt;/code&gt; key to view&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;themes&#34;&gt;Themes&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;black: Black background, white text, blue links (default)&lt;/li&gt;
+&lt;li&gt;white: White background, black text, blue links&lt;/li&gt;
+&lt;li&gt;league: Gray background, white text, blue links&lt;/li&gt;
+&lt;li&gt;beige: Beige background, dark text, brown links&lt;/li&gt;
+&lt;li&gt;sky: Blue background, thin dark text, blue links&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;night: Black background, thick white text, orange links&lt;/li&gt;
+&lt;li&gt;serif: Cappuccino background, gray text, brown links&lt;/li&gt;
+&lt;li&gt;simple: White background, black text, blue links&lt;/li&gt;
+&lt;li&gt;solarized: Cream-colored background, dark green text, blue links&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+
+&lt;section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image=&#34;/media/boards.jpg&#34;
+  &gt;
+
+&lt;h2 id=&#34;custom-slide&#34;&gt;Custom Slide&lt;/h2&gt;
+&lt;p&gt;Customize the slide style and background&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-markdown&#34;&gt;{{&amp;lt; slide background-image=&amp;quot;/media/boards.jpg&amp;quot; &amp;gt;}}
+{{&amp;lt; slide background-color=&amp;quot;#0000FF&amp;quot; &amp;gt;}}
+{{&amp;lt; slide class=&amp;quot;my-style&amp;quot; &amp;gt;}}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;custom-css-example&#34;&gt;Custom CSS Example&lt;/h2&gt;
+&lt;p&gt;Let&amp;rsquo;s make headers navy colored.&lt;/p&gt;
+&lt;p&gt;Create &lt;code&gt;assets/css/reveal_custom.css&lt;/code&gt; with:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-css&#34;&gt;.reveal section h1,
+.reveal section h2,
+.reveal section h3 {
+  color: navy;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;questions&#34;&gt;Questions?&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/wowchemy/wowchemy-hugo-modules/discussions&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Ask&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://wowchemy.com/docs/managing-content/#create-slides&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Documentation&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>External Project</title>
+      <link>https://seramirezruiz.github.io/2023-spring-stats2/project/external-project/</link>
+      <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
+      <guid>https://seramirezruiz.github.io/2023-spring-stats2/project/external-project/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Internal Project</title>
+      <link>https://seramirezruiz.github.io/2023-spring-stats2/project/internal-project/</link>
+      <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
+      <guid>https://seramirezruiz.github.io/2023-spring-stats2/project/internal-project/</guid>
+      <description>&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis posuere tellus ac convallis placerat. Proin tincidunt magna sed ex sollicitudin condimentum. Sed ac faucibus dolor, scelerisque sollicitudin nisi. Cras purus urna, suscipit quis sapien eu, pulvinar tempor diam. Quisque risus orci, mollis id ante sit amet, gravida egestas nisl. Sed ac tempus magna. Proin in dui enim. Donec condimentum, sem id dapibus fringilla, tellus enim condimentum arcu, nec volutpat est felis vel metus. Vestibulum sit amet erat at nulla eleifend gravida.&lt;/p&gt;
+&lt;p&gt;Nullam vel molestie justo. Curabitur vitae efficitur leo. In hac habitasse platea dictumst. Sed pulvinar mauris dui, eget varius purus congue ac. Nulla euismod, lorem vel elementum dapibus, nunc justo porta mi, sed tempus est est vel tellus. Nam et enim eleifend, laoreet sem sit amet, elementum sem. Morbi ut leo congue, maximus velit ut, finibus arcu. In et libero cursus, rutrum risus non, molestie leo. Nullam congue quam et volutpat malesuada. Sed risus tortor, pulvinar et dictum nec, sodales non mi. Phasellus lacinia commodo laoreet. Nam mollis, erat in feugiat consectetur, purus eros egestas tellus, in auctor urna odio at nibh. Mauris imperdiet nisi ac magna convallis, at rhoncus ligula cursus.&lt;/p&gt;
+&lt;p&gt;Cras aliquam rhoncus ipsum, in hendrerit nunc mattis vitae. Duis vitae efficitur metus, ac tempus leo. Cras nec fringilla lacus. Quisque sit amet risus at ipsum pharetra commodo. Sed aliquam mauris at consequat eleifend. Praesent porta, augue sed viverra bibendum, neque ante euismod ante, in vehicula justo lorem ac eros. Suspendisse augue libero, venenatis eget tincidunt ut, malesuada at lorem. Donec vitae bibendum arcu. Aenean maximus nulla non pretium iaculis. Quisque imperdiet, nulla in pulvinar aliquet, velit quam ultrices quam, sit amet fringilla leo sem vel nunc. Mauris in lacinia lacus.&lt;/p&gt;
+&lt;p&gt;Suspendisse a tincidunt lacus. Curabitur at urna sagittis, dictum ante sit amet, euismod magna. Sed rutrum massa id tortor commodo, vitae elementum turpis tempus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean purus turpis, venenatis a ullamcorper nec, tincidunt et massa. Integer posuere quam rutrum arcu vehicula imperdiet. Mauris ullamcorper quam vitae purus congue, quis euismod magna eleifend. Vestibulum semper vel augue eget tincidunt. Fusce eget justo sodales, dapibus odio eu, ultrices lorem. Duis condimentum lorem id eros commodo, in facilisis mauris scelerisque. Morbi sed auctor leo. Nullam volutpat a lacus quis pharetra. Nulla congue rutrum magna a ornare.&lt;/p&gt;
+&lt;p&gt;Aliquam in turpis accumsan, malesuada nibh ut, hendrerit justo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque sed erat nec justo posuere suscipit. Donec ut efficitur arcu, in malesuada neque. Nunc dignissim nisl massa, id vulputate nunc pretium nec. Quisque eget urna in risus suscipit ultricies. Pellentesque odio odio, tincidunt in eleifend sed, posuere a diam. Nam gravida nisl convallis semper elementum. Morbi vitae felis faucibus, vulputate orci placerat, aliquet nisi. Aliquam erat volutpat. Maecenas sagittis pulvinar purus, sed porta quam laoreet at.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
